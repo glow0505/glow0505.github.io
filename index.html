@@ -365,6 +365,12 @@
             border-bottom-color: #B45F06;
         }
 
+        .btn-info {
+            background: #00BFFF;
+            color: white;
+            border-bottom-color: #1E90FF;
+        }
+
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -872,6 +878,21 @@
             z-index: 10;
         }
 
+        .gift-tag {
+            position: absolute;
+            bottom: -5px;
+            left: -5px;
+            background: #FF69B4;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            border: 2px solid white;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
         .reward-badge {
             background: #FF4444;
             color: white;
@@ -934,6 +955,33 @@
             color: #FFE68F;
             font-size: 0.9rem;
             margin-bottom: 10px;
+        }
+
+        .history-list {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #1A0F0A;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .history-item {
+            padding: 8px;
+            border-bottom: 1px solid #5A3A24;
+            color: #FFE68F;
+            font-size: 0.9rem;
+        }
+
+        .history-item .time {
+            color: #FFD966;
+            font-size: 0.7rem;
+            margin-left: 10px;
+        }
+
+        .history-item .gift {
+            color: #FF69B4;
+            font-weight: bold;
         }
 
         .data-actions {
@@ -1081,7 +1129,7 @@
                     <div class="voucher-list" id="exchangeVoucherList"></div>
                 </div>
 
-                <!-- 6. 玩家管理（带操作按钮） -->
+                <!-- 6. 玩家管理（带操作按钮和赠送历史） -->
                 <div class="admin-section">
                     <h3>👥 玩家管理</h3>
                     <button class="btn btn-small" onclick="refreshPlayerList()">🔄 刷新玩家列表</button>
@@ -1121,6 +1169,7 @@
                     <div class="tab active" onclick="switchTab('draw')">🎲 抽卡</div>
                     <div class="tab" onclick="switchTab('gift')">🎁 赠送</div>
                     <div class="tab" onclick="switchTab('exchange')">🔄 换卡</div>
+                    <div class="tab" onclick="switchTab('history')">📜 历史</div>
                 </div>
 
                 <!-- 抽卡界面 -->
@@ -1184,6 +1233,17 @@
                     </div>
                 </div>
 
+                <!-- 历史界面 -->
+                <div id="historyTab" style="display: none;">
+                    <div class="action-panel active">
+                        <div class="action-title">📜 我的赠送记录</div>
+                        <div class="history-list" id="giftHistoryList"></div>
+                        
+                        <div class="action-title" style="margin-top: 20px;">📥 我收到的卡片</div>
+                        <div class="history-list" id="receivedHistoryList"></div>
+                    </div>
+                </div>
+
                 <!-- 卡册 -->
                 <div class="album-section">
                     <div class="album-header">
@@ -1203,7 +1263,7 @@
         let vouchers = new Map();           // 抽卡券 code -> used
         let exchangeVouchers = new Map();   // 换卡券 code -> used
         let groups = new Map();             // 小组 groupName -> { password, members: Set }
-        let players = new Map();            // 玩家数据 weiboId -> { password, cards: Map(cardId -> count), groups: Set }
+        let players = new Map();            // 玩家数据 weiboId -> { password, cards: Map(cardId -> count), groups: Set, giftHistory: [], receiveHistory: [] }
         let recentCards = [];
         let currentUser = null;             // 当前登录的微博ID
         let isLoginMode = true;              // 登录/注册模式切换
@@ -1277,6 +1337,7 @@
             updateGiftGrid();
             updateExchangeGrids();
             updateGroupDisplay();
+            updateHistoryTabs();
         };
 
         window.handleRegister = function() {
@@ -1297,7 +1358,9 @@
             players.set(weibo, { 
                 password: pwd,
                 cards: new Map(), 
-                groups: new Set() 
+                groups: new Set(),
+                giftHistory: [],
+                receiveHistory: []
             });
             saveAllData();
             
@@ -1313,6 +1376,7 @@
             updateGiftGrid();
             updateExchangeGrids();
             updateGroupDisplay();
+            updateHistoryTabs();
         };
 
         window.logout = function() {
@@ -1328,16 +1392,19 @@
         // ==================== 标签切换 ====================
         window.switchTab = function(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.player-area .tab')[tab === 'draw' ? 0 : tab === 'gift' ? 1 : 2].classList.add('active');
+            document.querySelectorAll('.player-area .tab')[tab === 'draw' ? 0 : tab === 'gift' ? 1 : tab === 'exchange' ? 2 : 3].classList.add('active');
             
             document.getElementById('drawTab').style.display = tab === 'draw' ? 'block' : 'none';
             document.getElementById('giftTab').style.display = tab === 'gift' ? 'block' : 'none';
             document.getElementById('exchangeTab').style.display = tab === 'exchange' ? 'block' : 'none';
+            document.getElementById('historyTab').style.display = tab === 'history' ? 'block' : 'none';
             
             if (tab === 'gift') {
                 updateGiftGrid();
             } else if (tab === 'exchange') {
                 updateExchangeGrids();
+            } else if (tab === 'history') {
+                updateHistoryTabs();
             }
         };
 
@@ -1373,7 +1440,9 @@
                         players.set(id, { 
                             password: data.password || '',
                             cards: new Map(Object.entries(data.cards)),
-                            groups: new Set(data.groups || [])
+                            groups: new Set(data.groups || []),
+                            giftHistory: data.giftHistory || [],
+                            receiveHistory: data.receiveHistory || []
                         });
                     });
                 }
@@ -1404,7 +1473,9 @@
                     playersObj[id] = { 
                         password: data.password,
                         cards: Object.fromEntries(data.cards),
-                        groups: Array.from(data.groups || [])
+                        groups: Array.from(data.groups || []),
+                        giftHistory: data.giftHistory || [],
+                        receiveHistory: data.receiveHistory || []
                     };
                 });
                 localStorage.setItem('zhenguang_players', JSON.stringify(playersObj));
@@ -1759,6 +1830,24 @@
             refreshPlayerList();
         };
 
+        // 查看玩家赠送历史
+        window.viewPlayerGiftHistory = function(weiboId) {
+            const player = players.get(weiboId);
+            if (!player) return;
+            
+            let historyStr = '📤 赠送记录：\n';
+            player.giftHistory.forEach(h => {
+                historyStr += `${h.time} 送给 ${h.to} 【${h.card}】\n`;
+            });
+            
+            historyStr += '\n📥 收到记录：\n';
+            player.receiveHistory.forEach(h => {
+                historyStr += `${h.time} 来自 ${h.from} 【${h.card}】\n`;
+            });
+            
+            alert(historyStr || '暂无历史记录');
+        };
+
         // 更新玩家管理列表
         function updatePlayerManageList() {
             const div = document.getElementById('playerManageList');
@@ -1793,12 +1882,14 @@
                         <div class="player-manage-detail">
                             <div>📚 卡片总数: ${totalCards}张</div>
                             <div>👥 所属小组: ${groupsList}</div>
+                            <div>📤 赠送: ${data.giftHistory?.length || 0}次 | 📥 收到: ${data.receiveHistory?.length || 0}次</div>
                             <div style="font-size: 0.8rem; color: #FFD966; margin-top: 5px;">${cardsDetail.join('、') || '无卡片'}</div>
                         </div>
                         <div class="player-manage-actions">
                             <button class="btn btn-small btn-warning" onclick="changePlayerPassword('${id}')">🔑 改密码</button>
                             <button class="btn btn-small btn-danger" onclick="deletePlayerAccount('${id}')">🗑️ 删账号</button>
                             <button class="btn btn-small btn-warning" onclick="clearPlayerAlbum('${id}')">📖 清空卡册</button>
+                            <button class="btn btn-small btn-info" onclick="viewPlayerGiftHistory('${id}')">📜 历史</button>
                 `;
                 
                 // 添加踢出小组按钮（每个小组一个）
@@ -1914,9 +2005,15 @@
                 const card = cardLibrary.find(c => c.id === cardId);
                 if (card) {
                     total += count;
+                    
+                    // 查找这张卡是否来自赠送
+                    const receiveHistory = players.get(weiboId).receiveHistory || [];
+                    const lastReceive = receiveHistory.filter(h => h.card === card.name).pop();
+                    
                     html += `
                         <div class="album-card" onclick="this.classList.toggle('flipped')">
                             <div class="card-count">${count}</div>
+                            ${lastReceive ? `<div class="gift-tag">🎁 来自 ${lastReceive.from}</div>` : ''}
                             <div class="album-card-inner">
                                 <div class="album-front"><img src="${card.frontURL}"></div>
                                 <div class="album-back"><img src="${card.backURL}"></div>
@@ -1973,10 +2070,20 @@
             if (currentUser === toId) return alert('不能赠送给自己');
             if (!selectedGiftCard) return alert('请选择要赠送的卡片');
             
+            // 检查对方账号是否存在
+            if (!players.has(toId)) {
+                return alert('❌ 对方微博ID不存在，请确认后再试');
+            }
+            
             const fromPlayer = players.get(currentUser);
+            const card = cardLibrary.find(c => c.id === selectedGiftCard);
+            
             if (!fromPlayer || !fromPlayer.cards.has(selectedGiftCard) || fromPlayer.cards.get(selectedGiftCard) < 1) {
                 return alert('你没有这张卡片');
             }
+            
+            // 二次确认
+            if (!confirm(`确定要将【${card.name}】赠送给 ${toId} 吗？`)) return;
             
             // 扣减赠送方
             fromPlayer.cards.set(selectedGiftCard, fromPlayer.cards.get(selectedGiftCard) - 1);
@@ -1985,11 +2092,28 @@
             }
             
             // 增加接收方
-            if (!players.has(toId)) {
-                players.set(toId, { password: '', cards: new Map(), groups: new Set() });
-            }
             const toPlayer = players.get(toId);
             toPlayer.cards.set(selectedGiftCard, (toPlayer.cards.get(selectedGiftCard) || 0) + 1);
+            
+            // 记录赠送历史
+            const now = new Date();
+            const timeStr = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
+            
+            if (!fromPlayer.giftHistory) fromPlayer.giftHistory = [];
+            fromPlayer.giftHistory.push({
+                time: timeStr,
+                to: toId,
+                card: card.name,
+                cardId: selectedGiftCard
+            });
+            
+            if (!toPlayer.receiveHistory) toPlayer.receiveHistory = [];
+            toPlayer.receiveHistory.push({
+                time: timeStr,
+                from: currentUser,
+                card: card.name,
+                cardId: selectedGiftCard
+            });
             
             saveAllData();
             
@@ -1997,8 +2121,51 @@
             document.getElementById('giftToId').value = '';
             updateGiftGrid();
             updateAlbum(currentUser);
-            alert('✅ 赠送成功！');
+            updateHistoryTabs();
+            
+            alert(`✅ 成功将【${card.name}】赠送给 ${toId}！`);
         };
+
+        // 历史记录
+        function updateHistoryTabs() {
+            if (!currentUser) return;
+            
+            const player = players.get(currentUser);
+            
+            // 赠送记录
+            const giftList = document.getElementById('giftHistoryList');
+            let giftHtml = '';
+            if (player.giftHistory && player.giftHistory.length > 0) {
+                player.giftHistory.slice().reverse().forEach(h => {
+                    giftHtml += `
+                        <div class="history-item">
+                            <span class="gift">🎁 赠送给 ${h.to}</span> 【${h.card}】
+                            <span class="time">${h.time}</span>
+                        </div>
+                    `;
+                });
+            } else {
+                giftHtml = '<div style="color: #999; padding: 10px;">暂无赠送记录</div>';
+            }
+            giftList.innerHTML = giftHtml;
+            
+            // 收到记录
+            const receiveList = document.getElementById('receivedHistoryList');
+            let receiveHtml = '';
+            if (player.receiveHistory && player.receiveHistory.length > 0) {
+                player.receiveHistory.slice().reverse().forEach(h => {
+                    receiveHtml += `
+                        <div class="history-item">
+                            <span class="gift">📥 来自 ${h.from}</span> 【${h.card}】
+                            <span class="time">${h.time}</span>
+                        </div>
+                    `;
+                });
+            } else {
+                receiveHtml = '<div style="color: #999; padding: 10px;">暂无收到记录</div>';
+            }
+            receiveList.innerHTML = receiveHtml;
+        }
 
         // 换卡功能
         function updateExchangeGrids() {
@@ -2103,7 +2270,9 @@
                     Array.from(players.entries()).map(([id, data]) => [id, { 
                         password: data.password,
                         cards: Object.fromEntries(data.cards),
-                        groups: Array.from(data.groups || [])
+                        groups: Array.from(data.groups || []),
+                        giftHistory: data.giftHistory || [],
+                        receiveHistory: data.receiveHistory || []
                     }])
                 )
             };
@@ -2146,7 +2315,9 @@
                                 players.set(id, { 
                                     password: playerData.password || '',
                                     cards: new Map(Object.entries(playerData.cards)),
-                                    groups: new Set(playerData.groups || [])
+                                    groups: new Set(playerData.groups || []),
+                                    giftHistory: playerData.giftHistory || [],
+                                    receiveHistory: playerData.receiveHistory || []
                                 });
                             });
                         }
