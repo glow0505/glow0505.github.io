@@ -16,12 +16,80 @@
             background: #FED71A;
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .app-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            position: relative;
+        /* 活动密码模态框 */
+        .activity-lock {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #FED71A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .lock-box {
+            background: #2D1A0F;
+            padding: 50px;
+            border-radius: 80px;
+            border: 8px solid #FFB347;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.4);
+            text-align: center;
+            width: 450px;
+        }
+
+        .lock-box h2 {
+            color: #FED71A;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            font-weight: 900;
+            text-shadow: 3px 3px 0 #B1612E;
+        }
+
+        .lock-box input {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.8rem;
+            border: 4px solid #FFB347;
+            border-radius: 60px;
+            margin-bottom: 30px;
+            outline: none;
+            text-align: center;
+            background: #FFF3D6;
+            letter-spacing: 4px;
+        }
+
+        .lock-box button {
+            background: #FFB347;
+            color: #2D1A0F;
+            border: none;
+            padding: 18px 50px;
+            font-size: 2rem;
+            font-weight: bold;
+            border-radius: 60px;
+            cursor: pointer;
+            border-bottom: 6px solid #B1612E;
+            transition: 0.1s;
+            width: 100%;
+        }
+
+        .lock-box button:active {
+            transform: translateY(6px);
+            border-bottom-width: 0;
+        }
+
+        .lock-box .hint {
+            color: #FFB347;
+            margin-top: 20px;
+            font-size: 1rem;
+            opacity: 0.5;
         }
 
         /* 店招 */
@@ -46,7 +114,6 @@
             transform: rotate(-1deg);
         }
 
-        /* 后台入口（小小一个，不显眼） */
         .admin-entry {
             position: absolute;
             top: 20px;
@@ -71,7 +138,6 @@
             color: #FED71A;
         }
 
-        /* 登录模态框 */
         .login-modal {
             position: fixed;
             top: 0;
@@ -136,12 +202,6 @@
             border-bottom-color: #666;
         }
 
-        /* 主界面 */
-        .main-content {
-            display: block;
-        }
-
-        /* 管理员面板（默认隐藏） */
         .admin-panel {
             background: rgba(45, 26, 15, 0.95);
             backdrop-filter: blur(8px);
@@ -183,11 +243,15 @@
             margin-bottom: 15px;
         }
 
+        .upload-area:hover {
+            background: #6F4A30;
+        }
+
         .btn {
             background: #FED71A;
             color: #2D1A0F;
             border: none;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
@@ -200,7 +264,114 @@
             font-size: 0.9rem;
         }
 
-        /* 玩家区域 */
+        .btn-danger {
+            background: #B1612E;
+            color: white;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #2D1A0F;
+            border-radius: 20px;
+        }
+
+        .card-grid-item {
+            background: #5A3A24;
+            border-radius: 15px;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .card-grid-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 0 #FED71A;
+        }
+
+        .card-grid-item.flipped .card-grid-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-grid-inner {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 2/3;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card-grid-front, .card-grid-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .card-grid-front {
+            transform: rotateY(0deg);
+        }
+
+        .card-grid-back {
+            transform: rotateY(180deg);
+        }
+
+        .card-grid-front img, .card-grid-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-name {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #FFE68F;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recent-upload {
+            background: #2D1A0F;
+            border-radius: 20px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .recent-title {
+            color: #FED71A;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+        }
+
+        .recent-item {
+            text-align: center;
+        }
+
+        .recent-item img {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid #FED71A;
+            cursor: pointer;
+        }
+
         .player-area {
             background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
@@ -246,7 +417,6 @@
             border-bottom: 4px solid #B1612E;
         }
 
-        /* 抽卡展示区 */
         .draw-area {
             display: flex;
             flex-direction: column;
@@ -285,13 +455,8 @@
             box-shadow: 0 20px 30px rgba(0,0,0,0.3);
         }
 
-        .card-front {
-            transform: rotateY(0deg);
-        }
-
-        .card-back {
-            transform: rotateY(180deg);
-        }
+        .card-front { transform: rotateY(0deg); }
+        .card-back { transform: rotateY(180deg); }
 
         .card-front img, .card-back img {
             width: 100%;
@@ -309,7 +474,6 @@
             animation: cardReveal 0.6s ease-out;
         }
 
-        /* 卡册 */
         .album-section {
             background: #FED16C;
             border-radius: 40px;
@@ -413,27 +577,6 @@
             100% { opacity: 1; }
         }
 
-        .preview-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            margin: 10px 0;
-        }
-
-        .preview-item {
-            background: #2D1A0F;
-            border-radius: 8px;
-            padding: 5px;
-            text-align: center;
-        }
-
-        .preview-item img {
-            width: 100%;
-            aspect-ratio: 2/3;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
         .voucher-list {
             max-height: 150px;
             overflow-y: auto;
@@ -450,142 +593,267 @@
             border-bottom: 1px solid #5A3A24;
             color: #FFE68F;
         }
+
+        .data-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .main-content {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- 右上角后台入口（小圆点） -->
-        <div class="admin-entry" onclick="showLoginModal()">⚙️</div>
-
-        <!-- 登录模态框（密码输入） -->
-        <div class="login-modal" id="loginModal">
-            <div class="login-box">
-                <h3>🔐 掌柜后台</h3>
-                <input type="password" id="adminPassword" placeholder="输入密码">
-                <button onclick="checkAdminPassword()">进入</button>
-                <button class="close-btn" onclick="hideLoginModal()">取消</button>
-            </div>
+    <!-- 活动密码锁（先显示这个） -->
+    <div class="activity-lock" id="activityLock">
+        <div class="lock-box">
+            <h2>🔒 珍光集卡铺</h2>
+            <input type="password" id="activityPassword" placeholder="输入活动密码" maxlength="10">
+            <button onclick="checkActivityPassword()">进入</button>
+            <!-- 没有任何提示文字，只有输入正确才能进 -->
         </div>
+    </div>
 
-        <!-- 店招 -->
-        <div class="shop-header">
-            <div class="shop-name">珍光集卡铺</div>
-        </div>
+    <!-- 主内容（初始隐藏） -->
+    <div class="main-content" id="mainContent">
+        <div class="app-container">
+            <div class="admin-entry" onclick="showLoginModal()">⚙️</div>
 
-        <!-- 管理员面板（初始隐藏） -->
-        <div class="admin-panel" id="adminPanel">
-            <h2>⚙️ 掌柜后台</h2>
-            
-            <!-- 1. 批量上传卡面卡背 -->
-            <div class="admin-section">
-                <h3>📤 批量上传卡面+卡背</h3>
-                <div class="upload-area" onclick="document.getElementById('cardSetInput').click()">
-                    <span style="font-size: 2rem;">📁</span>
-                    <p>点击选择多套卡片（成对选择）</p>
-                    <input type="file" id="cardSetInput" accept="image/*" multiple hidden>
-                </div>
-                <div class="preview-grid" id="uploadedPreview"></div>
-            </div>
-
-            <!-- 2. 查看卡片库 -->
-            <div class="admin-section">
-                <h3>📚 卡片库 (<span id="cardCount">0</span>)</h3>
-                <button class="btn btn-small" onclick="showCardLibrary()">查看所有</button>
-                <div id="cardLibraryList" style="max-height: 150px; overflow-y: auto; margin-top: 10px;"></div>
-            </div>
-
-            <!-- 3. 抽卡券管理 -->
-            <div class="admin-section">
-                <h3>🎟️ 抽卡券</h3>
-                <div style="display: flex; gap: 5px;">
-                    <input type="text" id="newVoucher" placeholder="新券号" style="flex: 1; padding: 8px; border-radius: 20px;">
-                    <button class="btn btn-small" onclick="addVoucher()">添加</button>
-                </div>
-                <div class="voucher-list" id="voucherList"></div>
-            </div>
-
-            <!-- 4. 玩家列表 -->
-            <div class="admin-section">
-                <h3>👥 玩家</h3>
-                <button class="btn btn-small" onclick="showPlayers()">查看所有玩家</button>
-                <div id="playerList" style="max-height: 150px; overflow-y: auto; margin-top: 10px;"></div>
-            </div>
-
-            <button class="btn" onclick="hideAdminPanel()">关闭后台</button>
-        </div>
-
-        <!-- 玩家主区域 -->
-        <div class="player-area">
-            <!-- 抽卡输入区 -->
-            <div class="player-header">
-                <div class="input-group">
-                    <span style="font-size: 1.5rem;">🌟</span>
-                    <input type="text" id="weiboId" placeholder="微博ID" value="玩家">
-                </div>
-                <div class="input-group">
-                    <span style="font-size: 1.5rem;">🎟️</span>
-                    <input type="text" id="voucherInput" placeholder="卡券号">
-                    <button onclick="drawCard()">抽卡</button>
+            <div class="login-modal" id="loginModal">
+                <div class="login-box">
+                    <h3>🔐 掌柜后台</h3>
+                    <input type="password" id="adminPassword" placeholder="输入密码">
+                    <button onclick="checkAdminPassword()">进入</button>
+                    <button class="close-btn" onclick="hideLoginModal()">取消</button>
                 </div>
             </div>
 
-            <!-- 抽卡展示 -->
-            <div class="draw-area">
-                <div class="card-container" id="drawCard" onclick="this.classList.toggle('flipped')">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <img id="drawCardFront" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23ebcfb5'/%3E%3Ctext x='40' y='150' fill='%238b644b' font-size='24'%3E✨ 点击抽卡 ✨%3C/text%3E%3C/svg%3E">
-                        </div>
-                        <div class="card-back">
-                            <img id="drawCardBack" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23b4835c'/%3E%3Ctext x='40' y='150' fill='%23f0dccc' font-size='24'%3E🔸 珍光卡背 🔸%3C/text%3E%3C/svg%3E">
-                        </div>
+            <div class="shop-header">
+                <div class="shop-name">珍光集卡铺</div>
+            </div>
+
+            <!-- 管理员面板 -->
+            <div class="admin-panel" id="adminPanel">
+                <h2>⚙️ 掌柜后台</h2>
+                
+                <!-- 1. 批量上传卡面卡背 -->
+                <div class="admin-section">
+                    <h3>📤 批量上传卡面+卡背</h3>
+                    <div class="upload-area" onclick="document.getElementById('cardSetInput').click()">
+                        <span style="font-size: 2rem;">📁</span>
+                        <p>点击选择多套卡片（请成对选择：卡面1、卡背1、卡面2、卡背2...）</p>
+                        <input type="file" id="cardSetInput" accept="image/*" multiple hidden>
+                    </div>
+                    
+                    <div id="recentUploadSection" class="recent-upload" style="display: none;">
+                        <div class="recent-title">✨ 刚刚上传的卡片</div>
+                        <div class="recent-grid" id="recentUploadGrid"></div>
                     </div>
                 </div>
-                <p style="color: #666;">👆 点击卡片翻转</p>
+
+                <!-- 2. 卡片库 -->
+                <div class="admin-section">
+                    <h3>📚 卡片库 (<span id="cardCount">0</span>)</h3>
+                    <div class="card-grid" id="cardLibraryGrid"></div>
+                </div>
+
+                <!-- 3. 抽卡券管理 -->
+                <div class="admin-section">
+                    <h3>🎟️ 抽卡券管理</h3>
+                    <div style="display: flex; gap: 5px;">
+                        <input type="text" id="newVoucher" placeholder="新券号" style="flex: 1; padding: 8px; border-radius: 20px;">
+                        <button class="btn btn-small" onclick="addVoucher()">添加</button>
+                    </div>
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-small" onclick="batchAddVouchers()">📋 批量添加（用逗号分隔）</button>
+                    </div>
+                    <div class="voucher-list" id="voucherList"></div>
+                    <div style="margin-top: 10px;">
+                        <button class="btn btn-small btn-danger" onclick="clearUsedVouchers()">🗑️ 清除已用券</button>
+                    </div>
+                </div>
+
+                <!-- 4. 玩家列表 -->
+                <div class="admin-section">
+                    <h3>👥 玩家列表</h3>
+                    <button class="btn btn-small" onclick="showPlayers()">刷新玩家列表</button>
+                    <div id="playerList" style="max-height: 200px; overflow-y: auto; margin-top: 10px; background: #2D1A0F; padding: 10px; border-radius: 10px;"></div>
+                </div>
+
+                <!-- 5. 数据管理 -->
+                <div class="data-actions">
+                    <button class="btn btn-small" onclick="exportData()">💾 导出备份</button>
+                    <button class="btn btn-small" onclick="importData()">📂 导入数据</button>
+                    <button class="btn btn-small btn-danger" onclick="resetAllData()">⚠️ 重置</button>
+                </div>
+
+                <button class="btn" onclick="hideAdminPanel()">关闭后台</button>
             </div>
 
-            <!-- 卡册 -->
-            <div class="album-section">
-                <div class="album-header">
-                    <span>📖 我的卡册</span>
-                    <span>总数: <span id="albumTotal">0</span></span>
+            <!-- 玩家区域 -->
+            <div class="player-area">
+                <div class="player-header">
+                    <div class="input-group">
+                        <span style="font-size: 1.5rem;">🌟</span>
+                        <input type="text" id="weiboId" placeholder="微博ID" value="玩家">
+                    </div>
+                    <div class="input-group">
+                        <span style="font-size: 1.5rem;">🎟️</span>
+                        <input type="text" id="voucherInput" placeholder="卡券号">
+                        <button onclick="drawCard()">抽卡</button>
+                    </div>
                 </div>
-                <div class="album-grid" id="albumGrid"></div>
-                <div id="rewardReminder" class="reward-badge" style="display: none;">🎁 满10张啦！找掌柜领实体卡~</div>
+
+                <!-- 抽卡展示区 -->
+                <div class="draw-area">
+                    <div class="card-container" id="drawCard" onclick="this.classList.toggle('flipped')">
+                        <div class="card-inner">
+                            <div class="card-front">
+                                <img id="drawCardFront" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23ebcfb5'/%3E%3Ctext x='40' y='150' fill='%238b644b' font-size='24'%3E✨ 点击抽卡 ✨%3C/text%3E%3C/svg%3E">
+                            </div>
+                            <div class="card-back">
+                                <img id="drawCardBack" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23b4835c'/%3E%3Ctext x='40' y='150' fill='%23f0dccc' font-size='24'%3E🔸 珍光卡背 🔸%3C/text%3E%3C/svg%3E">
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: #666;">👆 点击卡片翻转</p>
+                </div>
+
+                <!-- 卡册 -->
+                <div class="album-section">
+                    <div class="album-header">
+                        <span>📖 我的卡册</span>
+                        <span>总数: <span id="albumTotal">0</span></span>
+                    </div>
+                    <div class="album-grid" id="albumGrid"></div>
+                    <div id="rewardReminder" class="reward-badge" style="display: none;">🎁 满10张啦！找掌柜领实体卡~</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ==================== 数据存储 ====================
-        let cardLibrary = [];              // { id, frontURL, backURL, name }
-        let vouchers = new Map();           // code -> used
-        let players = new Map();            // weiboId -> { cards: Map(cardId -> count) }
+        // ==================== 活动密码验证 ====================
+        window.checkActivityPassword = function() {
+            const pwd = document.getElementById('activityPassword').value;
+            // 密码是 SZN0326（区分大小写）
+            if (pwd === 'SZN0326') {
+                document.getElementById('activityLock').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                // 加载数据
+                loadData();
+            } else {
+                // 错误密码什么都不提示，直接清空输入框
+                document.getElementById('activityPassword').value = '';
+            }
+        };
 
-        // ==================== 初始化测试数据 ====================
-        function initTestData() {
-            // 测试卡片
-            for (let i = 1; i <= 6; i++) {
+        // 按回车也可以提交
+        document.getElementById('activityPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkActivityPassword();
+            }
+        });
+
+        // ==================== 数据存储 ====================
+        let cardLibrary = [];
+        let vouchers = new Map();
+        let players = new Map();
+        let recentCards = [];
+
+        // ==================== 数据持久化 ====================
+        function loadData() {
+            try {
+                // 加载卡片库
+                const savedCards = localStorage.getItem('zhenguang_cards');
+                if (savedCards) {
+                    cardLibrary = JSON.parse(savedCards);
+                } else {
+                    // 第一次使用，给个默认卡片方便测试
+                    initDefaultCards();
+                }
+
+                // 加载抽卡券
+                const savedVouchers = localStorage.getItem('zhenguang_vouchers');
+                if (savedVouchers) {
+                    const voucherObj = JSON.parse(savedVouchers);
+                    vouchers = new Map(Object.entries(voucherObj));
+                } else {
+                    initDefaultVouchers();
+                }
+
+                // 加载玩家数据
+                const savedPlayers = localStorage.getItem('zhenguang_players');
+                if (savedPlayers) {
+                    const playersObj = JSON.parse(savedPlayers);
+                    players = new Map();
+                    Object.entries(playersObj).forEach(([id, data]) => {
+                        const cardsMap = new Map(Object.entries(data.cards));
+                        players.set(id, { cards: cardsMap });
+                    });
+                }
+
+                // 更新UI
+                updateAllUI();
+            } catch (e) {
+                console.error('加载数据失败', e);
+                initDefaultCards();
+                initDefaultVouchers();
+                updateAllUI();
+            }
+        }
+
+        function saveAllData() {
+            try {
+                // 保存卡片库
+                localStorage.setItem('zhenguang_cards', JSON.stringify(cardLibrary));
+
+                // 保存抽卡券
+                const voucherObj = Object.fromEntries(vouchers);
+                localStorage.setItem('zhenguang_vouchers', JSON.stringify(voucherObj));
+
+                // 保存玩家数据
+                const playersObj = {};
+                players.forEach((data, id) => {
+                    playersObj[id] = {
+                        cards: Object.fromEntries(data.cards)
+                    };
+                });
+                localStorage.setItem('zhenguang_players', JSON.stringify(playersObj));
+
+                console.log('✅ 数据已保存', new Date().toLocaleTimeString());
+                
+                // 更新所有UI（确保玩家看到最新数据）
+                updateAllUI();
+            } catch (e) {
+                console.error('保存数据失败', e);
+            }
+        }
+
+        // 初始化默认卡片（只有第一次用）
+        function initDefaultCards() {
+            cardLibrary = [];
+            for (let i = 1; i <= 3; i++) {
                 cardLibrary.push({
-                    id: `card${i}`,
-                    frontURL: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23${['c49a7c','b6855e','a5724e','8d623f','b98f6b','dbb594'][i-1]}'/%3E%3Ctext x='40' y='150' fill='%232d1a0f' font-size='30'%3E${i}号卡%3C/text%3E%3C/svg%3E`,
+                    id: `default${i}`,
+                    frontURL: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23${['c49a7c','b6855e','a5724e'][i-1]}'/%3E%3Ctext x='40' y='150' fill='%232d1a0f' font-size='30'%3E${i}号卡%3C/text%3E%3C/svg%3E`,
                     backURL: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23946644'/%3E%3Ctext x='30' y='150' fill='%23ebcfb5' font-size='24'%3E珍光卡背%3C/text%3E%3C/svg%3E`,
                     name: `珍光${i}号`
                 });
             }
-            
-            // 测试券
-            vouchers.set('TEST001', false);
-            vouchers.set('TEST002', false);
-            vouchers.set('TEST003', false);
-            
-            // 测试玩家
-            let testCards = new Map();
-            testCards.set('card1', 2);
-            testCards.set('card2', 1);
-            players.set('测试玩家', { cards: testCards });
         }
-        initTestData();
+
+        function initDefaultVouchers() {
+            vouchers = new Map([
+                ['TEST001', false],
+                ['TEST002', false],
+                ['TEST003', false]
+            ]);
+        }
 
         // ==================== 登录相关 ====================
         window.showLoginModal = function() {
@@ -602,7 +870,7 @@
             if (pwd === 'szn20260214') {
                 document.getElementById('adminPanel').style.display = 'block';
                 hideLoginModal();
-                updateAdminUI();
+                updateAllAdminViews();
             } else {
                 alert('密码错误');
             }
@@ -620,7 +888,7 @@
                 return;
             }
             
-            // 按文件名排序，尽量配对
+            recentCards = [];
             files.sort((a, b) => a.name.localeCompare(b.name));
             
             for (let i = 0; i < files.length; i += 2) {
@@ -629,17 +897,50 @@
                 const frontURL = await readFileAsDataURL(files[i]);
                 const backURL = await readFileAsDataURL(files[i + 1]);
                 
-                cardLibrary.push({
+                const newCard = {
                     id: 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
                     frontURL: frontURL,
                     backURL: backURL,
                     name: files[i].name.split('.')[0]
-                });
+                };
+                
+                cardLibrary.push(newCard);
+                recentCards.push(newCard);
             }
             
-            updateAdminUI();
-            alert(`成功添加 ${Math.floor(files.length/2)} 套卡片`);
+            // 保存数据（这会自动更新所有UI）
+            saveAllData();
+            
+            // 显示最近上传
+            document.getElementById('recentUploadSection').style.display = 'block';
+            const recentGrid = document.getElementById('recentUploadGrid');
+            let recentHtml = '';
+            recentCards.forEach(card => {
+                recentHtml += `
+                    <div class="recent-item">
+                        <img src="${card.frontURL}" alt="${card.name}" onclick="flipRecentCard(this)">
+                        <div style="color: #FFD966; font-size:0.7rem;">${card.name}</div>
+                    </div>
+                `;
+            });
+            recentGrid.innerHTML = recentHtml;
+            
+            alert(`✅ 成功添加 ${Math.floor(files.length/2)} 套卡片！`);
         });
+
+        window.flipRecentCard = function(imgElement) {
+            const cardName = imgElement.alt;
+            const card = recentCards.find(c => c.name === cardName) || 
+                        cardLibrary.find(c => c.name === cardName);
+            
+            if (card) {
+                if (imgElement.src === card.frontURL) {
+                    imgElement.src = card.backURL;
+                } else {
+                    imgElement.src = card.frontURL;
+                }
+            }
+        };
 
         function readFileAsDataURL(file) {
             return new Promise(resolve => {
@@ -654,43 +955,87 @@
             if (!code) return alert('请输入券号');
             if (vouchers.has(code)) return alert('券号已存在');
             vouchers.set(code, false);
-            updateVoucherList();
+            saveAllData();  // 保存并更新
             document.getElementById('newVoucher').value = '';
         };
 
-        window.showCardLibrary = function() {
-            const div = document.getElementById('cardLibraryList');
-            let html = '';
-            cardLibrary.forEach(card => {
-                html += `<div style="padding: 5px; border-bottom: 1px solid #5A3A24; color: #FFE68F;">${card.name}</div>`;
+        window.batchAddVouchers = function() {
+            const input = prompt('请输入券号，用逗号分隔（例如：A001,A002,A003）');
+            if (!input) return;
+            
+            const codes = input.split(',').map(c => c.trim()).filter(c => c);
+            let added = 0;
+            
+            codes.forEach(code => {
+                if (!vouchers.has(code)) {
+                    vouchers.set(code, false);
+                    added++;
+                }
             });
-            div.innerHTML = html || '<div style="color: #999;">暂无卡片</div>';
+            
+            if (added > 0) {
+                saveAllData();  // 保存并更新
+            }
+            
+            alert(`✅ 添加 ${added} 个券号`);
         };
 
-        window.showPlayers = function() {
-            const div = document.getElementById('playerList');
-            let html = '';
-            players.forEach((data, id) => {
-                let total = 0;
-                data.cards.forEach(c => total += c);
-                html += `<div style="padding: 5px; border-bottom: 1px solid #FED71A; color: #FFE68F;">🌟 ${id} (${total}张)</div>`;
+        window.clearUsedVouchers = function() {
+            if (!confirm('确定要删除所有已使用的券号吗？')) return;
+            
+            const newVouchers = new Map();
+            vouchers.forEach((used, code) => {
+                if (!used) {
+                    newVouchers.set(code, false);
+                }
             });
-            div.innerHTML = html || '<div style="color: #999;">暂无玩家</div>';
+            
+            vouchers = newVouchers;
+            saveAllData();  // 保存并更新
+            alert('已清除所有已用券号');
         };
 
-        function updateAdminUI() {
-            document.getElementById('cardCount').innerText = cardLibrary.length;
+        // ==================== UI 更新函数 ====================
+        function updateAllUI() {
+            // 更新玩家卡册（当前显示的微博ID）
+            const currentWeibo = document.getElementById('weiboId').value.trim();
+            if (currentWeibo) {
+                updateAlbum(currentWeibo);
+            }
             
-            // 更新预览
-            const preview = document.getElementById('uploadedPreview');
-            let html = '';
-            cardLibrary.slice(-4).forEach(card => {
-                html += `<div class="preview-item"><img src="${card.frontURL}"><span style="font-size:0.7rem; color:#FFD966;">${card.name}</span></div>`;
-            });
-            preview.innerHTML = html;
-            
-            updateVoucherList();
+            // 如果后台开着，更新后台视图
+            if (document.getElementById('adminPanel').style.display === 'block') {
+                updateAllAdminViews();
+            }
         }
+
+        function updateCardLibraryGrid() {
+            const grid = document.getElementById('cardLibraryGrid');
+            let html = '';
+            
+            cardLibrary.forEach((card, index) => {
+                html += `
+                    <div class="card-grid-item" onclick="flipCardInLibrary(this, ${index})">
+                        <div class="card-grid-inner">
+                            <div class="card-grid-front">
+                                <img src="${card.frontURL}" alt="${card.name}">
+                            </div>
+                            <div class="card-grid-back">
+                                <img src="${card.backURL}" alt="${card.name}">
+                            </div>
+                        </div>
+                        <div class="card-name">${card.name}</div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html || '<div style="color: #999; padding: 20px; text-align: center;">暂无卡片，请先上传</div>';
+            document.getElementById('cardCount').innerText = cardLibrary.length;
+        }
+
+        window.flipCardInLibrary = function(element, index) {
+            element.classList.toggle('flipped');
+        };
 
         function updateVoucherList() {
             const list = document.getElementById('voucherList');
@@ -699,6 +1044,44 @@
                 html += `<div class="voucher-item"><span>${code}</span><span style="color:${used ? '#FF6B6B' : '#6BFF6B'}">${used ? '已用' : '可用'}</span></div>`;
             });
             list.innerHTML = html;
+        }
+
+        window.showPlayers = function() {
+            const div = document.getElementById('playerList');
+            let html = '';
+            
+            if (players.size === 0) {
+                div.innerHTML = '<div style="color: #999;">暂无玩家</div>';
+                return;
+            }
+            
+            players.forEach((data, id) => {
+                let total = 0;
+                data.cards.forEach(c => total += c);
+                
+                let cardsDetail = [];
+                data.cards.forEach((count, cardId) => {
+                    const card = cardLibrary.find(c => c.id === cardId);
+                    if (card) {
+                        cardsDetail.push(`${card.name} x${count}`);
+                    }
+                });
+                
+                html += `
+                    <div style="padding: 10px; border-bottom: 1px solid #FED71A;">
+                        <div style="color: #FFE68F; font-weight: bold;">🌟 ${id}</div>
+                        <div style="color: #FFD966; font-size: 0.9rem;">总计: ${total}张</div>
+                        <div style="color: #FFF3BF; font-size: 0.8rem; margin-top: 5px;">${cardsDetail.join('、') || '无卡片'}</div>
+                    </div>
+                `;
+            });
+            div.innerHTML = html;
+        };
+
+        function updateAllAdminViews() {
+            updateCardLibraryGrid();
+            updateVoucherList();
+            showPlayers();
         }
 
         // ==================== 玩家功能 ====================
@@ -710,16 +1093,24 @@
                 return alert('请输入微博ID和抽卡券号！');
             }
             
-            if (!vouchers.has(voucher) || vouchers.get(voucher)) {
-                return alert('无效或已使用的抽卡券！');
+            // 检查券号是否存在
+            if (!vouchers.has(voucher)) {
+                return alert('❌ 无效的抽卡券号！');
             }
             
+            // 检查是否已使用
+            if (vouchers.get(voucher) === true) {
+                return alert('❌ 此抽卡券已使用过！');
+            }
+            
+            // 检查卡库是否有卡
             if (cardLibrary.length === 0) {
-                return alert('卡库为空，请管理员先上传卡片');
+                return alert('❌ 卡库为空，请等待掌柜上传卡片');
             }
             
             // 随机抽卡
-            const card = cardLibrary[Math.floor(Math.random() * cardLibrary.length)];
+            const randomIndex = Math.floor(Math.random() * cardLibrary.length);
+            const card = cardLibrary[randomIndex];
             
             // 标记券已用
             vouchers.set(voucher, true);
@@ -731,7 +1122,10 @@
             const playerCards = players.get(weiboId).cards;
             playerCards.set(card.id, (playerCards.get(card.id) || 0) + 1);
             
-            // 更新展示
+            // 保存数据（这会让所有玩家看到更新）
+            saveAllData();
+            
+            // 更新抽卡展示
             document.getElementById('drawCardFront').src = card.frontURL;
             document.getElementById('drawCardBack').src = card.backURL;
             
@@ -740,17 +1134,17 @@
             drawCard.classList.add('draw-animation');
             setTimeout(() => drawCard.classList.remove('draw-animation'), 600);
             
-            // 更新卡册显示
-            updateAlbum(weiboId);
-            
             // 清空券号
             document.getElementById('voucherInput').value = '';
+            
+            alert(`🎉 恭喜抽到【${card.name}】！已存入卡册`);
         };
 
         function updateAlbum(weiboId) {
             if (!players.has(weiboId)) {
-                document.getElementById('albumGrid').innerHTML = '<div style="color: #666;">暂无卡片</div>';
+                document.getElementById('albumGrid').innerHTML = '<div style="color: #666; grid-column: 1/-1; text-align: center;">暂无卡片，快去抽卡吧~</div>';
                 document.getElementById('albumTotal').innerText = '0';
+                document.getElementById('rewardReminder').style.display = 'none';
                 return;
             }
             
@@ -759,7 +1153,10 @@
             let html = '';
             let total = 0;
             
-            playerCards.forEach((count, cardId) => {
+            // 转换为数组并排序
+            const cardEntries = Array.from(playerCards.entries());
+            
+            cardEntries.forEach(([cardId, count]) => {
                 const card = cardLibrary.find(c => c.id === cardId);
                 if (card) {
                     total += count;
@@ -767,8 +1164,8 @@
                         <div class="album-card" onclick="this.classList.toggle('flipped')">
                             <div class="card-count">${count}</div>
                             <div class="album-card-inner">
-                                <div class="album-front"><img src="${card.frontURL}"></div>
-                                <div class="album-back"><img src="${card.backURL}"></div>
+                                <div class="album-front"><img src="${card.frontURL}" alt="${card.name}"></div>
+                                <div class="album-back"><img src="${card.backURL}" alt="${card.name}"></div>
                             </div>
                             <div style="text-align:center; font-size:0.8rem; margin-top:5px;">${card.name}</div>
                         </div>
@@ -776,18 +1173,89 @@
                 }
             });
             
-            grid.innerHTML = html || '<div style="color: #666;">暂无卡片</div>';
+            grid.innerHTML = html || '<div style="color: #666; grid-column: 1/-1; text-align: center;">暂无卡片</div>';
             document.getElementById('albumTotal').innerText = total;
             document.getElementById('rewardReminder').style.display = total >= 10 ? 'block' : 'none';
         }
 
         // 监听微博ID变化
         document.getElementById('weiboId').addEventListener('input', (e) => {
-            if (e.target.value.trim()) updateAlbum(e.target.value.trim());
+            if (e.target.value.trim()) {
+                updateAlbum(e.target.value.trim());
+            }
         });
 
-        // 初始显示测试玩家
-        setTimeout(() => updateAlbum('测试玩家'), 100);
+        // ==================== 数据备份与恢复 ====================
+        window.exportData = function() {
+            const data = {
+                cards: cardLibrary,
+                vouchers: Object.fromEntries(vouchers),
+                players: Object.fromEntries(
+                    Array.from(players.entries()).map(([id, data]) => [
+                        id,
+                        { cards: Object.fromEntries(data.cards) }
+                    ])
+                ),
+                exportTime: new Date().toLocaleString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `珍光卡铺备份_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            alert('✅ 数据已导出，请妥善保管备份文件');
+        };
+
+        window.importData = function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        
+                        if (data.cards) cardLibrary = data.cards;
+                        if (data.vouchers) vouchers = new Map(Object.entries(data.vouchers));
+                        if (data.players) {
+                            players = new Map();
+                            Object.entries(data.players).forEach(([id, playerData]) => {
+                                players.set(id, {
+                                    cards: new Map(Object.entries(playerData.cards))
+                                });
+                            });
+                        }
+                        
+                        saveAllData();
+                        alert('✅ 数据导入成功！');
+                    } catch (err) {
+                        alert('❌ 导入失败，文件格式错误');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        };
+
+        window.resetAllData = function() {
+            if (!confirm('⚠️ 警告：这将删除所有数据！确定要继续吗？')) return;
+            
+            cardLibrary = [];
+            vouchers = new Map();
+            players = new Map();
+            
+            // 加一个默认测试券
+            vouchers.set('TEST001', false);
+            
+            saveAllData();
+            alert('✅ 所有数据已清空');
+        };
     </script>
 </body>
 </html>
