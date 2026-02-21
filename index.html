@@ -21,6 +21,12 @@
             justify-content: center;
         }
 
+        .app-container {
+            max-width: 1400px;
+            width: 100%;
+            position: relative;
+        }
+
         /* 活动密码锁 */
         .activity-lock {
             position: fixed;
@@ -996,47 +1002,8 @@
             100% { opacity: 0; transform: translateY(-20px); }
         }
 
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 4000;
-        }
-
-        .modal-content {
-            background: #FFF3D6;
-            padding: 30px;
-            border-radius: 50px;
-            border: 5px solid #FED71A;
-            max-width: 500px;
-            width: 90%;
-        }
-
-        .modal-content h3 {
-            color: #2D1A0F;
-            margin-bottom: 20px;
-            font-size: 1.8rem;
-        }
-
-        .modal-content input {
-            width: 100%;
-            padding: 12px 20px;
-            font-size: 1.1rem;
-            border: 2px solid #B1612E;
-            border-radius: 40px;
-            margin-bottom: 20px;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
+        .main-content {
+            display: none;
         }
     </style>
 </head>
@@ -1069,7 +1036,7 @@
     </div>
 
     <!-- 主内容 -->
-    <div class="main-content" id="mainContent" style="display: none;">
+    <div class="main-content" id="mainContent">
         <div class="app-container">
             <div class="user-info" id="userInfo" style="display: none;">
                 👤 <span id="currentUser">未登录</span>
@@ -1081,7 +1048,7 @@
                 <div class="shop-name">珍光集卡铺</div>
             </div>
 
-            <!-- 管理员面板（默认隐藏，登录后显示） -->
+            <!-- 管理员面板 -->
             <div class="admin-panel" id="adminPanel" style="display: none;">
                 <h2>⚙️ 掌柜后台</h2>
                 
@@ -1097,7 +1064,7 @@
                     </div>
                 </div>
 
-                <!-- 1. 批量上传卡面卡背 -->
+                <!-- 批量上传卡面卡背 -->
                 <div class="admin-section">
                     <h3>📤 批量上传卡面+卡背</h3>
                     <div class="upload-area" onclick="document.getElementById('cardSetInput').click()">
@@ -1105,14 +1072,13 @@
                         <p>点击选择多套卡片（请成对选择：卡面1、卡背1、卡面2、卡背2...）</p>
                         <input type="file" id="cardSetInput" accept="image/*" multiple hidden>
                     </div>
-                    
                     <div id="recentUploadSection" class="recent-upload" style="display: none;">
                         <div class="recent-title">✨ 刚刚上传的卡片</div>
                         <div class="recent-grid" id="recentUploadGrid"></div>
                     </div>
                 </div>
 
-                <!-- 2. 卡片库（可批量删除） -->
+                <!-- 卡片库（可批量删除） -->
                 <div class="admin-section">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap;">
                         <h3>📚 卡片库 (<span id="cardCount">0</span>)</h3>
@@ -1125,7 +1091,7 @@
                     <div class="card-grid" id="cardLibraryGrid"></div>
                 </div>
 
-                <!-- 3. 小组管理（带解散功能） -->
+                <!-- 小组管理（带解散功能） -->
                 <div class="admin-section">
                     <h3>👥 小组管理</h3>
                     <div style="display: flex; gap: 5px; margin-bottom: 10px;">
@@ -1136,7 +1102,7 @@
                     <div class="voucher-list" id="groupList"></div>
                 </div>
 
-                <!-- 4. 抽卡券管理 -->
+                <!-- 抽卡券管理 -->
                 <div class="admin-section">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3>🎟️ 抽卡券管理</h3>
@@ -1155,7 +1121,7 @@
                     </div>
                 </div>
 
-                <!-- 5. 换卡券管理（带批量添加） -->
+                <!-- 换卡券管理（带批量添加） -->
                 <div class="admin-section">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3>🔄 换卡券管理</h3>
@@ -1171,14 +1137,14 @@
                     <div class="voucher-list" id="exchangeVoucherList"></div>
                 </div>
 
-                <!-- 6. 玩家管理 -->
+                <!-- 玩家管理 -->
                 <div class="admin-section">
                     <h3>👥 玩家管理</h3>
                     <button class="btn btn-small" onclick="refreshPlayerList()">🔄 刷新玩家列表</button>
                     <div id="playerManageList" style="max-height: 400px; overflow-y: auto; margin-top: 15px;"></div>
                 </div>
 
-                <!-- 7. 数据管理 -->
+                <!-- 数据管理 -->
                 <div class="data-actions">
                     <button class="btn btn-small" onclick="exportData()">💾 导出备份</button>
                     <button class="btn btn-small" onclick="importData()">📂 导入数据</button>
@@ -1221,7 +1187,6 @@
                             <button onclick="drawCard()">抽卡</button>
                         </div>
                     </div>
-
                     <div class="draw-area">
                         <div class="card-container" id="drawCard" onclick="this.classList.toggle('flipped')">
                             <div class="card-inner">
@@ -1242,7 +1207,6 @@
                     <div class="action-panel">
                         <div class="action-title">🎁 选择要赠送的卡片</div>
                         <div class="action-grid" id="giftCardGrid"></div>
-                        
                         <div style="margin-top: 20px;">
                             <div class="input-group" style="margin-bottom: 10px;">
                                 <span style="font-size: 1.5rem;">👤</span>
@@ -1258,16 +1222,13 @@
                     <div class="action-panel">
                         <div class="action-title">🔄 选择要换出的卡片</div>
                         <div class="action-grid" id="exchangeGiveGrid"></div>
-                        
                         <div style="margin-top: 20px;">
                             <div class="input-group" style="margin-bottom: 10px;">
                                 <span style="font-size: 1.5rem;">🎟️</span>
                                 <input type="text" id="exchangeVoucherInput" placeholder="换卡券号">
                             </div>
-                            
                             <div class="action-title" style="margin-top: 20px;">✨ 选择想要换入的卡片</div>
                             <div class="action-grid" id="exchangeReceiveGrid"></div>
-                            
                             <button class="btn btn-success" onclick="exchangeCard()" style="width: 100%; margin-top: 20px;">确认换卡</button>
                         </div>
                     </div>
@@ -1278,7 +1239,6 @@
                     <div class="action-panel">
                         <div class="action-title">📜 我的赠送记录</div>
                         <div class="history-list" id="giftHistoryList"></div>
-                        
                         <div class="action-title" style="margin-top: 20px;">📥 我收到的卡片</div>
                         <div class="history-list" id="receivedHistoryList"></div>
                     </div>
@@ -1300,12 +1260,9 @@
     <script>
         // ==================== 配置信息 ====================
         const CONFIG = {
-            // 使用你的 Gist ID
-            gistCards: '93c0cb1770f8be1d7a26c9b36855bf82',
-            gistVouchers: 'c49eafc17e492b6f959642224181d1fe',
-            gistPlayers: 'a652961e1f81cf541a190d738fbcec42',
             githubUser: 'glow0505',
-            githubToken: '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'
+            githubToken: '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',
+            repo: 'data-backup'
         };
 
         // ==================== 全局变量 ====================
@@ -1320,32 +1277,24 @@
         let adminLoggedIn = false;
         let entryPassword = 'SZN0326';
         
-        // 当前玩家所在小组
         let currentGroup = null;
-
-        // 当前选中的卡片
         let selectedGiftCard = null;
         let selectedExchangeGiveCard = null;
         let selectedExchangeReceiveCard = null;
-        
-        // 批量删除选中的卡片
         let selectedCards = new Set();
 
         // ==================== 初始化 ====================
-        // 检查是否有保存的登录状态
         (function init() {
             const savedAdmin = localStorage.getItem('adminLoggedIn');
             if (savedAdmin === 'true') {
                 adminLoggedIn = true;
             }
-            
             const savedEntryPassword = localStorage.getItem('entryPassword');
             if (savedEntryPassword) {
                 entryPassword = savedEntryPassword;
             }
         })();
 
-        // 保存状态提示
         function showSaveStatus() {
             const status = document.getElementById('saveStatus');
             status.style.display = 'block';
@@ -1354,33 +1303,79 @@
             }, 2000);
         }
 
-        // ==================== jsDelivr + Gist 读取数据 ====================
-        async function loadFromGist(gistId) {
+        // ==================== GitHub Issues 数据库 ====================
+        async function loadFromGitHub() {
             try {
-                const url = `https://gist.githubusercontent.com/${CONFIG.githubUser}/${gistId}/raw`;
-                const response = await fetch(url);
+                const response = await fetch(`https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.repo}/issues?labels=data&state=all&sort=created&direction=desc&per_page=1`, {
+                    headers: {
+                        'Authorization': `token ${CONFIG.githubToken}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                
                 if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                return await response.json();
+                
+                const issues = await response.json();
+                if (issues.length === 0) {
+                    await saveAllData();
+                    return;
+                }
+                
+                const data = JSON.parse(issues[0].body);
+                
+                cardLibrary = data.cards || [];
+                
+                vouchers = new Map(Object.entries(data.vouchers || {}));
+                exchangeVouchers = new Map(Object.entries(data.exchangeVouchers || {}));
+                
+                players = new Map();
+                if (data.players) {
+                    Object.entries(data.players).forEach(([id, playerData]) => {
+                        players.set(id, {
+                            password: playerData.password,
+                            cards: new Map(Object.entries(playerData.cards || {})),
+                            groups: new Set(playerData.groups || []),
+                            giftHistory: playerData.giftHistory || [],
+                            receiveHistory: playerData.receiveHistory || []
+                        });
+                    });
+                }
+                
+                groups = new Map();
+                if (data.groups) {
+                    Object.entries(data.groups).forEach(([name, groupData]) => {
+                        groups.set(name, {
+                            password: groupData.password,
+                            members: new Set(groupData.members || [])
+                        });
+                    });
+                }
+                
+                if (data.entryPassword) {
+                    entryPassword = data.entryPassword;
+                    localStorage.setItem('entryPassword', entryPassword);
+                }
+                
+                updateAllUI();
+                
             } catch (error) {
-                console.error('加载失败:', error);
-                return null;
+                console.error('加载失败，使用缓存:', error);
+                loadFromCache();
             }
         }
 
-        // ==================== 保存数据到 Gist（通过 Issues）====================
         async function saveAllData() {
             try {
-                // 准备数据
                 const data = {
                     cards: cardLibrary,
                     vouchers: Object.fromEntries(vouchers),
                     exchangeVouchers: Object.fromEntries(exchangeVouchers),
                     players: {},
                     groups: {},
-                    entryPassword: entryPassword
+                    entryPassword: entryPassword,
+                    timestamp: Date.now()
                 };
                 
-                // 处理玩家数据
                 players.forEach((playerData, weiboId) => {
                     data.players[weiboId] = {
                         password: playerData.password,
@@ -1391,7 +1386,6 @@
                     };
                 });
                 
-                // 处理小组数据
                 groups.forEach((groupData, groupName) => {
                     data.groups[groupName] = {
                         password: groupData.password,
@@ -1399,26 +1393,46 @@
                     };
                 });
                 
-                // 保存到 localStorage 作为备份
-                localStorage.setItem('backup_data', JSON.stringify(data));
+                const response = await fetch(`https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.repo}/issues`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `token ${CONFIG.githubToken}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/vnd.github.v3+json'
+                    },
+                    body: JSON.stringify({
+                        title: `数据备份 ${new Date().toLocaleString()}`,
+                        body: JSON.stringify(data, null, 2),
+                        labels: ['data']
+                    })
+                });
                 
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                
+                localStorage.setItem('cache_data', JSON.stringify(data));
                 showSaveStatus();
                 return true;
             } catch (error) {
                 console.error('保存失败:', error);
+                const cacheData = {
+                    cards: cardLibrary,
+                    vouchers: Object.fromEntries(vouchers),
+                    exchangeVouchers: Object.fromEntries(exchangeVouchers),
+                    players: Object.fromEntries(players),
+                    groups: Object.fromEntries(groups),
+                    entryPassword: entryPassword
+                };
+                localStorage.setItem('cache_data', JSON.stringify(cacheData));
                 return false;
             }
         }
 
-        // ==================== 从 localStorage 加载备份 ====================
-        function loadFromBackup() {
+        function loadFromCache() {
             try {
-                const backup = localStorage.getItem('backup_data');
-                if (backup) {
-                    const data = JSON.parse(backup);
-                    
+                const cache = localStorage.getItem('cache_data');
+                if (cache) {
+                    const data = JSON.parse(cache);
                     cardLibrary = data.cards || [];
-                    
                     vouchers = new Map(Object.entries(data.vouchers || {}));
                     exchangeVouchers = new Map(Object.entries(data.exchangeVouchers || {}));
                     
@@ -1449,69 +1463,11 @@
                         entryPassword = data.entryPassword;
                         localStorage.setItem('entryPassword', entryPassword);
                     }
-                    
-                    return true;
                 }
             } catch (error) {
-                console.error('加载备份失败:', error);
+                console.error('加载缓存失败:', error);
             }
-            return false;
-        }
-
-        // ==================== 初始化加载 ====================
-        async function loadAllData() {
-            // 先尝试从 Gist 加载
-            try {
-                const [cardsData, vouchersData, playersData] = await Promise.all([
-                    loadFromGist(CONFIG.gistCards),
-                    loadFromGist(CONFIG.gistVouchers),
-                    loadFromGist(CONFIG.gistPlayers)
-                ]);
-                
-                if (cardsData) cardLibrary = cardsData;
-                if (vouchersData) {
-                    vouchers = new Map(Object.entries(vouchersData.draw || {}));
-                    exchangeVouchers = new Map(Object.entries(vouchersData.exchange || {}));
-                }
-                
-                if (playersData) {
-                    players = new Map();
-                    Object.entries(playersData).forEach(([id, data]) => {
-                        players.set(id, {
-                            password: data.password,
-                            cards: new Map(Object.entries(data.cards || {})),
-                            groups: new Set(data.groups || []),
-                            giftHistory: data.giftHistory || [],
-                            receiveHistory: data.receiveHistory || []
-                        });
-                    });
-                }
-                
-                // 从玩家数据重建小组
-                groups = new Map();
-                players.forEach((player, weiboId) => {
-                    if (player.groups) {
-                        player.groups.forEach(groupName => {
-                            if (!groups.has(groupName)) {
-                                groups.set(groupName, { password: '', members: new Set() });
-                            }
-                            groups.get(groupName).members.add(weiboId);
-                        });
-                    }
-                });
-                
-            } catch (error) {
-                console.error('Gist 加载失败，使用备份:', error);
-                loadFromBackup();
-            }
-            
             updateAllUI();
-            
-            // 如果管理员已登录，显示后台
-            if (adminLoggedIn) {
-                document.getElementById('adminPanel').style.display = 'block';
-                updateAllAdminViews();
-            }
         }
 
         // ==================== 活动密码验证 ====================
@@ -1521,7 +1477,7 @@
                 document.getElementById('activityLock').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
                 document.getElementById('accountModal').style.display = 'flex';
-                loadAllData();
+                loadFromGitHub();
             } else {
                 document.getElementById('activityPassword').value = '';
             }
@@ -1663,13 +1619,9 @@
             document.getElementById('exchangeTab').style.display = tab === 'exchange' ? 'block' : 'none';
             document.getElementById('historyTab').style.display = tab === 'history' ? 'block' : 'none';
             
-            if (tab === 'gift') {
-                updateGiftGrid();
-            } else if (tab === 'exchange') {
-                updateExchangeGrids();
-            } else if (tab === 'history') {
-                updateHistoryTabs();
-            }
+            if (tab === 'gift') updateGiftGrid();
+            else if (tab === 'exchange') updateExchangeGrids();
+            else if (tab === 'history') updateHistoryTabs();
         };
 
         // ==================== 小组功能 ====================
@@ -1691,20 +1643,17 @@
         window.dissolveGroup = function(groupName) {
             if (!confirm(`确定要解散小组【${groupName}】吗？所有成员将被移出。`)) return;
             
-            // 从所有玩家中移除该小组
             players.forEach((player, weiboId) => {
                 if (player.groups && player.groups.has(groupName)) {
                     player.groups.delete(groupName);
                 }
             });
             
-            // 删除小组
             groups.delete(groupName);
             
             saveAllData();
             updateGroupList();
             
-            // 如果当前选中的是被解散的小组，清空显示
             if (currentGroup === groupName) {
                 currentGroup = null;
                 document.getElementById('groupMembersSection').style.display = 'none';
@@ -1741,7 +1690,6 @@
 
         window.showGroupMembers = function() {
             if (!currentGroup) return;
-            
             const group = groups.get(currentGroup);
             if (!group) return;
             
@@ -1752,13 +1700,7 @@
             members.forEach(memberId => {
                 const player = players.get(memberId);
                 const totalCards = player ? Array.from(player.cards.values()).reduce((a, b) => a + b, 0) : 0;
-                
-                html += `
-                    <div class="member-card" onclick="viewMemberAlbum('${memberId}')">
-                        <div class="weibo">🌟 ${memberId}</div>
-                        <div class="card-count">📚 ${totalCards}张</div>
-                    </div>
-                `;
+                html += `<div class="member-card" onclick="viewMemberAlbum('${memberId}')"><div class="weibo">🌟 ${memberId}</div><div class="card-count">📚 ${totalCards}张</div></div>`;
             });
             
             grid.innerHTML = html;
@@ -1774,14 +1716,7 @@
             const list = document.getElementById('groupList');
             let html = '';
             groups.forEach((data, name) => {
-                html += `
-                    <div class="voucher-item">
-                        <span>👥 ${name} (${data.members.size}人)</span>
-                        <div class="voucher-actions">
-                            <button class="voucher-delete" onclick="dissolveGroup('${name}')">🗑️</button>
-                        </div>
-                    </div>
-                `;
+                html += `<div class="voucher-item"><span>👥 ${name} (${data.members.size}人)</span><div class="voucher-actions"><button class="voucher-delete" onclick="dissolveGroup('${name}')">🗑️</button></div></div>`;
             });
             list.innerHTML = html || '<div style="color: #999; padding: 10px;">暂无小组</div>';
         }
@@ -1798,16 +1733,14 @@
 
         window.switchGroup = function(groupName) {
             if (!currentUser) return alert('请先登录');
-            
             const group = groups.get(groupName);
             if (!group.members.has(currentUser)) return alert('你不是该小组成员');
-            
             currentGroup = groupName;
             document.getElementById('currentGroupInfo').innerHTML = `当前小组: <strong style="color: #FED71A;">${groupName}</strong>`;
             showGroupMembers();
         };
 
-        // ==================== 卡片管理（批量删除）====================
+        // ==================== 卡片管理 ====================
         window.toggleSelectCard = function(cardId, event) {
             event.stopPropagation();
             if (selectedCards.has(cardId)) {
@@ -1820,23 +1753,15 @@
         };
 
         window.selectAllCards = function() {
-            cardLibrary.forEach(card => {
-                selectedCards.add(card.id);
-            });
+            cardLibrary.forEach(card => selectedCards.add(card.id));
             updateCardLibraryGrid();
         };
 
         window.deleteSelectedCards = function() {
-            if (selectedCards.size === 0) {
-                alert('请先选择要删除的卡片');
-                return;
-            }
-            
+            if (selectedCards.size === 0) return alert('请先选择要删除的卡片');
             if (!confirm(`确定要删除选中的 ${selectedCards.size} 张卡片吗？`)) return;
-            
             cardLibrary = cardLibrary.filter(c => !selectedCards.has(c.id));
             selectedCards.clear();
-            
             saveAllData();
             refreshCardLibrary();
         };
@@ -1845,58 +1770,41 @@
         window.batchAddExchangeVouchers = function() {
             const input = prompt('请输入换卡券号，用逗号分隔（例如：E001,E002,E003）');
             if (!input) return;
-            
             const codes = input.split(/[,，\s]+/).map(c => c.trim()).filter(c => c.length > 0);
-            
-            if (codes.length === 0) {
-                alert('没有有效的券号');
-                return;
-            }
+            if (codes.length === 0) return alert('没有有效的券号');
             
             let added = 0;
-            let skipped = 0;
-            
             codes.forEach(code => {
                 if (!exchangeVouchers.has(code)) {
                     exchangeVouchers.set(code, false);
                     added++;
-                } else {
-                    skipped++;
                 }
             });
-            
             if (added > 0) {
                 saveAllData();
                 updateExchangeVoucherList();
             }
-            
-            alert(`✅ 添加 ${added} 个换卡券号${skipped > 0 ? '，' + skipped + '个已存在' : ''}`);
+            alert(`✅ 添加 ${added} 个换卡券号`);
         };
 
         // ==================== 管理员功能 ====================
         document.getElementById('cardSetInput').addEventListener('change', async (e) => {
             const files = Array.from(e.target.files);
-            if (files.length < 2) {
-                alert('请至少选择两张图片');
-                return;
-            }
+            if (files.length < 2) return alert('请至少选择两张图片');
             
             recentCards = [];
             files.sort((a, b) => a.name.localeCompare(b.name));
             
             for (let i = 0; i < files.length; i += 2) {
                 if (i + 1 >= files.length) break;
-                
                 const frontURL = URL.createObjectURL(files[i]);
                 const backURL = URL.createObjectURL(files[i + 1]);
-                
                 const newCard = {
                     id: 'card_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
                     frontURL: frontURL,
                     backURL: backURL,
                     name: files[i].name.split('.')[0]
                 };
-                
                 cardLibrary.push(newCard);
                 recentCards.push(newCard);
             }
@@ -1907,18 +1815,11 @@
             const recentGrid = document.getElementById('recentUploadGrid');
             let recentHtml = '';
             recentCards.forEach(card => {
-                recentHtml += `
-                    <div class="recent-item">
-                        <img src="${card.frontURL}" alt="${card.name}" onclick="flipRecentCard(this)">
-                        <div style="color: #FFD966; font-size:0.7rem;">${card.name}</div>
-                    </div>
-                `;
+                recentHtml += `<div class="recent-item"><img src="${card.frontURL}" alt="${card.name}" onclick="flipRecentCard(this)"><div style="color: #FFD966; font-size:0.7rem;">${card.name}</div></div>`;
             });
             recentGrid.innerHTML = recentHtml;
-            
             refreshCardLibrary();
-            
-            alert(`✅ 成功添加 ${Math.floor(files.length/2)} 套卡片！\n注意：图片仅保存在当前浏览器，刷新后需要重新上传。`);
+            alert(`✅ 成功添加 ${Math.floor(files.length/2)} 套卡片！`);
         });
 
         window.refreshCardLibrary = function() {
@@ -1926,22 +1827,13 @@
             document.getElementById('cardCount').innerText = cardLibrary.length;
         };
 
-        window.refreshVouchers = function() {
-            updateVoucherList();
-        };
-
-        window.refreshExchangeVouchers = function() {
-            updateExchangeVoucherList();
-        };
-
-        window.refreshPlayerList = function() {
-            updatePlayerManageList();
-        };
+        window.refreshVouchers = function() { updateVoucherList(); };
+        window.refreshExchangeVouchers = function() { updateExchangeVoucherList(); };
+        window.refreshPlayerList = function() { updatePlayerManageList(); };
 
         window.deleteCard = function(cardId, event) {
             event.stopPropagation();
             if (!confirm('确定要删除这张卡片吗？')) return;
-            
             cardLibrary = cardLibrary.filter(c => c.id !== cardId);
             selectedCards.delete(cardId);
             saveAllData();
@@ -1951,9 +1843,7 @@
         window.flipRecentCard = function(imgElement) {
             const cardName = imgElement.alt;
             const card = recentCards.find(c => c.name === cardName) || cardLibrary.find(c => c.name === cardName);
-            if (card) {
-                imgElement.src = imgElement.src === card.frontURL ? card.backURL : card.frontURL;
-            }
+            if (card) imgElement.src = imgElement.src === card.frontURL ? card.backURL : card.frontURL;
         };
 
         window.addVoucher = function() {
@@ -1969,7 +1859,6 @@
         window.deleteVoucher = function(code, event) {
             event.stopPropagation();
             if (!confirm(`确定要删除抽卡券【${code}】吗？`)) return;
-            
             vouchers.delete(code);
             saveAllData();
             updateVoucherList();
@@ -1988,7 +1877,6 @@
         window.deleteExchangeVoucher = function(code, event) {
             event.stopPropagation();
             if (!confirm(`确定要删除换卡券【${code}】吗？`)) return;
-            
             exchangeVouchers.delete(code);
             saveAllData();
             updateExchangeVoucherList();
@@ -1997,41 +1885,27 @@
         window.batchAddVouchers = function() {
             const input = prompt('请输入抽卡券号，用逗号分隔（例如：A001,A002,A003）');
             if (!input) return;
-            
             const codes = input.split(/[,，\s]+/).map(c => c.trim()).filter(c => c.length > 0);
-            
-            if (codes.length === 0) {
-                alert('没有有效的券号');
-                return;
-            }
+            if (codes.length === 0) return alert('没有有效的券号');
             
             let added = 0;
-            let skipped = 0;
-            
             codes.forEach(code => {
                 if (!vouchers.has(code)) {
                     vouchers.set(code, false);
                     added++;
-                } else {
-                    skipped++;
                 }
             });
-            
             if (added > 0) {
                 saveAllData();
                 updateVoucherList();
             }
-            
-            alert(`✅ 添加 ${added} 个抽卡券号${skipped > 0 ? '，' + skipped + '个已存在' : ''}`);
+            alert(`✅ 添加 ${added} 个抽卡券号`);
         };
 
         window.clearUsedVouchers = function() {
             if (!confirm('确定删除所有已使用的抽卡券号吗？')) return;
-            
             const newVouchers = new Map();
-            vouchers.forEach((used, code) => { 
-                if (!used) newVouchers.set(code, false); 
-            });
+            vouchers.forEach((used, code) => { if (!used) newVouchers.set(code, false); });
             vouchers = newVouchers;
             saveAllData();
             updateVoucherList();
@@ -2041,10 +1915,8 @@
         window.changePlayerPassword = function(weiboId) {
             const newPassword = prompt(`请输入 ${weiboId} 的新密码：`);
             if (!newPassword) return;
-            
             const player = players.get(weiboId);
             if (!player) return alert('玩家不存在');
-            
             player.password = newPassword;
             saveAllData();
             alert(`✅ 已修改 ${weiboId} 的密码`);
@@ -2052,14 +1924,10 @@
         };
 
         window.deletePlayerAccount = function(weiboId) {
-            if (!confirm(`⚠️ 确定要删除玩家 ${weiboId} 的账号吗？此操作不可恢复！`)) return;
-            
+            if (!confirm(`⚠️ 确定要删除玩家 ${weiboId} 的账号吗？`)) return;
             groups.forEach((group, groupName) => {
-                if (group.members.has(weiboId)) {
-                    group.members.delete(weiboId);
-                }
+                if (group.members.has(weiboId)) group.members.delete(weiboId);
             });
-            
             players.delete(weiboId);
             saveAllData();
             alert(`✅ 已删除玩家 ${weiboId}`);
@@ -2068,10 +1936,8 @@
 
         window.clearPlayerAlbum = function(weiboId) {
             if (!confirm(`⚠️ 确定要清空 ${weiboId} 的所有卡片吗？`)) return;
-            
             const player = players.get(weiboId);
             if (!player) return alert('玩家不存在');
-            
             player.cards.clear();
             saveAllData();
             alert(`✅ 已清空 ${weiboId} 的卡册`);
@@ -2080,17 +1946,10 @@
 
         window.kickFromGroup = function(weiboId, groupName) {
             if (!confirm(`确定要将 ${weiboId} 踢出小组 ${groupName} 吗？`)) return;
-            
             const group = groups.get(groupName);
-            if (group && group.members.has(weiboId)) {
-                group.members.delete(weiboId);
-            }
-            
+            if (group && group.members.has(weiboId)) group.members.delete(weiboId);
             const player = players.get(weiboId);
-            if (player && player.groups) {
-                player.groups.delete(groupName);
-            }
-            
+            if (player && player.groups) player.groups.delete(groupName);
             saveAllData();
             alert(`✅ 已将 ${weiboId} 踢出 ${groupName}`);
             refreshPlayerList();
@@ -2099,7 +1958,6 @@
         window.viewPlayerGiftHistory = function(weiboId) {
             const player = players.get(weiboId);
             if (!player) return;
-            
             let historyStr = '📤 赠送记录：\n';
             if (player.giftHistory && player.giftHistory.length > 0) {
                 player.giftHistory.forEach(h => {
@@ -2108,7 +1966,6 @@
             } else {
                 historyStr += '无\n';
             }
-            
             historyStr += '\n📥 收到记录：\n';
             if (player.receiveHistory && player.receiveHistory.length > 0) {
                 player.receiveHistory.forEach(h => {
@@ -2117,39 +1974,31 @@
             } else {
                 historyStr += '无';
             }
-            
             alert(historyStr);
         };
 
         function updatePlayerManageList() {
             const div = document.getElementById('playerManageList');
             let html = '';
-            
             if (players.size === 0) {
                 div.innerHTML = '<div style="color: #999; text-align: center; padding: 20px;">暂无玩家</div>';
                 return;
             }
             
             const playerArray = Array.from(players.entries()).sort((a, b) => a[0].localeCompare(b[0]));
-            
             playerArray.forEach(([id, data]) => {
                 let totalCards = 0;
                 data.cards.forEach(c => totalCards += c);
-                
                 let cardsDetail = [];
                 data.cards.forEach((count, cardId) => {
                     const card = cardLibrary.find(c => c.id === cardId);
                     if (card) cardsDetail.push(`${card.name} x${count}`);
                 });
-                
                 let groupsList = data.groups ? Array.from(data.groups).join(', ') : '无';
                 
                 html += `
                     <div class="player-manage-item">
-                        <div class="player-manage-header">
-                            <span>🌟 ${id}</span>
-                            <span>密码: ${data.password}</span>
-                        </div>
+                        <div class="player-manage-header"><span>🌟 ${id}</span><span>密码: ${data.password}</span></div>
                         <div class="player-manage-detail">
                             <div>📚 卡片总数: ${totalCards}张</div>
                             <div>👥 所属小组: ${groupsList}</div>
@@ -2162,16 +2011,13 @@
                             <button class="btn btn-small btn-warning" onclick="clearPlayerAlbum('${id}')">📖 清空卡册</button>
                             <button class="btn btn-small btn-info" onclick="viewPlayerGiftHistory('${id}')">📜 历史</button>
                 `;
-                
                 if (data.groups && data.groups.size > 0) {
                     data.groups.forEach(groupName => {
                         html += `<button class="btn btn-small btn-danger" onclick="kickFromGroup('${id}', '${groupName}')">👥 踢出【${groupName}】</button>`;
                     });
                 }
-                
                 html += `</div></div>`;
             });
-            
             div.innerHTML = html;
         }
 
@@ -2185,18 +2031,15 @@
                 updateGroupDisplay();
                 updateHistoryTabs();
             }
-            
             if (document.getElementById('adminPanel').style.display === 'block') {
                 updateAllAdminViews();
             }
-            
             document.getElementById('currentEntryPassword').innerText = entryPassword;
         }
 
         function updateCardLibraryGrid() {
             const grid = document.getElementById('cardLibraryGrid');
             let html = '';
-            
             cardLibrary.forEach(card => {
                 const isSelected = selectedCards.has(card.id) ? 'checked' : '';
                 html += `
@@ -2211,7 +2054,6 @@
                     </div>
                 `;
             });
-            
             grid.innerHTML = html || '<div style="color: #999; padding: 20px; text-align: center;">暂无卡片，请先上传</div>';
             document.getElementById('cardCount').innerText = cardLibrary.length;
         }
@@ -2223,21 +2065,12 @@
         function updateVoucherList() {
             const list = document.getElementById('voucherList');
             let html = '';
-            
             if (vouchers.size === 0) {
                 list.innerHTML = '<div style="color: #999; padding: 10px; text-align: center;">暂无抽卡券</div>';
                 return;
             }
-            
             vouchers.forEach((used, code) => {
-                html += `
-                    <div class="voucher-item">
-                        <span>${code} <span style="color:${used ? '#FF6B6B' : '#6BFF6B'}">(${used ? '已用' : '可用'})</span></span>
-                        <div class="voucher-actions">
-                            <button class="voucher-delete" onclick="deleteVoucher('${code}', event)">×</button>
-                        </div>
-                    </div>
-                `;
+                html += `<div class="voucher-item"><span>${code} <span style="color:${used ? '#FF6B6B' : '#6BFF6B'}">(${used ? '已用' : '可用'})</span></span><div class="voucher-actions"><button class="voucher-delete" onclick="deleteVoucher('${code}', event)">×</button></div></div>`;
             });
             list.innerHTML = html;
         }
@@ -2245,21 +2078,12 @@
         function updateExchangeVoucherList() {
             const list = document.getElementById('exchangeVoucherList');
             let html = '';
-            
             if (exchangeVouchers.size === 0) {
                 list.innerHTML = '<div style="color: #999; padding: 10px; text-align: center;">暂无换卡券</div>';
                 return;
             }
-            
             exchangeVouchers.forEach((used, code) => {
-                html += `
-                    <div class="voucher-item">
-                        <span>🔄 ${code} <span style="color:${used ? '#FF6B6B' : '#6BFF6B'}">(${used ? '已用' : '可用'})</span></span>
-                        <div class="voucher-actions">
-                            <button class="voucher-delete" onclick="deleteExchangeVoucher('${code}', event)">×</button>
-                        </div>
-                    </div>
-                `;
+                html += `<div class="voucher-item"><span>🔄 ${code} <span style="color:${used ? '#FF6B6B' : '#6BFF6B'}">(${used ? '已用' : '可用'})</span></span><div class="voucher-actions"><button class="voucher-delete" onclick="deleteExchangeVoucher('${code}', event)">×</button></div></div>`;
             });
             list.innerHTML = html;
         }
@@ -2275,7 +2099,6 @@
         // ==================== 玩家功能 ====================
         window.drawCard = function() {
             if (!currentUser) return alert('请先登录');
-            
             const voucher = document.getElementById('voucherInput').value.trim();
             
             if (!voucher) return alert('请输入抽卡券号！');
@@ -2283,7 +2106,6 @@
             if (cardLibrary.length === 0) return alert('卡库为空！');
             
             const card = cardLibrary[Math.floor(Math.random() * cardLibrary.length)];
-            
             vouchers.set(voucher, true);
             
             const player = players.get(currentUser);
@@ -2320,7 +2142,6 @@
                 const card = cardLibrary.find(c => c.id === cardId);
                 if (card) {
                     total += count;
-                    
                     const receiveHistory = players.get(weiboId).receiveHistory || [];
                     const lastReceive = receiveHistory.filter(h => h.card === card.name).pop();
                     
@@ -2356,15 +2177,9 @@
             playerCards.forEach((count, cardId) => {
                 const card = cardLibrary.find(c => c.id === cardId);
                 if (card && count > 0) {
-                    html += `
-                        <div class="action-card" onclick="selectGiftCard('${cardId}')">
-                            <img src="${card.frontURL}" alt="${card.name}">
-                            <div class="name">${card.name} x${count}</div>
-                        </div>
-                    `;
+                    html += `<div class="action-card" onclick="selectGiftCard('${cardId}')"><img src="${card.frontURL}" alt="${card.name}"><div class="name">${card.name} x${count}</div></div>`;
                 }
             });
-            
             grid.innerHTML = html || '<div style="color: #999;">暂无可赠送的卡片</div>';
         }
 
@@ -2382,10 +2197,7 @@
             if (!toId) return alert('请输入对方微博ID');
             if (currentUser === toId) return alert('不能赠送给自己');
             if (!selectedGiftCard) return alert('请选择要赠送的卡片');
-            
-            if (!players.has(toId)) {
-                return alert('❌ 对方微博ID不存在，请确认后再试');
-            }
+            if (!players.has(toId)) return alert('❌ 对方微博ID不存在');
             
             const fromPlayer = players.get(currentUser);
             const card = cardLibrary.find(c => c.id === selectedGiftCard);
@@ -2397,9 +2209,7 @@
             if (!confirm(`确定要将【${card.name}】赠送给 ${toId} 吗？`)) return;
             
             fromPlayer.cards.set(selectedGiftCard, fromPlayer.cards.get(selectedGiftCard) - 1);
-            if (fromPlayer.cards.get(selectedGiftCard) === 0) {
-                fromPlayer.cards.delete(selectedGiftCard);
-            }
+            if (fromPlayer.cards.get(selectedGiftCard) === 0) fromPlayer.cards.delete(selectedGiftCard);
             
             const toPlayer = players.get(toId);
             toPlayer.cards.set(selectedGiftCard, (toPlayer.cards.get(selectedGiftCard) || 0) + 1);
@@ -2408,20 +2218,10 @@
             const timeStr = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
             
             if (!fromPlayer.giftHistory) fromPlayer.giftHistory = [];
-            fromPlayer.giftHistory.push({
-                time: timeStr,
-                to: toId,
-                card: card.name,
-                cardId: selectedGiftCard
-            });
+            fromPlayer.giftHistory.push({ time: timeStr, to: toId, card: card.name, cardId: selectedGiftCard });
             
             if (!toPlayer.receiveHistory) toPlayer.receiveHistory = [];
-            toPlayer.receiveHistory.push({
-                time: timeStr,
-                from: currentUser,
-                card: card.name,
-                cardId: selectedGiftCard
-            });
+            toPlayer.receiveHistory.push({ time: timeStr, from: currentUser, card: card.name, cardId: selectedGiftCard });
             
             await saveAllData();
             
@@ -2430,25 +2230,18 @@
             updateGiftGrid();
             updateAlbum(currentUser);
             updateHistoryTabs();
-            
             alert(`✅ 成功将【${card.name}】赠送给 ${toId}！`);
         };
 
         function updateHistoryTabs() {
             if (!currentUser) return;
-            
             const player = players.get(currentUser);
             
             const giftList = document.getElementById('giftHistoryList');
             let giftHtml = '';
             if (player.giftHistory && player.giftHistory.length > 0) {
                 player.giftHistory.slice().reverse().forEach(h => {
-                    giftHtml += `
-                        <div class="history-item">
-                            <span class="gift">🎁 赠送给 ${h.to}</span> 【${h.card}】
-                            <span class="time">${h.time}</span>
-                        </div>
-                    `;
+                    giftHtml += `<div class="history-item"><span class="gift">🎁 赠送给 ${h.to}</span> 【${h.card}】<span class="time">${h.time}</span></div>`;
                 });
             } else {
                 giftHtml = '<div style="color: #999; padding: 10px;">暂无赠送记录</div>';
@@ -2459,12 +2252,7 @@
             let receiveHtml = '';
             if (player.receiveHistory && player.receiveHistory.length > 0) {
                 player.receiveHistory.slice().reverse().forEach(h => {
-                    receiveHtml += `
-                        <div class="history-item">
-                            <span class="gift">📥 来自 ${h.from}</span> 【${h.card}】
-                            <span class="time">${h.time}</span>
-                        </div>
-                    `;
+                    receiveHtml += `<div class="history-item"><span class="gift">📥 来自 ${h.from}</span> 【${h.card}】<span class="time">${h.time}</span></div>`;
                 });
             } else {
                 receiveHtml = '<div style="color: #999; padding: 10px;">暂无收到记录</div>';
@@ -2482,12 +2270,7 @@
             playerCards.forEach((count, cardId) => {
                 const card = cardLibrary.find(c => c.id === cardId);
                 if (card && count > 0) {
-                    html += `
-                        <div class="action-card" onclick="selectExchangeGiveCard('${cardId}')">
-                            <img src="${card.frontURL}" alt="${card.name}">
-                            <div class="name">${card.name} x${count}</div>
-                        </div>
-                    `;
+                    html += `<div class="action-card" onclick="selectExchangeGiveCard('${cardId}')"><img src="${card.frontURL}" alt="${card.name}"><div class="name">${card.name} x${count}</div></div>`;
                 }
             });
             giveGrid.innerHTML = html || '<div style="color: #999;">暂无卡片</div>';
@@ -2496,12 +2279,7 @@
             html = '';
             cardLibrary.forEach(card => {
                 if (!players.get(currentUser).cards.has(card.id)) {
-                    html += `
-                        <div class="action-card" onclick="selectExchangeReceiveCard('${card.id}')">
-                            <img src="${card.frontURL}" alt="${card.name}">
-                            <div class="name">${card.name}</div>
-                        </div>
-                    `;
+                    html += `<div class="action-card" onclick="selectExchangeReceiveCard('${card.id}')"><img src="${card.frontURL}" alt="${card.name}"><div class="name">${card.name}</div></div>`;
                 }
             });
             receiveGrid.innerHTML = html || '<div style="color: #999;">暂无未拥有的卡片</div>';
@@ -2525,9 +2303,7 @@
             const voucher = document.getElementById('exchangeVoucherInput').value.trim();
             
             if (!voucher) return alert('请输入换卡券号');
-            if (!exchangeVouchers.has(voucher) || exchangeVouchers.get(voucher)) {
-                return alert('无效或已使用的换卡券！');
-            }
+            if (!exchangeVouchers.has(voucher) || exchangeVouchers.get(voucher)) return alert('无效或已使用的换卡券！');
             if (!selectedExchangeGiveCard) return alert('请选择要换出的卡片');
             if (!selectedExchangeReceiveCard) return alert('请选择要换入的卡片');
             
@@ -2539,9 +2315,7 @@
             exchangeVouchers.set(voucher, true);
             
             player.cards.set(selectedExchangeGiveCard, player.cards.get(selectedExchangeGiveCard) - 1);
-            if (player.cards.get(selectedExchangeGiveCard) === 0) {
-                player.cards.delete(selectedExchangeGiveCard);
-            }
+            if (player.cards.get(selectedExchangeGiveCard) === 0) player.cards.delete(selectedExchangeGiveCard);
             
             player.cards.set(selectedExchangeReceiveCard, (player.cards.get(selectedExchangeReceiveCard) || 0) + 1);
             
@@ -2552,7 +2326,6 @@
             document.getElementById('exchangeVoucherInput').value = '';
             updateExchangeGrids();
             updateAlbum(currentUser);
-            
             alert('✅ 换卡成功！');
         };
 
@@ -2562,18 +2335,8 @@
                 cards: cardLibrary,
                 vouchers: Object.fromEntries(vouchers),
                 exchangeVouchers: Object.fromEntries(exchangeVouchers),
-                groups: Object.fromEntries(
-                    Array.from(groups.entries()).map(([name, data]) => [name, { password: data.password, members: Array.from(data.members) }])
-                ),
-                players: Object.fromEntries(
-                    Array.from(players.entries()).map(([id, data]) => [id, { 
-                        password: data.password,
-                        cards: Object.fromEntries(data.cards),
-                        groups: Array.from(data.groups || []),
-                        giftHistory: data.giftHistory || [],
-                        receiveHistory: data.receiveHistory || []
-                    }])
-                ),
+                groups: Object.fromEntries(Array.from(groups.entries()).map(([name, data]) => [name, { password: data.password, members: Array.from(data.members) }])),
+                players: Object.fromEntries(Array.from(players.entries()).map(([id, data]) => [id, { password: data.password, cards: Object.fromEntries(data.cards), groups: Array.from(data.groups || []), giftHistory: data.giftHistory || [], receiveHistory: data.receiveHistory || [] }])),
                 entryPassword: entryPassword
             };
             
@@ -2605,10 +2368,7 @@
                         if (data.groups) {
                             groups = new Map();
                             Object.entries(data.groups).forEach(([name, groupData]) => {
-                                groups.set(name, {
-                                    password: groupData.password,
-                                    members: new Set(groupData.members)
-                                });
+                                groups.set(name, { password: groupData.password, members: new Set(groupData.members) });
                             });
                         }
                         
