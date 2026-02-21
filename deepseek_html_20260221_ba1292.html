@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>珍光卡铺 · 抽抽乐</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'PingFang SC', Roboto, 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #FED71A;  /* 明亮背景 完全符合要求 */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 1.8rem 1rem;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* 醒目的店招 */
+        .shop-header {
+            text-align: center;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.2));
+        }
+
+        .shop-name {
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            color: #2D1A0F;             /* 深巧克力色，对比鲜明 */
+            text-shadow: 4px 4px 0 #FFB347, 8px 8px 0 rgba(0,0,0,0.15);
+            background: linear-gradient(145deg, #FFE68F, #FED71A);
+            display: inline-block;
+            padding: 0.2rem 3rem 0.2rem 4rem;
+            border-radius: 120px 30px 120px 30px;
+            transform: rotate(-1deg);
+            border: 4px solid #b1612e;
+            box-shadow: 0 20px 30px -8px #b05617;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .shop-sub {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #3F280E;
+            background: rgba(255,255,200,0.7);
+            backdrop-filter: blur(4px);
+            display: inline-block;
+            padding: 0.4rem 3rem;
+            border-radius: 60px;
+            letter-spacing: 2px;
+            border: 2px solid #FEF9D7;
+        }
+
+        /* 管理员区 */
+        .admin-panel {
+            background: rgba(45, 26, 15, 0.85);
+            backdrop-filter: blur(8px);
+            border-radius: 2.5rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 20px 35px -8px #3f2a10;
+            border: 2px solid #fec458;
+        }
+
+        .admin-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #FFEEC2;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 0 #7a3f1a;
+        }
+
+        .admin-title span {
+            background: #f5b134;
+            color: #2a180c;
+            padding: 0.3rem 1.4rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            border: 2px solid #ffd58c;
+        }
+
+        .upload-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-end;
+        }
+
+        .upload-item {
+            flex: 1 1 250px;
+        }
+
+        .upload-item label {
+            display: block;
+            font-weight: 600;
+            color: #FFDFA0;
+            margin-bottom: 0.6rem;
+            letter-spacing: 0.5px;
+        }
+
+        .upload-box {
+            background: #fcf2dd;
+            border-radius: 30px;
+            padding: 0.8rem 1.5rem;
+            border: 3px dashed #e09d52;
+            transition: 0.2s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #5f3f20;
+            font-weight: 500;
+        }
+
+        .upload-box:hover {
+            border-color: #fec821;
+            background: #fff5e6;
+            transform: scale(1.02);
+        }
+
+        .upload-box input {
+            display: none;
+        }
+
+        .preview-thumb {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 16px;
+            background: #f0dccc;
+            border: 2px solid #e09d52;
+        }
+
+        .card-db-badge {
+            margin-top: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: #faeacb;
+            color: #3f280e;
+            border-radius: 40px;
+            padding: 0.6rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 2px solid #f5b853;
+        }
+
+        .chip button {
+            background: #cd7f3b;
+            border: none;
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid #b34e0e;
+            box-shadow: 0 3px 0 #6d3210;
+        }
+
+        .chip button:active {
+            transform: translateY(3px);
+            box-shadow: none;
+        }
+
+        /* 玩家抽卡区 */
+        .player-section {
+            background: #ffffffd4;
+            backdrop-filter: blur(10px);
+            border-radius: 3rem;
+            padding: 2rem 2.2rem;
+            box-shadow: 0 25px 40px -15px #af5f1a, inset 0 0 0 2px #FFF8DD;
+            border: 3px solid #FED71A;
+        }
+
+        .play-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            background: #FEF3D6;
+            padding: 0.8rem 2rem;
+            border-radius: 100px;
+            border: 2px solid #fdb338;
+        }
+
+        .weibo-input {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            background: #ffffff;
+            padding: 0.2rem 1rem 0.2rem 1.8rem;
+            border-radius: 60px;
+            border: 2px solid #fec85c;
+        }
+
+        .weibo-input input {
+            border: none;
+            background: transparent;
+            padding: 0.8rem 0;
+            font-size: 1.1rem;
+            width: 230px;
+            outline: none;
+            color: #3e2c1c;
+            font-weight: 500;
+        }
+
+        .weibo-input input::placeholder {
+            color: #ca9f6e;
+        }
+
+        .voucher-panel {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #ffffff;
+            padding: 0.2rem 1.2rem 0.2rem 2rem;
+            border-radius: 60px;
+            border: 2px solid #fcaa36;
+        }
+
+        .voucher-panel input {
+            width: 110px;
+            background: #FFF2D7;
+            border: 1px solid #d68f44;
+            border-radius: 40px;
+            padding: 0.6rem 1rem;
+            font-weight: 600;
+            text-align: center;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .draw-btn {
+            background: #d57217;
+            border: none;
+            color: white;
+            padding: 0.9rem 2.8rem;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #884d1c, 0 10px 25px -5px #d45d00;
+            transition: 0.1s linear;
+            border: 2px solid #ffc107;
+        }
+
+        .draw-btn:active {
+            transform: translateY(6px);
+            box-shadow: 0 2px 0 #884d1c, 0 8px 18px -5px #d45d00;
+        }
+
+        .draw-btn:disabled {
+            opacity: 0.4;
+            transform: translateY(0);
+            box-shadow: 0 5px 0 #884d1c;
+        }
+
+        /* 卡片展示 */
+        .card-showcase {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .card-physical {
+            width: 240px;
+            height: 330px;
+            perspective: 1500px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+            border-radius: 28px;
+            box-shadow: 0 30px 35px -12px #62371e;
+        }
+
+        .card-physical.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 28px;
+            overflow: hidden;
+            background: #ebcfb5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid #FFFBE6;
+            box-shadow: inset 0 -4px 10px rgba(80,40,10,0.3);
+        }
+
+        .card-front img, .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-front {
+            transform: rotateY(0deg);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* 卡册 */
+        .album-section {
+            background: #FED16C;
+            border-radius: 3rem 3rem 2rem 2rem;
+            padding: 2rem 2rem 1.8rem;
+            border: 4px solid #FFFAD3;
+            box-shadow: inset 0 -6px 0 #b36d29;
+        }
+
+        .album-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: #2b1b0c;
+            font-weight: 800;
+            margin-bottom: 1.8rem;
+            font-size: 1.7rem;
+            text-shadow: 2px 2px 0 #FEFB9C;
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .album-card {
+            background: #FFF5E1;
+            border-radius: 28px;
+            padding: 15px;
+            box-shadow: 0 9px 0 #b16929;
+            transition: 0.15s;
+            border: 3px solid #ffd58c;
+        }
+
+        .album-card img {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            border-radius: 20px;
+            background: #cfb8a5;
+            border: 4px solid #fbd097;
+        }
+
+        .album-id {
+            font-size: 0.9rem;
+            color: #62371e;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 700;
+            background: #FED71A;
+            padding: 0.3rem;
+            border-radius: 30px;
+        }
+
+        .status-msg {
+            color: #2d1a0f;
+            font-weight: 600;
+            background: #FFF2B5;
+            padding: 0.8rem 2rem;
+            border-radius: 40px;
+            border: 2px solid #FED71A;
+            margin-top: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .small-note {
+            color: #422f1d;
+            font-size: 0.95rem;
+            background: #ffefb0;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+        }
+
+        hr {
+            margin: 1.5rem 0 0.5rem;
+            border: 2px solid #fed16c;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+
+    <!-- 醒目店招 · 珍光卡铺 -->
+    <div class="shop-header">
+        <div class="shop-name">✨ 珍光卡铺 ✨</div>
+        <div class="shop-sub">抽抽乐 · 集卡册</div>
+    </div>
+
+    <!-- 管理员区 -->
+    <div class="admin-panel">
+        <div class="admin-title">
+            ⚙️ 掌柜的后台 <span>仅店主可见</span>
+        </div>
+        <div class="upload-grid">
+            <div class="upload-item">
+                <label>🎴 上传卡面 (卡图)</label>
+                <div class="upload-box" onclick="document.getElementById('cardFrontInput').click()">
+                    <img id="frontPreview" class="preview-thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23dbb594'%3E%3Crect width='100' height='100' /%3E%3Ctext x='20' y='55' fill='%23946644' font-size='14'%3E卡面%3C/text%3E%3C/svg%3E" alt="卡面预览">
+                    <span>点击上传 或拖拽</span>
+                    <input type="file" id="cardFrontInput" accept="image/*" hidden>
+                </div>
+            </div>
+            <div class="upload-item">
+                <label>🃏 上传卡背 (背面纹样)</label>
+                <div class="upload-box" onclick="document.getElementById('cardBackInput').click()">
+                    <img id="backPreview" class="preview-thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23dbb594'%3E%3Crect width='100' height='100' /%3E%3Ctext x='20' y='55' fill='%23946644' font-size='14'%3E卡背%3C/text%3E%3C/svg%3E" alt="卡背预览">
+                    <span>点击上传 或拖拽</span>
+                    <input type="file" id="cardBackInput" accept="image/*" hidden>
+                </div>
+            </div>
+            <div class="upload-item">
+                <label>📦 小卡库更新 (多张图片)</label>
+                <div class="upload-box" onclick="document.getElementById('cardLibraryInput').click()">
+                    <span>📤 批量添加卡片图片</span>
+                    <input type="file" id="cardLibraryInput" accept="image/*" multiple hidden>
+                </div>
+                <div class="card-db-badge">
+                    <div class="chip">🗂️ 库存小卡: <span id="cardCountDisplay">0</span> 张</div>
+                    <div class="chip"><button id="resetLibraryBtn">✨ 重置示例卡库</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 玩家抽卡区 -->
+    <div class="player-section">
+        <div class="play-header">
+            <div class="weibo-input">
+                <span style="font-size:1.6rem;">🌟</span>
+                <input type="text" id="weiboId" placeholder="输入微博ID" value="珍光小粉丝">
+            </div>
+            <div class="voucher-panel">
+                <span style="font-weight:700;">🎟️ 券号</span>
+                <input type="text" id="voucherCode" placeholder="如 G888" value="A0001">
+                <button class="draw-btn" id="drawBtn">抽 1 次</button>
+            </div>
+        </div>
+
+        <!-- 展示区 可翻转 -->
+        <div class="card-showcase">
+            <div class="card-physical" id="physicalCard">
+                <div class="card-inner">
+                    <div class="card-front" id="cardFrontImg">
+                        <img id="frontDynamic" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280' fill='%23ebcfb5'%3E%3Crect width='200' height='280' /%3E%3Ctext x='30' y='140' fill='%238b644b' font-size='22'%3E✨ 卡面 ✨%3C/text%3E%3C/svg%3E" alt="卡面">
+                    </div>
+                    <div class="card-back" id="cardBackImg">
+                        <img id="backDynamic" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280' fill='%23d2b196'%3E%3Crect width='200' height='280' /%3E%3Ctext x='45' y='140' fill='%235f4230' font-size='22'%3E♠ 卡背 ♠%3C/text%3E%3C/svg%3E" alt="卡背">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p style="text-align:center; font-weight:600; color:#6d421d;">👇 点击卡片翻转查看卡背 👇</p>
+
+        <!-- 虚拟卡册 -->
+        <div class="album-section">
+            <div class="album-header">
+                <span style="font-size:2.5rem;">📖</span> 我的珍光卡册 <span id="albumCount" class="small-note">(0)</span>
+            </div>
+            <div class="album-grid" id="albumGrid">
+                <!-- 动态渲染 -->
+            </div>
+        </div>
+
+        <!-- 状态信息 -->
+        <div class="status-msg" id="statusMsg">✨ 输入微博ID和抽卡券，开始抽卡吧！</div>
+        <div class="small-note" style="margin-top:12px;">* 每张抽卡券仅可使用一次 (演示数据内存存储)</div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- 存储 ----------
+        let cardLibrary = [];                     // 小卡库 { id, dataURL }
+
+        // 卡面/卡背 (默认)
+        let currentFrontURL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280' fill='%23ebcfb5'%3E%3Crect width='200' height='280' /%3E%3Ctext x='30' y='140' fill='%238b644b' font-size='22'%3E✨ 卡面 ✨%3C/text%3E%3C/svg%3E";
+        let currentBackURL = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280' fill='%23d2b196'%3E%3Crect width='200' height='280' /%3E%3Ctext x='45' y='140' fill='%235f4230' font-size='22'%3E♠ 卡背 ♠%3C/text%3E%3C/svg%3E";
+
+        // 抽卡券池 (唯一编号 + 是否使用)
+        let vouchers = new Map([
+            ['A0001', false],
+            ['A0002', false],
+            ['G888',  false],
+            ['C999',  false],
+            ['P1001', false],
+            ['M356',  false],
+            ['TEST',  false],
+        ]);
+
+        // 我的卡册
+        let myAlbum = [];
+
+        // DOM 元素
+        const frontDynamicImg = document.getElementById('frontDynamic');
+        const backDynamicImg = document.getElementById('backDynamic');
+        const frontPreview = document.getElementById('frontPreview');
+        const backPreview = document.getElementById('backPreview');
+        const cardFrontInput = document.getElementById('cardFrontInput');
+        const cardBackInput = document.getElementById('cardBackInput');
+        const libraryInput = document.getElementById('cardLibraryInput');
+        const cardCountSpan = document.getElementById('cardCountDisplay');
+        const albumGrid = document.getElementById('albumGrid');
+        const albumCountSpan = document.getElementById('albumCount');
+        const statusMsgDiv = document.getElementById('statusMsg');
+        const drawBtn = document.getElementById('drawBtn');
+        const weiboIdInput = document.getElementById('weiboId');
+        const voucherCodeInput = document.getElementById('voucherCode');
+        const physicalCard = document.getElementById('physicalCard');
+        const resetLibBtn = document.getElementById('resetLibraryBtn');
+
+        // 辅助: 读取文件
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function updateCardCounter() {
+            cardCountSpan.innerText = cardLibrary.length;
+        }
+
+        // 渲染卡册
+        function renderAlbum() {
+            if (myAlbum.length === 0) {
+                albumGrid.innerHTML = '<div style="color:#7b5a38; padding:2rem; text-align:center; background:#FFF3C9; border-radius:50px;">✨ 暂无小卡，快去抽一张吧 ✨</div>';
+            } else {
+                let html = '';
+                myAlbum.forEach((card) => {
+                    html += `<div class="album-card">
+                        <img src="${card.dataURL}" alt="小卡" loading="lazy">
+                        <div class="album-id"># ${card.id}</div>
+                    </div>`;
+                });
+                albumGrid.innerHTML = html;
+            }
+            albumCountSpan.innerText = `(${myAlbum.length})`;
+        }
+
+        // 翻转至正面
+        function flipToFront() {
+            physicalCard.classList.remove('flipped');
+        }
+
+        // 点击卡片翻转
+        physicalCard.addEventListener('click', () => {
+            physicalCard.classList.toggle('flipped');
+        });
+
+        // 卡面上传
+        cardFrontInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const dataURL = await readFileAsDataURL(file);
+            currentFrontURL = dataURL;
+            frontDynamicImg.src = dataURL;
+            frontPreview.src = dataURL;
+            flipToFront();
+        });
+
+        // 卡背上传
+        cardBackInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+            const dataURL = await readFileAsDataURL(file);
+            currentBackURL = dataURL;
+            backDynamicImg.src = dataURL;
+            backPreview.src = dataURL;
+        });
+
+        // 小卡库批量上传
+        libraryInput.addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files);
+            if (files.length === 0) return;
+
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    try {
+                        const dataURL = await readFileAsDataURL(file);
+                        const id = '珍光' + Date.now().toString().slice(-6) + Math.random().toString(36).substring(2,5);
+                        cardLibrary.push({ id, dataURL, name: file.name });
+                    } catch (err) {}
+                }
+            }
+            updateCardCounter();
+            statusMsgDiv.innerText = `✅ 已添加 ${files.length} 张，库存现共 ${cardLibrary.length} 张`;
+            libraryInput.value = '';
+        });
+
+        // 重置卡库 (精美示例卡)
+        resetLibBtn.addEventListener('click', () => {
+            cardLibrary = [];
+            const names = ['珍光1号', '光之卡', '幸运星', '珍光SR', '闪卡R', '铺子限定', '小光', '珍珍', '光光'];
+            for (let i = 1; i <= 9; i++) {
+                const hue = (i * 37) % 360;
+                const svg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='hsl(${hue}, 75%25, 70%25)'/%3E%3Ccircle cx='100' cy='120' r='55' fill='%23FED71A' /%3E%3Ctext x='55' y='150' fill='%233d280f' font-size='30' font-weight='bold'%3E${i}%3C/text%3E%3Ctext x='20' y='210' fill='%23502e0e' font-size='22'%3E${names[i-1]}%3C/text%3E%3C/svg%3E`;
+                cardLibrary.push({ id: `J-${i}`, dataURL: svg });
+            }
+            updateCardCounter();
+            statusMsgDiv.innerText = `✨ 重置了示例卡库，现有 9 张珍光小卡`;
+        });
+
+        // 随机抽取
+        function drawRandomCard() {
+            if (cardLibrary.length === 0) return null;
+            const rand = Math.floor(Math.random() * cardLibrary.length);
+            return cardLibrary[rand];
+        }
+
+        // 抽卡按钮逻辑
+        drawBtn.addEventListener('click', () => {
+            const weibo = weiboIdInput.value.trim();
+            if (!weibo) {
+                statusMsgDiv.innerText = '❌ 请输入微博ID';
+                return;
+            }
+
+            const voucher = voucherCodeInput.value.trim();
+            if (!voucher) {
+                statusMsgDiv.innerText = '❌ 请输入抽卡券号';
+                return;
+            }
+
+            if (!vouchers.has(voucher)) {
+                statusMsgDiv.innerText = `❌ 券号 ${voucher} 不存在`;
+                return;
+            }
+            if (vouchers.get(voucher) === true) {
+                statusMsgDiv.innerText = `❌ 券号 ${voucher} 已使用过了`;
+                return;
+            }
+
+            if (cardLibrary.length === 0) {
+                statusMsgDiv.innerText = '❌ 卡库空空，店主正在补货';
+                return;
+            }
+
+            const drawn = drawRandomCard();
+            if (!drawn) return;
+
+            // 标记使用
+            vouchers.set(voucher, true);
+
+            // 加入卡册 (复制一份)
+            myAlbum.push({ ...drawn, drawTime: Date.now(), weibo });
+
+            // 更新展示卡片为抽到的卡面
+            frontDynamicImg.src = drawn.dataURL;
+            backDynamicImg.src = currentBackURL;   // 使用最新卡背
+            flipToFront();
+
+            renderAlbum();
+            statusMsgDiv.innerText = `🎉 ${weibo} 使用券【${voucher}】抽到了 ${drawn.id} ！已存入卡册。`;
+            voucherCodeInput.value = '';
+        });
+
+        // 初版初始化：展示默认图和示例小卡库
+        (function init() {
+            // 加入几个好看示例卡
+            for (let i = 1; i <= 6; i++) {
+                const svg = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 280'%3E%3Crect width='200' height='280' fill='%23f7cf9f'/%3E%3Ctext x='35' y='150' fill='%23945d36' font-size='30' font-weight='bold'%3E🌟 ${i} 🌟%3C/text%3E%3C/svg%3E`;
+                cardLibrary.push({ id: `SP-${i}`, dataURL: svg });
+            }
+            updateCardCounter();
+
+            frontDynamicImg.src = currentFrontURL;
+            backDynamicImg.src = currentBackURL;
+            frontPreview.src = currentFrontURL;
+            backPreview.src = currentBackURL;
+            renderAlbum();
+        })();
+    })();
+</script>
+</body>
+</html>
