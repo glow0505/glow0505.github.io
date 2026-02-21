@@ -85,6 +85,80 @@
             border-bottom-width: 0;
         }
 
+        /* 登录/注册模态框 */
+        .login-account-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+            backdrop-filter: blur(5px);
+        }
+
+        .account-box {
+            background: #FFF3D6;
+            padding: 40px;
+            border-radius: 60px;
+            border: 8px solid #FED71A;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.4);
+            text-align: center;
+            width: 400px;
+        }
+
+        .account-box h2 {
+            color: #2D1A0F;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .account-box input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            border: 3px solid #B1612E;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .account-box button {
+            background: #B1612E;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            border-bottom: 5px solid #6D3210;
+            transition: 0.1s;
+            margin: 10px;
+            width: 120px;
+        }
+
+        .account-box button:active {
+            transform: translateY(5px);
+            border-bottom-width: 0;
+        }
+
+        .account-box .switch-link {
+            margin-top: 20px;
+            color: #B1612E;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .account-box .error-msg {
+            color: #FF4444;
+            margin-top: 10px;
+            min-height: 20px;
+        }
+
         /* 店招 */
         .shop-header {
             text-align: center;
@@ -105,6 +179,18 @@
             border: 5px solid #B1612E;
             letter-spacing: 4px;
             transform: rotate(-1deg);
+        }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 70px;
+            background: rgba(45, 26, 15, 0.8);
+            color: #FED71A;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            border: 2px solid #FFB347;
         }
 
         .admin-entry {
@@ -273,6 +359,12 @@
             border-bottom-color: #1f6a9a;
         }
 
+        .btn-warning {
+            background: #FFA500;
+            color: white;
+            border-bottom-color: #B45F06;
+        }
+
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -405,6 +497,21 @@
             border-radius: 50px;
             padding: 30px;
             border: 3px solid #FED71A;
+        }
+
+        .logout-btn {
+            background: #999;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: #666;
         }
 
         /* 小组区域 */
@@ -799,6 +906,36 @@
             color: #FFE68F;
         }
 
+        .player-manage-item {
+            background: #2D1A0F;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #5A3A24;
+        }
+
+        .player-manage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #FED71A;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .player-manage-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .player-manage-detail {
+            color: #FFE68F;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
         .data-actions {
             display: flex;
             gap: 10px;
@@ -836,9 +973,28 @@
         </div>
     </div>
 
+    <!-- 账号登录/注册模态框 -->
+    <div class="login-account-modal" id="accountModal" style="display: none;">
+        <div class="account-box">
+            <h2 id="accountModalTitle">🔐 登录</h2>
+            <input type="text" id="accountWeibo" placeholder="微博ID">
+            <input type="password" id="accountPassword" placeholder="密码">
+            <div>
+                <button onclick="handleLogin()" id="loginBtn">登录</button>
+                <button onclick="handleRegister()" id="registerBtn">注册</button>
+            </div>
+            <div class="switch-link" id="switchLink" onclick="switchMode()">没有账号？点我注册</div>
+            <div class="error-msg" id="accountError"></div>
+        </div>
+    </div>
+
     <!-- 主内容 -->
     <div class="main-content" id="mainContent">
         <div class="app-container">
+            <div class="user-info" id="userInfo" style="display: none;">
+                👤 <span id="currentUser">未登录</span>
+                <button class="logout-btn" onclick="logout()">退出</button>
+            </div>
             <div class="admin-entry" onclick="showLoginModal()">⚙️</div>
 
             <div class="login-modal" id="loginModal">
@@ -893,10 +1049,13 @@
                     <div class="voucher-list" id="groupList"></div>
                 </div>
 
-                <!-- 4. 抽卡券管理 -->
+                <!-- 4. 抽卡券管理（带刷新） -->
                 <div class="admin-section">
-                    <h3>🎟️ 抽卡券管理</h3>
-                    <div style="display: flex; gap: 5px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>🎟️ 抽卡券管理</h3>
+                        <button class="btn btn-small btn-refresh" onclick="refreshVouchers()">🔄 刷新</button>
+                    </div>
+                    <div style="display: flex; gap: 5px; margin-top: 10px;">
                         <input type="text" id="newVoucher" placeholder="新券号" style="flex: 1; padding: 8px; border-radius: 20px;">
                         <button class="btn btn-small" onclick="addVoucher()">添加</button>
                     </div>
@@ -909,21 +1068,24 @@
                     </div>
                 </div>
 
-                <!-- 5. 换卡券管理 -->
+                <!-- 5. 换卡券管理（带刷新） -->
                 <div class="admin-section">
-                    <h3>🔄 换卡券管理</h3>
-                    <div style="display: flex; gap: 5px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>🔄 换卡券管理</h3>
+                        <button class="btn btn-small btn-refresh" onclick="refreshExchangeVouchers()">🔄 刷新</button>
+                    </div>
+                    <div style="display: flex; gap: 5px; margin-top: 10px;">
                         <input type="text" id="newExchangeVoucher" placeholder="换卡券号" style="flex: 1; padding: 8px; border-radius: 20px;">
                         <button class="btn btn-small" onclick="addExchangeVoucher()">添加</button>
                     </div>
                     <div class="voucher-list" id="exchangeVoucherList"></div>
                 </div>
 
-                <!-- 6. 玩家列表 -->
+                <!-- 6. 玩家管理（带操作按钮） -->
                 <div class="admin-section">
-                    <h3>👥 玩家列表</h3>
-                    <button class="btn btn-small" onclick="showPlayers()">刷新玩家列表</button>
-                    <div id="playerList" style="max-height: 200px; overflow-y: auto; margin-top: 10px; background: #2D1A0F; padding: 10px; border-radius: 10px;"></div>
+                    <h3>👥 玩家管理</h3>
+                    <button class="btn btn-small" onclick="refreshPlayerList()">🔄 刷新玩家列表</button>
+                    <div id="playerManageList" style="max-height: 400px; overflow-y: auto; margin-top: 15px;"></div>
                 </div>
 
                 <!-- 7. 数据管理 -->
@@ -936,8 +1098,8 @@
                 <button class="btn" onclick="hideAdminPanel()">关闭后台</button>
             </div>
 
-            <!-- 玩家区域 -->
-            <div class="player-area">
+            <!-- 玩家区域（登录后才能看到） -->
+            <div class="player-area" id="playerArea" style="display: none;">
                 <!-- 小组加入区域 -->
                 <div class="group-section">
                     <div class="group-header">
@@ -964,10 +1126,6 @@
                 <!-- 抽卡界面 -->
                 <div id="drawTab">
                     <div class="player-header">
-                        <div class="input-group">
-                            <span style="font-size: 1.5rem;">🌟</span>
-                            <input type="text" id="weiboId" placeholder="微博ID" value="玩家">
-                        </div>
                         <div class="input-group">
                             <span style="font-size: 1.5rem;">🎟️</span>
                             <input type="text" id="voucherInput" placeholder="卡券号">
@@ -1045,8 +1203,10 @@
         let vouchers = new Map();           // 抽卡券 code -> used
         let exchangeVouchers = new Map();   // 换卡券 code -> used
         let groups = new Map();             // 小组 groupName -> { password, members: Set }
-        let players = new Map();            // 玩家数据 weiboId -> { cards: Map(cardId -> count), groups: Set }
+        let players = new Map();            // 玩家数据 weiboId -> { password, cards: Map(cardId -> count), groups: Set }
         let recentCards = [];
+        let currentUser = null;             // 当前登录的微博ID
+        let isLoginMode = true;              // 登录/注册模式切换
         
         // 当前玩家所在小组
         let currentGroup = null;
@@ -1062,6 +1222,8 @@
             if (pwd === 'SZN0326') {
                 document.getElementById('activityLock').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
+                // 显示账号登录框
+                document.getElementById('accountModal').style.display = 'flex';
                 loadData();
             } else {
                 document.getElementById('activityPassword').value = '';
@@ -1073,6 +1235,95 @@
                 checkActivityPassword();
             }
         });
+
+        // ==================== 账号系统 ====================
+        window.switchMode = function() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('accountModalTitle').innerText = isLoginMode ? '🔐 登录' : '📝 注册';
+            document.getElementById('switchLink').innerText = isLoginMode ? '没有账号？点我注册' : '已有账号？点我登录';
+            document.getElementById('accountError').innerText = '';
+        };
+
+        window.handleLogin = function() {
+            const weibo = document.getElementById('accountWeibo').value.trim();
+            const pwd = document.getElementById('accountPassword').value.trim();
+            
+            if (!weibo || !pwd) {
+                document.getElementById('accountError').innerText = '请输入微博ID和密码';
+                return;
+            }
+            
+            if (!players.has(weibo)) {
+                document.getElementById('accountError').innerText = '账号不存在';
+                return;
+            }
+            
+            const player = players.get(weibo);
+            if (player.password !== pwd) {
+                document.getElementById('accountError').innerText = '密码错误';
+                return;
+            }
+            
+            // 登录成功
+            currentUser = weibo;
+            document.getElementById('accountModal').style.display = 'none';
+            document.getElementById('playerArea').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('currentUser').innerText = weibo;
+            
+            // 更新UI
+            document.getElementById('albumTitle').innerText = '我的卡册';
+            updateAlbum(weibo);
+            updateGiftGrid();
+            updateExchangeGrids();
+            updateGroupDisplay();
+        };
+
+        window.handleRegister = function() {
+            const weibo = document.getElementById('accountWeibo').value.trim();
+            const pwd = document.getElementById('accountPassword').value.trim();
+            
+            if (!weibo || !pwd) {
+                document.getElementById('accountError').innerText = '请输入微博ID和密码';
+                return;
+            }
+            
+            if (players.has(weibo)) {
+                document.getElementById('accountError').innerText = '账号已存在';
+                return;
+            }
+            
+            // 注册新账号
+            players.set(weibo, { 
+                password: pwd,
+                cards: new Map(), 
+                groups: new Set() 
+            });
+            saveAllData();
+            
+            // 自动登录
+            currentUser = weibo;
+            document.getElementById('accountModal').style.display = 'none';
+            document.getElementById('playerArea').style.display = 'block';
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('currentUser').innerText = weibo;
+            
+            document.getElementById('albumTitle').innerText = '我的卡册';
+            updateAlbum(weibo);
+            updateGiftGrid();
+            updateExchangeGrids();
+            updateGroupDisplay();
+        };
+
+        window.logout = function() {
+            currentUser = null;
+            document.getElementById('playerArea').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('accountModal').style.display = 'flex';
+            document.getElementById('accountWeibo').value = '';
+            document.getElementById('accountPassword').value = '';
+            document.getElementById('accountError').innerText = '';
+        };
 
         // ==================== 标签切换 ====================
         window.switchTab = function(tab) {
@@ -1120,13 +1371,13 @@
                     players = new Map();
                     Object.entries(playersObj).forEach(([id, data]) => {
                         players.set(id, { 
+                            password: data.password || '',
                             cards: new Map(Object.entries(data.cards)),
                             groups: new Set(data.groups || [])
                         });
                     });
                 }
 
-                updateAllUI();
                 updateGroupDisplay();
             } catch (e) {
                 console.error('加载数据失败', e);
@@ -1151,14 +1402,13 @@
                 const playersObj = {};
                 players.forEach((data, id) => {
                     playersObj[id] = { 
+                        password: data.password,
                         cards: Object.fromEntries(data.cards),
                         groups: Array.from(data.groups || [])
                     };
                 });
                 localStorage.setItem('zhenguang_players', JSON.stringify(playersObj));
 
-                // 更新所有UI
-                updateAllUI();
                 if (document.getElementById('adminPanel').style.display === 'block') {
                     updateAllAdminViews();
                 }
@@ -1209,22 +1459,23 @@
         };
 
         window.joinGroup = function() {
-            const weiboId = document.getElementById('weiboId').value.trim();
+            if (!currentUser) return alert('请先登录');
+            
             const groupName = document.getElementById('joinGroupName').value.trim();
             const password = document.getElementById('joinGroupPassword').value.trim();
             
-            if (!weiboId) return alert('请先输入微博ID');
             if (!groupName || !password) return alert('请输入小组名称和密码');
             
             const group = groups.get(groupName);
             if (!group || group.password !== password) return alert('小组名称或密码错误');
             
             // 添加玩家到小组
-            group.members.add(weiboId);
+            group.members.add(currentUser);
             
             // 记录玩家加入的小组
-            if (!players.has(weiboId)) players.set(weiboId, { cards: new Map(), groups: new Set() });
-            players.get(weiboId).groups.add(groupName);
+            const player = players.get(currentUser);
+            if (!player.groups) player.groups = new Set();
+            player.groups.add(groupName);
             
             currentGroup = groupName;
             saveAllData();
@@ -1278,6 +1529,7 @@
 
         function updateGroupDisplay() {
             const display = document.getElementById('groupListDisplay');
+            if (!display) return;
             let html = '';
             groups.forEach((data, name) => {
                 html += `<div class="group-tag" onclick="switchGroup('${name}')">👥 ${name} <span class="member-count">${data.members.size}</span></div>`;
@@ -1286,11 +1538,10 @@
         }
 
         window.switchGroup = function(groupName) {
-            const weiboId = document.getElementById('weiboId').value.trim();
-            if (!weiboId) return alert('请先输入微博ID');
+            if (!currentUser) return alert('请先登录');
             
             const group = groups.get(groupName);
-            if (!group.members.has(weiboId)) return alert('你不是该小组成员');
+            if (!group.members.has(currentUser)) return alert('你不是该小组成员');
             
             currentGroup = groupName;
             document.getElementById('currentGroupInfo').innerHTML = `当前小组: <strong style="color: #FED71A;">${groupName}</strong>`;
@@ -1354,6 +1605,21 @@
             document.getElementById('cardCount').innerText = cardLibrary.length;
         };
 
+        // 刷新抽卡券
+        window.refreshVouchers = function() {
+            updateVoucherList();
+        };
+
+        // 刷新换卡券
+        window.refreshExchangeVouchers = function() {
+            updateExchangeVoucherList();
+        };
+
+        // 刷新玩家列表
+        window.refreshPlayerList = function() {
+            updatePlayerManageList();
+        };
+
         window.deleteCard = function(cardId, event) {
             event.stopPropagation();
             if (!confirm('确定要删除这张卡片吗？玩家已拥有的卡片不会消失，但新玩家抽不到了。')) return;
@@ -1386,6 +1652,7 @@
             vouchers.set(code, false);
             saveAllData();
             document.getElementById('newVoucher').value = '';
+            updateVoucherList();
         };
 
         window.addExchangeVoucher = function() {
@@ -1395,10 +1662,11 @@
             exchangeVouchers.set(code, false);
             saveAllData();
             document.getElementById('newExchangeVoucher').value = '';
+            updateExchangeVoucherList();
         };
 
         window.batchAddVouchers = function() {
-            const input = prompt('请输入券号，用逗号分隔');
+            const input = prompt('请输入券号，用逗号分隔（例如：A001,A002,A003）');
             if (!input) return;
             
             const codes = input.split(',').map(c => c.trim()).filter(c => c);
@@ -1409,7 +1677,10 @@
                     added++;
                 }
             });
-            if (added > 0) saveAllData();
+            if (added > 0) {
+                saveAllData();
+                updateVoucherList();
+            }
             alert(`✅ 添加 ${added} 个券号`);
         };
 
@@ -1419,17 +1690,131 @@
             vouchers.forEach((used, code) => { if (!used) newVouchers.set(code, false); });
             vouchers = newVouchers;
             saveAllData();
+            updateVoucherList();
         };
 
-        // ==================== UI 更新 ====================
-        function updateAllUI() {
-            const currentWeibo = document.getElementById('weiboId').value.trim();
-            if (currentWeibo) {
-                document.getElementById('albumTitle').innerText = '我的卡册';
-                updateAlbum(currentWeibo);
+        // ==================== 玩家管理功能 ====================
+        
+        // 修改玩家密码
+        window.changePlayerPassword = function(weiboId) {
+            const newPassword = prompt(`请输入 ${weiboId} 的新密码：`);
+            if (!newPassword) return;
+            
+            const player = players.get(weiboId);
+            if (!player) return alert('玩家不存在');
+            
+            player.password = newPassword;
+            saveAllData();
+            alert(`✅ 已修改 ${weiboId} 的密码`);
+            refreshPlayerList();
+        };
+
+        // 删除玩家账号
+        window.deletePlayerAccount = function(weiboId) {
+            if (!confirm(`⚠️ 确定要删除玩家 ${weiboId} 的账号吗？此操作不可恢复！`)) return;
+            
+            // 从所有小组中移除该玩家
+            groups.forEach((group, groupName) => {
+                if (group.members.has(weiboId)) {
+                    group.members.delete(weiboId);
+                }
+            });
+            
+            // 删除玩家
+            players.delete(weiboId);
+            saveAllData();
+            alert(`✅ 已删除玩家 ${weiboId}`);
+            refreshPlayerList();
+        };
+
+        // 清空玩家卡册
+        window.clearPlayerAlbum = function(weiboId) {
+            if (!confirm(`⚠️ 确定要清空 ${weiboId} 的所有卡片吗？`)) return;
+            
+            const player = players.get(weiboId);
+            if (!player) return alert('玩家不存在');
+            
+            player.cards.clear();
+            saveAllData();
+            alert(`✅ 已清空 ${weiboId} 的卡册`);
+            refreshPlayerList();
+        };
+
+        // 将玩家踢出小组
+        window.kickFromGroup = function(weiboId, groupName) {
+            if (!confirm(`确定要将 ${weiboId} 踢出小组 ${groupName} 吗？`)) return;
+            
+            const group = groups.get(groupName);
+            if (group && group.members.has(weiboId)) {
+                group.members.delete(weiboId);
             }
+            
+            const player = players.get(weiboId);
+            if (player && player.groups) {
+                player.groups.delete(groupName);
+            }
+            
+            saveAllData();
+            alert(`✅ 已将 ${weiboId} 踢出 ${groupName}`);
+            refreshPlayerList();
+        };
+
+        // 更新玩家管理列表
+        function updatePlayerManageList() {
+            const div = document.getElementById('playerManageList');
+            let html = '';
+            
+            if (players.size === 0) {
+                div.innerHTML = '<div style="color: #999; text-align: center; padding: 20px;">暂无玩家</div>';
+                return;
+            }
+            
+            // 转换为数组并排序
+            const playerArray = Array.from(players.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+            
+            playerArray.forEach(([id, data]) => {
+                let totalCards = 0;
+                data.cards.forEach(c => totalCards += c);
+                
+                let cardsDetail = [];
+                data.cards.forEach((count, cardId) => {
+                    const card = cardLibrary.find(c => c.id === cardId);
+                    if (card) cardsDetail.push(`${card.name} x${count}`);
+                });
+                
+                let groupsList = data.groups ? Array.from(data.groups).join(', ') : '无';
+                
+                html += `
+                    <div class="player-manage-item">
+                        <div class="player-manage-header">
+                            <span>🌟 ${id}</span>
+                            <span>密码: ${data.password}</span>
+                        </div>
+                        <div class="player-manage-detail">
+                            <div>📚 卡片总数: ${totalCards}张</div>
+                            <div>👥 所属小组: ${groupsList}</div>
+                            <div style="font-size: 0.8rem; color: #FFD966; margin-top: 5px;">${cardsDetail.join('、') || '无卡片'}</div>
+                        </div>
+                        <div class="player-manage-actions">
+                            <button class="btn btn-small btn-warning" onclick="changePlayerPassword('${id}')">🔑 改密码</button>
+                            <button class="btn btn-small btn-danger" onclick="deletePlayerAccount('${id}')">🗑️ 删账号</button>
+                            <button class="btn btn-small btn-warning" onclick="clearPlayerAlbum('${id}')">📖 清空卡册</button>
+                `;
+                
+                // 添加踢出小组按钮（每个小组一个）
+                if (data.groups && data.groups.size > 0) {
+                    data.groups.forEach(groupName => {
+                        html += `<button class="btn btn-small btn-danger" onclick="kickFromGroup('${id}', '${groupName}')">👥 踢出【${groupName}】</button>`;
+                    });
+                }
+                
+                html += `</div></div>`;
+            });
+            
+            div.innerHTML = html;
         }
 
+        // ==================== UI 更新 ====================
         function updateCardLibraryGrid() {
             const grid = document.getElementById('cardLibraryGrid');
             let html = '';
@@ -1473,52 +1858,21 @@
             list.innerHTML = html;
         }
 
-        window.showPlayers = function() {
-            const div = document.getElementById('playerList');
-            let html = '';
-            
-            if (players.size === 0) {
-                div.innerHTML = '<div style="color: #999;">暂无玩家</div>';
-                return;
-            }
-            
-            players.forEach((data, id) => {
-                let total = 0;
-                data.cards.forEach(c => total += c);
-                
-                let cardsDetail = [];
-                data.cards.forEach((count, cardId) => {
-                    const card = cardLibrary.find(c => c.id === cardId);
-                    if (card) cardsDetail.push(`${card.name} x${count}`);
-                });
-                
-                let groupsStr = data.groups ? Array.from(data.groups).join(', ') : '无';
-                
-                html += `
-                    <div style="padding: 10px; border-bottom: 1px solid #FED71A;">
-                        <div style="color: #FFE68F; font-weight: bold;">🌟 ${id}</div>
-                        <div style="color: #FFD966;">总计: ${total}张 | 小组: ${groupsStr}</div>
-                        <div style="color: #FFF3BF; font-size: 0.8rem;">${cardsDetail.join('、') || '无卡片'}</div>
-                    </div>
-                `;
-            });
-            div.innerHTML = html;
-        };
-
         function updateAllAdminViews() {
-            refreshCardLibrary();  // 使用刷新函数
+            refreshCardLibrary();
             updateVoucherList();
             updateExchangeVoucherList();
             updateGroupList();
-            showPlayers();
+            updatePlayerManageList();
         }
 
         // ==================== 玩家功能 ====================
         window.drawCard = function() {
-            const weiboId = document.getElementById('weiboId').value.trim();
+            if (!currentUser) return alert('请先登录');
+            
             const voucher = document.getElementById('voucherInput').value.trim();
             
-            if (!weiboId || !voucher) return alert('请输入微博ID和抽卡券号！');
+            if (!voucher) return alert('请输入抽卡券号！');
             if (!vouchers.has(voucher) || vouchers.get(voucher)) return alert('无效或已使用的抽卡券！');
             if (cardLibrary.length === 0) return alert('卡库为空！');
             
@@ -1526,9 +1880,8 @@
             
             vouchers.set(voucher, true);
             
-            if (!players.has(weiboId)) players.set(weiboId, { cards: new Map(), groups: new Set() });
-            const playerCards = players.get(weiboId).cards;
-            playerCards.set(card.id, (playerCards.get(card.id) || 0) + 1);
+            const player = players.get(currentUser);
+            player.cards.set(card.id, (player.cards.get(card.id) || 0) + 1);
             
             saveAllData();
             
@@ -1541,6 +1894,7 @@
             setTimeout(() => drawCard.classList.remove('draw-animation'), 600);
             
             document.getElementById('voucherInput').value = '';
+            updateAlbum(currentUser);
             alert(`🎉 抽到【${card.name}】！`);
         };
 
@@ -1580,13 +1934,12 @@
 
         // 赠送功能
         function updateGiftGrid() {
-            const weiboId = document.getElementById('weiboId').value.trim();
-            if (!players.has(weiboId)) {
+            if (!currentUser || !players.has(currentUser)) {
                 document.getElementById('giftCardGrid').innerHTML = '<div style="color: #999;">暂无卡片</div>';
                 return;
             }
             
-            const playerCards = players.get(weiboId).cards;
+            const playerCards = players.get(currentUser).cards;
             const grid = document.getElementById('giftCardGrid');
             let html = '';
             
@@ -1612,14 +1965,15 @@
         };
 
         window.giftCard = function() {
-            const fromId = document.getElementById('weiboId').value.trim();
+            if (!currentUser) return alert('请先登录');
+            
             const toId = document.getElementById('giftToId').value.trim();
             
-            if (!fromId || !toId) return alert('请输入双方微博ID');
-            if (fromId === toId) return alert('不能赠送给自己');
+            if (!toId) return alert('请输入对方微博ID');
+            if (currentUser === toId) return alert('不能赠送给自己');
             if (!selectedGiftCard) return alert('请选择要赠送的卡片');
             
-            const fromPlayer = players.get(fromId);
+            const fromPlayer = players.get(currentUser);
             if (!fromPlayer || !fromPlayer.cards.has(selectedGiftCard) || fromPlayer.cards.get(selectedGiftCard) < 1) {
                 return alert('你没有这张卡片');
             }
@@ -1631,7 +1985,9 @@
             }
             
             // 增加接收方
-            if (!players.has(toId)) players.set(toId, { cards: new Map(), groups: new Set() });
+            if (!players.has(toId)) {
+                players.set(toId, { password: '', cards: new Map(), groups: new Set() });
+            }
             const toPlayer = players.get(toId);
             toPlayer.cards.set(selectedGiftCard, (toPlayer.cards.get(selectedGiftCard) || 0) + 1);
             
@@ -1640,39 +1996,37 @@
             selectedGiftCard = null;
             document.getElementById('giftToId').value = '';
             updateGiftGrid();
-            updateAlbum(fromId);
+            updateAlbum(currentUser);
             alert('✅ 赠送成功！');
         };
 
         // 换卡功能
         function updateExchangeGrids() {
-            const weiboId = document.getElementById('weiboId').value.trim();
+            if (!currentUser || !players.has(currentUser)) return;
             
             // 更新可换出的卡片
-            if (players.has(weiboId)) {
-                const playerCards = players.get(weiboId).cards;
-                const giveGrid = document.getElementById('exchangeGiveGrid');
-                let html = '';
-                
-                playerCards.forEach((count, cardId) => {
-                    const card = cardLibrary.find(c => c.id === cardId);
-                    if (card && count > 0) {
-                        html += `
-                            <div class="action-card" onclick="selectExchangeGiveCard('${cardId}')">
-                                <img src="${card.frontURL}" alt="${card.name}">
-                                <div class="name">${card.name} x${count}</div>
-                            </div>
-                        `;
-                    }
-                });
-                giveGrid.innerHTML = html || '<div style="color: #999;">暂无卡片</div>';
-            }
+            const playerCards = players.get(currentUser).cards;
+            const giveGrid = document.getElementById('exchangeGiveGrid');
+            let html = '';
+            
+            playerCards.forEach((count, cardId) => {
+                const card = cardLibrary.find(c => c.id === cardId);
+                if (card && count > 0) {
+                    html += `
+                        <div class="action-card" onclick="selectExchangeGiveCard('${cardId}')">
+                            <img src="${card.frontURL}" alt="${card.name}">
+                            <div class="name">${card.name} x${count}</div>
+                        </div>
+                    `;
+                }
+            });
+            giveGrid.innerHTML = html || '<div style="color: #999;">暂无卡片</div>';
             
             // 更新可换入的卡片（所有未拥有的）
             const receiveGrid = document.getElementById('exchangeReceiveGrid');
-            let html = '';
+            html = '';
             cardLibrary.forEach(card => {
-                if (!players.has(weiboId) || !players.get(weiboId).cards.has(card.id)) {
+                if (!players.get(currentUser).cards.has(card.id)) {
                     html += `
                         <div class="action-card" onclick="selectExchangeReceiveCard('${card.id}')">
                             <img src="${card.frontURL}" alt="${card.name}">
@@ -1697,10 +2051,10 @@
         };
 
         window.exchangeCard = function() {
-            const weiboId = document.getElementById('weiboId').value.trim();
+            if (!currentUser) return alert('请先登录');
+            
             const voucher = document.getElementById('exchangeVoucherInput').value.trim();
             
-            if (!weiboId) return alert('请输入微博ID');
             if (!voucher) return alert('请输入换卡券号');
             if (!exchangeVouchers.has(voucher) || exchangeVouchers.get(voucher)) {
                 return alert('无效或已使用的换卡券！');
@@ -1708,7 +2062,7 @@
             if (!selectedExchangeGiveCard) return alert('请选择要换出的卡片');
             if (!selectedExchangeReceiveCard) return alert('请选择要换入的卡片');
             
-            const player = players.get(weiboId);
+            const player = players.get(currentUser);
             if (!player || !player.cards.has(selectedExchangeGiveCard) || player.cards.get(selectedExchangeGiveCard) < 1) {
                 return alert('你没有这张要换出的卡片');
             }
@@ -1731,21 +2085,10 @@
             selectedExchangeReceiveCard = null;
             document.getElementById('exchangeVoucherInput').value = '';
             updateExchangeGrids();
-            updateAlbum(weiboId);
+            updateAlbum(currentUser);
             
             alert('✅ 换卡成功！');
         };
-
-        // 监听微博ID变化
-        document.getElementById('weiboId').addEventListener('input', (e) => {
-            const weiboId = e.target.value.trim();
-            if (weiboId) {
-                document.getElementById('albumTitle').innerText = '我的卡册';
-                updateAlbum(weiboId);
-                updateGiftGrid();
-                updateExchangeGrids();
-            }
-        });
 
         // ==================== 数据备份与恢复 ====================
         window.exportData = function() {
@@ -1758,6 +2101,7 @@
                 ),
                 players: Object.fromEntries(
                     Array.from(players.entries()).map(([id, data]) => [id, { 
+                        password: data.password,
                         cards: Object.fromEntries(data.cards),
                         groups: Array.from(data.groups || [])
                     }])
@@ -1800,6 +2144,7 @@
                             players = new Map();
                             Object.entries(data.players).forEach(([id, playerData]) => {
                                 players.set(id, { 
+                                    password: playerData.password || '',
                                     cards: new Map(Object.entries(playerData.cards)),
                                     groups: new Set(playerData.groups || [])
                                 });
@@ -1823,7 +2168,7 @@
             exchangeVouchers = new Map();
             groups = new Map();
             players = new Map();
-            currentGroup = null;
+            currentUser = null;
             saveAllData();
             alert('✅ 数据已清空');
         };
