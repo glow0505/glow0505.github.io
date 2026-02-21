@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>珍光集卡铺 · 抽卡乐园</title>
     <style>
+        /* 样式保持不变，和上一版完全一样 */
         * {
             margin: 0;
             padding: 0;
@@ -21,7 +22,6 @@
             justify-content: center;
         }
 
-        /* 活动密码模态框 */
         .activity-lock {
             position: fixed;
             top: 0;
@@ -85,7 +85,6 @@
             border-bottom-width: 0;
         }
 
-        /* 登录/注册模态框 */
         .login-account-modal {
             position: fixed;
             top: 0;
@@ -159,7 +158,6 @@
             min-height: 20px;
         }
 
-        /* 店招 */
         .shop-header {
             text-align: center;
             margin-bottom: 20px;
@@ -520,7 +518,6 @@
             background: #666;
         }
 
-        /* 小组区域 */
         .group-section {
             background: #2D1A0F;
             border-radius: 30px;
@@ -1009,9 +1006,35 @@
             font-weight: bold;
             margin-bottom: 15px;
         }
+
+        .save-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 3000;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: fadeInOut 2s;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
     </style>
 </head>
 <body>
+    <!-- 保存状态提示 -->
+    <div class="save-status" id="saveStatus">💾 数据已保存</div>
+
     <!-- 活动密码锁 -->
     <div class="activity-lock" id="activityLock">
         <div class="lock-box">
@@ -1276,6 +1299,15 @@
         let selectedExchangeGiveCard = null;
         let selectedExchangeReceiveCard = null;
 
+        // 保存状态提示
+        function showSaveStatus() {
+            const status = document.getElementById('saveStatus');
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 2000);
+        }
+
         // ==================== 活动密码验证 ====================
         window.checkActivityPassword = function() {
             const pwd = document.getElementById('activityPassword').value;
@@ -1408,18 +1440,41 @@
             }
         };
 
-        // ==================== 数据持久化 ====================
+        // ==================== 数据持久化（修复版）====================
         function loadData() {
             try {
+                console.log('加载数据...');
+                
+                // 加载卡片库
                 const savedCards = localStorage.getItem('zhenguang_cards');
-                cardLibrary = savedCards ? JSON.parse(savedCards) : [];
+                if (savedCards) {
+                    cardLibrary = JSON.parse(savedCards);
+                    console.log('加载卡片:', cardLibrary.length);
+                } else {
+                    cardLibrary = [];
+                }
 
+                // 加载抽卡券
                 const savedVouchers = localStorage.getItem('zhenguang_vouchers');
-                vouchers = savedVouchers ? new Map(Object.entries(JSON.parse(savedVouchers))) : new Map();
+                if (savedVouchers) {
+                    const voucherObj = JSON.parse(savedVouchers);
+                    vouchers = new Map(Object.entries(voucherObj));
+                    console.log('加载抽卡券:', vouchers.size);
+                } else {
+                    vouchers = new Map();
+                }
 
+                // 加载换卡券
                 const savedExchangeVouchers = localStorage.getItem('zhenguang_exchange_vouchers');
-                exchangeVouchers = savedExchangeVouchers ? new Map(Object.entries(JSON.parse(savedExchangeVouchers))) : new Map();
+                if (savedExchangeVouchers) {
+                    const exchangeObj = JSON.parse(savedExchangeVouchers);
+                    exchangeVouchers = new Map(Object.entries(exchangeObj));
+                    console.log('加载换卡券:', exchangeVouchers.size);
+                } else {
+                    exchangeVouchers = new Map();
+                }
 
+                // 加载小组
                 const savedGroups = localStorage.getItem('zhenguang_groups');
                 if (savedGroups) {
                     const groupsObj = JSON.parse(savedGroups);
@@ -1430,8 +1485,10 @@
                             members: new Set(data.members)
                         });
                     });
+                    console.log('加载小组:', groups.size);
                 }
 
+                // 加载玩家数据
                 const savedPlayers = localStorage.getItem('zhenguang_players');
                 if (savedPlayers) {
                     const playersObj = JSON.parse(savedPlayers);
@@ -1439,15 +1496,19 @@
                     Object.entries(playersObj).forEach(([id, data]) => {
                         players.set(id, { 
                             password: data.password || '',
-                            cards: new Map(Object.entries(data.cards)),
+                            cards: new Map(Object.entries(data.cards || {})),
                             groups: new Set(data.groups || []),
                             giftHistory: data.giftHistory || [],
                             receiveHistory: data.receiveHistory || []
                         });
                     });
+                    console.log('加载玩家:', players.size);
+                } else {
+                    players = new Map();
                 }
 
                 updateGroupDisplay();
+                console.log('数据加载完成');
             } catch (e) {
                 console.error('加载数据失败', e);
             }
@@ -1455,10 +1516,18 @@
 
         function saveAllData() {
             try {
+                console.log('保存数据...');
+                
+                // 保存卡片库
                 localStorage.setItem('zhenguang_cards', JSON.stringify(cardLibrary));
+                
+                // 保存抽卡券
                 localStorage.setItem('zhenguang_vouchers', JSON.stringify(Object.fromEntries(vouchers)));
+                
+                // 保存换卡券
                 localStorage.setItem('zhenguang_exchange_vouchers', JSON.stringify(Object.fromEntries(exchangeVouchers)));
                 
+                // 保存小组
                 const groupsObj = {};
                 groups.forEach((data, name) => {
                     groupsObj[name] = {
@@ -1468,6 +1537,7 @@
                 });
                 localStorage.setItem('zhenguang_groups', JSON.stringify(groupsObj));
                 
+                // 保存玩家数据
                 const playersObj = {};
                 players.forEach((data, id) => {
                     playersObj[id] = { 
@@ -1480,11 +1550,18 @@
                 });
                 localStorage.setItem('zhenguang_players', JSON.stringify(playersObj));
 
+                // 显示保存成功提示
+                showSaveStatus();
+
+                // 如果后台开着，更新视图
                 if (document.getElementById('adminPanel').style.display === 'block') {
                     updateAllAdminViews();
                 }
+                
+                console.log('数据保存完成');
             } catch (e) {
                 console.error('保存数据失败', e);
+                alert('保存失败，请重试');
             }
         }
 
@@ -2314,7 +2391,7 @@
                             Object.entries(data.players).forEach(([id, playerData]) => {
                                 players.set(id, { 
                                     password: playerData.password || '',
-                                    cards: new Map(Object.entries(playerData.cards)),
+                                    cards: new Map(Object.entries(playerData.cards || {})),
                                     groups: new Set(playerData.groups || []),
                                     giftHistory: playerData.giftHistory || [],
                                     receiveHistory: playerData.receiveHistory || []
