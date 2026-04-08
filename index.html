@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>孙珍妮视频安利首页</title>
-  <meta name="description" content="仿视频平台风格的孙珍妮安利首页，按舞台、综艺、角色、直播等频道分区展示。">
+  <title>珍珍日上TV | 孙珍妮视频主页</title>
+  <meta name="description" content="珍珍日上TV：孙珍妮舞台、综艺、角色、直播回放视频安利主页。">
   <style>
     :root {
-      --bg: #0b0f1c;
-      --bg-soft: #131a2f;
-      --panel: #171f36;
-      --card: #1b2441;
-      --line: rgba(255, 255, 255, 0.12);
-      --text: #f4f7ff;
-      --muted: #acb7db;
-      --accent: #31d0aa;
-      --accent-2: #8c7dff;
-      --shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+      --bg: #06070d;
+      --bg-2: #0d1120;
+      --panel: rgba(15, 19, 34, 0.78);
+      --card: #121938;
+      --line: rgba(255, 255, 255, 0.13);
+      --text: #f8f9ff;
+      --muted: #b8bfd8;
+      --gold: #d7b06d;
+      --gold-soft: #f4d9a3;
+      --cyan: #72e4d0;
+      --shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
     }
 
     * {
@@ -25,227 +26,267 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(49, 208, 170, 0.12), transparent 32%),
-        radial-gradient(circle at 100% 0%, rgba(140, 125, 255, 0.16), transparent 38%),
-        var(--bg);
       color: var(--text);
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
       min-height: 100vh;
+      background:
+        radial-gradient(circle at 85% 8%, rgba(114, 228, 208, 0.12), transparent 32%),
+        radial-gradient(circle at 12% 15%, rgba(215, 176, 109, 0.16), transparent 34%),
+        linear-gradient(180deg, var(--bg), var(--bg-2) 52%, #090d1a);
     }
 
     .container {
-      width: min(1280px, 94vw);
+      width: min(1320px, 94vw);
       margin: 0 auto;
     }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 50;
-      backdrop-filter: blur(10px);
-      background: rgba(9, 12, 22, 0.82);
+      z-index: 20;
       border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      background: rgba(6, 7, 13, 0.78);
     }
 
     .topbar {
-      height: 66px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 14px;
+      height: 72px;
     }
 
-    .logo {
+    .brand {
       font-size: 1.1rem;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       white-space: nowrap;
     }
 
-    .logo span {
-      color: var(--accent);
-      margin: 0 6px;
+    .brand b {
+      color: var(--gold-soft);
+      font-weight: 700;
     }
 
     .search {
       flex: 1;
-      max-width: 520px;
+      max-width: 540px;
+      height: 42px;
       display: flex;
       align-items: center;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.04);
       padding: 0 14px;
-      height: 40px;
     }
 
     .search input {
+      width: 100%;
       border: none;
       outline: none;
       background: transparent;
       color: var(--text);
-      width: 100%;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
     }
 
-    .channels {
+    .search input::placeholder {
+      color: #a9b3d1;
+    }
+
+    .nav {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       overflow-x: auto;
       scrollbar-width: none;
       padding-bottom: 10px;
     }
 
-    .channels::-webkit-scrollbar {
+    .nav::-webkit-scrollbar {
       display: none;
     }
 
-    .channels a {
+    .nav a {
       text-decoration: none;
-      color: #deebff;
-      font-size: 0.9rem;
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e8edff;
+      border: 1px solid rgba(255, 255, 255, 0.16);
       background: rgba(255, 255, 255, 0.03);
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.88rem;
       white-space: nowrap;
       transition: 0.2s ease;
     }
 
-    .channels a:hover,
-    .channels a.active {
-      color: #ffffff;
-      border-color: rgba(49, 208, 170, 0.72);
-      background: rgba(49, 208, 170, 0.16);
+    .nav a:hover,
+    .nav a.active {
+      color: #fff7e1;
+      border-color: rgba(215, 176, 109, 0.7);
+      background: rgba(215, 176, 109, 0.16);
     }
 
     .hero {
       margin-top: 16px;
-      margin-bottom: 28px;
-      border-radius: 20px;
-      border: 1px solid var(--line);
+      border-radius: 22px;
       overflow: hidden;
-      background:
-        linear-gradient(115deg, rgba(14, 20, 40, 0.96) 22%, rgba(11, 15, 29, 0.55)),
-        radial-gradient(circle at 80% 32%, rgba(49, 208, 170, 0.22), transparent 45%);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
+      background:
+        linear-gradient(120deg, rgba(10, 14, 29, 0.96) 25%, rgba(8, 11, 22, 0.48)),
+        radial-gradient(circle at 72% 24%, rgba(114, 228, 208, 0.22), transparent 44%);
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%);
+      pointer-events: none;
     }
 
     .hero-inner {
-      padding: clamp(24px, 5vw, 56px);
-      min-height: 260px;
+      position: relative;
+      z-index: 1;
+      padding: clamp(28px, 6vw, 62px);
+      min-height: 320px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .hero-badge {
-      font-size: 0.8rem;
-      color: #b8ffe8;
-      letter-spacing: 1px;
+    .hero-tag {
+      font-size: 0.82rem;
+      color: #ffe2b5;
       text-transform: uppercase;
+      letter-spacing: 1.2px;
     }
 
     .hero h1 {
-      font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+      font-size: clamp(1.8rem, 3.6vw, 3.1rem);
       line-height: 1.25;
     }
 
+    .hero h1 span {
+      color: var(--gold-soft);
+    }
+
     .hero p {
+      max-width: 760px;
       color: var(--muted);
-      max-width: 680px;
+      font-size: 0.98rem;
     }
 
     .hero-actions {
+      margin-top: 4px;
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 6px;
+      gap: 10px;
     }
 
     .hero-actions a {
       text-decoration: none;
-      color: #081028;
-      background: #ecf7ff;
-      border-radius: 9px;
-      padding: 9px 14px;
+      border-radius: 10px;
+      padding: 10px 14px;
       font-size: 0.9rem;
       font-weight: 700;
       transition: 0.2s ease;
     }
 
+    .hero-actions a.primary {
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+      color: #19130a;
+    }
+
     .hero-actions a.secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: #e7efff;
-      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #ebf1ff;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       font-weight: 500;
     }
 
     .hero-actions a:hover {
       transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .edit-tip {
+      margin-top: 14px;
+      border: 1px dashed rgba(215, 176, 109, 0.5);
+      background: rgba(215, 176, 109, 0.08);
+      color: #f4e4c7;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.84rem;
     }
 
     main {
-      padding-bottom: 30px;
+      padding-bottom: 36px;
     }
 
-    .section {
-      margin-bottom: 26px;
+    .channel {
+      margin-top: 26px;
     }
 
-    .section-head {
+    .channel-head {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 12px;
       gap: 12px;
+      margin-bottom: 12px;
     }
 
-    .section-head h2 {
-      font-size: 1.28rem;
+    .channel-head h2 {
+      font-size: 1.32rem;
+      font-weight: 700;
     }
 
-    .section-head a {
+    .channel-head a {
       text-decoration: none;
-      color: #99e8d5;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
+      color: #9de8d8;
     }
 
-    .video-row {
+    .video-grid {
       display: grid;
       grid-template-columns: repeat(6, minmax(0, 1fr));
       gap: 12px;
     }
 
     .video-card {
+      display: block;
       text-decoration: none;
       color: inherit;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 13px;
       overflow: hidden;
-      transition: 0.2s ease;
-      display: block;
+      border: 1px solid var(--line);
+      background: var(--card);
+      transition: transform 0.2s ease, border-color 0.2s ease;
       min-width: 0;
     }
 
     .video-card:hover {
       transform: translateY(-2px);
-      border-color: rgba(49, 208, 170, 0.55);
+      border-color: rgba(114, 228, 208, 0.65);
     }
 
     .thumb {
-      position: relative;
       aspect-ratio: 16 / 9;
+      position: relative;
+      border-bottom: 1px solid var(--line);
       background:
-        linear-gradient(135deg, rgba(140, 125, 255, 0.28), rgba(49, 208, 170, 0.2)),
-        var(--panel);
+        linear-gradient(135deg, rgba(215, 176, 109, 0.18), rgba(114, 228, 208, 0.22)),
+        #111628;
+      background-size: cover;
+      background-position: center;
       display: grid;
       place-items: center;
-      border-bottom: 1px solid var(--line);
     }
 
     .play {
@@ -253,7 +294,7 @@
       height: 40px;
       border-radius: 50%;
       border: 1px solid rgba(255, 255, 255, 0.35);
-      background: rgba(0, 0, 0, 0.32);
+      background: rgba(0, 0, 0, 0.34);
       display: grid;
       place-items: center;
       font-size: 0.86rem;
@@ -261,17 +302,17 @@
 
     .duration {
       position: absolute;
-      right: 7px;
-      bottom: 7px;
-      background: rgba(0, 0, 0, 0.72);
-      border-radius: 5px;
+      right: 8px;
+      bottom: 8px;
+      border-radius: 6px;
       padding: 2px 6px;
-      font-size: 0.73rem;
-      color: #f3f6ff;
+      background: rgba(0, 0, 0, 0.75);
+      font-size: 0.72rem;
+      color: #f8fbff;
     }
 
     .info {
-      padding: 10px 10px 11px;
+      padding: 10px 10px 12px;
     }
 
     .title {
@@ -293,21 +334,32 @@
       text-overflow: ellipsis;
     }
 
+    .empty {
+      grid-column: 1 / -1;
+      border: 1px dashed rgba(255, 255, 255, 0.26);
+      border-radius: 10px;
+      padding: 16px;
+      color: #aeb8d5;
+      font-size: 0.9rem;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
     footer {
       border-top: 1px solid var(--line);
-      color: #99a7d1;
-      font-size: 0.84rem;
       text-align: center;
+      color: #9caad0;
+      font-size: 0.84rem;
       padding: 22px 0 34px;
     }
 
-    @media (max-width: 1180px) {
-      .video-row {
+    @media (max-width: 1200px) {
+      .video-grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 840px) {
+    @media (max-width: 900px) {
       .topbar {
         height: auto;
         padding: 12px 0;
@@ -320,18 +372,14 @@
         width: 100%;
       }
 
-      .video-row {
+      .video-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 520px) {
-      .video-row {
+    @media (max-width: 560px) {
+      .video-grid {
         grid-template-columns: 1fr;
-      }
-
-      .hero {
-        margin-top: 12px;
       }
     }
   </style>
@@ -339,15 +387,16 @@
 <body>
   <header>
     <div class="container topbar">
-      <div class="logo">珍藏<span>|</span>孙珍妮视频站</div>
-      <div class="search">
-        <input type="text" placeholder="搜索：舞台、综艺、角色片段...">
-      </div>
-      <nav class="channels">
+      <div class="brand"><b>珍珍日上TV</b> · 孙珍妮视频主页</div>
+      <label class="search">
+        <input id="searchInput" type="text" placeholder="搜索视频标题/简介：舞台、综艺、角色、直播...">
+      </label>
+      <nav class="nav">
         <a href="#stage" class="active">舞台</a>
         <a href="#show">综艺</a>
         <a href="#role">角色</a>
-        <a href="#live">直播</a>
+        <a href="#live">直播回放</a>
+        <a href="/daily-group.html">官群空降</a>
       </nav>
     </div>
   </header>
@@ -355,172 +404,170 @@
   <main class="container">
     <section class="hero">
       <div class="hero-inner">
-        <div class="hero-badge">Featured Channel</div>
-        <h1>孙珍妮安利主页 · 像视频平台一样浏览</h1>
-        <p>按频道刷内容：舞台、综艺、角色、直播回放。每个分区都像首页推荐位，适合直接分享给朋友一键入坑。</p>
+        <div class="hero-tag">Zhenzhen Rising TV</div>
+        <h1>欢迎来到 <span>珍珍日上TV</span></h1>
+        <p>做成了类似视频平台首页的安利站结构：频道分区 + 视频卡片 + 搜索筛选。你可以直接替换每条视频的标题、简介、封面、时长和链接。</p>
         <div class="hero-actions">
-          <a href="#stage">先看舞台</a>
+          <a class="primary" href="#stage">先看舞台</a>
           <a class="secondary" href="#show">再看综艺</a>
-          <a class="secondary" href="#role">补角色</a>
+          <a class="secondary" href="/daily-group.html">看官群空降截图</a>
+        </div>
+        <div class="edit-tip">
+          内容替换入口：请编辑本文件底部脚本中的 <strong>VIDEO_LIBRARY</strong> 数据。
         </div>
       </div>
     </section>
 
-    <section class="section" id="stage">
-      <div class="section-head">
+    <section class="channel" id="stage">
+      <div class="channel-head">
         <h2>舞台安利</h2>
-        <a href="#">更多舞台 ></a>
+        <a href="#">查看更多 ></a>
       </div>
-      <div class="video-row">
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">04:12</span></div>
-          <div class="info"><div class="title">舞台 1 · 高能开场直拍</div><div class="desc">卡点干净，镜头表现稳定</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">03:58</span></div>
-          <div class="info"><div class="title">舞台 2 · 热门唱跳合作舞台</div><div class="desc">互动自然，氛围拉满</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">05:01</span></div>
-          <div class="info"><div class="title">舞台 3 · 抒情慢歌完整版</div><div class="desc">情绪递进很稳，细节值得二刷</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">02:49</span></div>
-          <div class="info"><div class="title">舞台 4 · 练习室视角</div><div class="desc">动作细节和控制力很清楚</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">03:33</span></div>
-          <div class="info"><div class="title">舞台 5 · 名场面混剪</div><div class="desc">新粉友好，一条视频看重点</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">04:26</span></div>
-          <div class="info"><div class="title">舞台 6 · 年度特别舞台</div><div class="desc">舞台叙事完整，记忆点强</div></div>
-        </a>
-      </div>
+      <div class="video-grid" data-channel="stage"></div>
     </section>
 
-    <section class="section" id="show">
-      <div class="section-head">
+    <section class="channel" id="show">
+      <div class="channel-head">
         <h2>综艺安利</h2>
-        <a href="#">更多综艺 ></a>
+        <a href="#">查看更多 ></a>
       </div>
-      <div class="video-row">
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">12:10</span></div>
-          <div class="info"><div class="title">综艺 1 · 团综高笑点合集</div><div class="desc">综艺感在线，路人缘拉满</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">08:42</span></div>
-          <div class="info"><div class="title">综艺 2 · 游戏环节高能片段</div><div class="desc">反应快，镜头感自然</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">09:36</span></div>
-          <div class="info"><div class="title">综艺 3 · 默契挑战名场面</div><div class="desc">和队友互动非常有梗</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">07:55</span></div>
-          <div class="info"><div class="title">综艺 4 · 访谈金句片段</div><div class="desc">表达清晰，观点真诚</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">10:02</span></div>
-          <div class="info"><div class="title">综艺 5 · 日常幕后花絮</div><div class="desc">轻松氛围，性格很圈粉</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">06:21</span></div>
-          <div class="info"><div class="title">综艺 6 · 新人入坑必看</div><div class="desc">一条看懂综艺魅力点</div></div>
-        </a>
-      </div>
+      <div class="video-grid" data-channel="show"></div>
     </section>
 
-    <section class="section" id="role">
-      <div class="section-head">
+    <section class="channel" id="role">
+      <div class="channel-head">
         <h2>角色安利</h2>
-        <a href="#">更多角色 ></a>
+        <a href="#">查看更多 ></a>
       </div>
-      <div class="video-row">
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">05:47</span></div>
-          <div class="info"><div class="title">角色 1 · 高智感角色剪辑</div><div class="desc">眼神戏和情绪停顿很细腻</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">07:06</span></div>
-          <div class="info"><div class="title">角色 2 · 青春成长线</div><div class="desc">生活化台词，代入感强</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">04:50</span></div>
-          <div class="info"><div class="title">角色 3 · 情绪爆发名场面</div><div class="desc">层次完整，起伏自然</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">06:28</span></div>
-          <div class="info"><div class="title">角色 4 · 台词高光集锦</div><div class="desc">语气变化和节奏都在线</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">08:03</span></div>
-          <div class="info"><div class="title">角色 5 · 角色关系梳理</div><div class="desc">剧情友好向，新人可直补</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">03:29</span></div>
-          <div class="info"><div class="title">角色 6 · 一分钟快速安利</div><div class="desc">适合转发给朋友安利</div></div>
-        </a>
-      </div>
+      <div class="video-grid" data-channel="role"></div>
     </section>
 
-    <section class="section" id="live">
-      <div class="section-head">
+    <section class="channel" id="live">
+      <div class="channel-head">
         <h2>直播回放</h2>
-        <a href="#">更多直播 ></a>
+        <a href="#">查看更多 ></a>
       </div>
-      <div class="video-row">
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">15:32</span></div>
-          <div class="info"><div class="title">直播 1 · 日常聊天精华</div><div class="desc">松弛自然，入坑友好</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">13:47</span></div>
-          <div class="info"><div class="title">直播 2 · 粉丝问答合集</div><div class="desc">幕后和工作状态分享</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">09:59</span></div>
-          <div class="info"><div class="title">直播 3 · 高能反应瞬间</div><div class="desc">名场面时间轴剪辑版</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">11:18</span></div>
-          <div class="info"><div class="title">直播 4 · 舞台幕后聊天</div><div class="desc">内容密度高，适合收藏</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">14:05</span></div>
-          <div class="info"><div class="title">直播 5 · 轻松互动夜</div><div class="desc">氛围轻松，笑点很多</div></div>
-        </a>
-        <a class="video-card" href="#">
-          <div class="thumb"><div class="play">▶</div><span class="duration">07:44</span></div>
-          <div class="info"><div class="title">直播 6 · 新粉速看导览</div><div class="desc">把重点片段都整理好了</div></div>
-        </a>
-      </div>
+      <div class="video-grid" data-channel="live"></div>
     </section>
   </main>
 
   <footer>
-    <div class="container">孙珍妮视频安利首页 · 当前为演示数据，后续可替换成真实视频链接与封面。</div>
+    <div class="container">珍珍日上TV · 支持按数据配置快速替换视频内容</div>
   </footer>
 
   <script>
-    const links = document.querySelectorAll(".channels a");
-    const sections = document.querySelectorAll(".section");
+    /*
+      ==================== 如何替换内容（最常改这里） ====================
+      每个视频对象字段说明：
+      - title: 标题
+      - desc: 简介
+      - duration: 时长文本，如 "04:21"
+      - url: 点击后跳转链接（B站/微博/腾讯视频等）
+      - cover: 封面图链接（可留空 ""，留空会显示默认渐变封面）
+    */
+    const VIDEO_LIBRARY = {
+      stage: [
+        { title: "舞台 1 · 高能开场直拍", desc: "卡点干净，爆发力足", duration: "04:12", url: "#", cover: "" },
+        { title: "舞台 2 · 合作舞台完整版", desc: "互动自然，镜头感强", duration: "03:58", url: "#", cover: "" },
+        { title: "舞台 3 · 抒情慢歌 Focus", desc: "情绪递进细腻稳定", duration: "05:01", url: "#", cover: "" },
+        { title: "舞台 4 · 练习室版", desc: "动作细节一目了然", duration: "02:49", url: "#", cover: "" },
+        { title: "舞台 5 · 名场面混剪", desc: "新粉速入坑推荐", duration: "03:33", url: "#", cover: "" },
+        { title: "舞台 6 · 年度特别舞台", desc: "舞台叙事完整有层次", duration: "04:26", url: "#", cover: "" }
+      ],
+      show: [
+        { title: "综艺 1 · 团综高笑点合集", desc: "综艺感在线，轻松下饭", duration: "12:10", url: "#", cover: "" },
+        { title: "综艺 2 · 游戏挑战高能片段", desc: "反应快，梗密度高", duration: "08:42", url: "#", cover: "" },
+        { title: "综艺 3 · 默契挑战名场面", desc: "团队互动有看点", duration: "09:36", url: "#", cover: "" },
+        { title: "综艺 4 · 访谈金句片段", desc: "表达清晰，有态度", duration: "07:55", url: "#", cover: "" },
+        { title: "综艺 5 · 幕后日常花絮", desc: "松弛感和亲和力拉满", duration: "10:02", url: "#", cover: "" },
+        { title: "综艺 6 · 入坑必看导览", desc: "一条视频看懂亮点", duration: "06:21", url: "#", cover: "" }
+      ],
+      role: [
+        { title: "角色 1 · 高智感角色剪辑", desc: "眼神戏细节很耐看", duration: "05:47", url: "#", cover: "" },
+        { title: "角色 2 · 青春成长线", desc: "台词自然，代入感强", duration: "07:06", url: "#", cover: "" },
+        { title: "角色 3 · 情绪爆发名场面", desc: "层次完整，起伏自然", duration: "04:50", url: "#", cover: "" },
+        { title: "角色 4 · 台词高光集锦", desc: "节奏和力度兼具", duration: "06:28", url: "#", cover: "" },
+        { title: "角色 5 · 人物关系梳理", desc: "剧情友好，适合新粉", duration: "08:03", url: "#", cover: "" },
+        { title: "角色 6 · 1分钟快速安利", desc: "适合转发安利朋友", duration: "03:29", url: "#", cover: "" }
+      ],
+      live: [
+        { title: "直播 1 · 日常聊天精华", desc: "松弛自然，入坑友好", duration: "15:32", url: "#", cover: "" },
+        { title: "直播 2 · 粉丝问答合集", desc: "幕后内容密度高", duration: "13:47", url: "#", cover: "" },
+        { title: "直播 3 · 高能反应瞬间", desc: "名场面时间轴整理", duration: "09:59", url: "#", cover: "" },
+        { title: "直播 4 · 舞台幕后聊天", desc: "分享真实工作感受", duration: "11:18", url: "#", cover: "" },
+        { title: "直播 5 · 轻松互动夜", desc: "互动感强，氛围好", duration: "14:05", url: "#", cover: "" },
+        { title: "直播 6 · 新粉速看导览", desc: "关键片段集中补档", duration: "07:44", url: "#", cover: "" }
+      ]
+    };
 
-    const updateActiveChannel = () => {
+    const channelOrder = ["stage", "show", "role", "live"];
+    const searchInput = document.getElementById("searchInput");
+
+    function buildCard(item) {
+      const link = item.url && item.url.trim() ? item.url : "#";
+      const target = link === "#" ? "" : ' target="_blank" rel="noopener noreferrer"';
+      const bg = item.cover && item.cover.trim()
+        ? ` style="background-image: linear-gradient(135deg, rgba(215,176,109,0.2), rgba(114,228,208,0.2)), url('${item.cover}');"`
+        : "";
+
+      return `
+        <a class="video-card" href="${link}"${target}>
+          <div class="thumb"${bg}>
+            <div class="play">▶</div>
+            <span class="duration">${item.duration || "00:00"}</span>
+          </div>
+          <div class="info">
+            <div class="title">${item.title || "未命名视频"}</div>
+            <div class="desc">${item.desc || "暂无简介"}</div>
+          </div>
+        </a>
+      `;
+    }
+
+    function renderAll() {
+      const keyword = (searchInput.value || "").trim().toLowerCase();
+
+      channelOrder.forEach((channel) => {
+        const mount = document.querySelector(`.video-grid[data-channel="${channel}"]`);
+        if (!mount) return;
+
+        const source = VIDEO_LIBRARY[channel] || [];
+        const filtered = source.filter((item) => {
+          if (!keyword) return true;
+          const text = `${item.title || ""} ${item.desc || ""}`.toLowerCase();
+          return text.includes(keyword);
+        });
+
+        if (filtered.length === 0) {
+          mount.innerHTML = '<div class="empty">没有匹配内容，可清空搜索词后查看全部视频。</div>';
+          return;
+        }
+
+        mount.innerHTML = filtered.map(buildCard).join("");
+      });
+    }
+
+    const navLinks = document.querySelectorAll(".nav a[href^='#']");
+    const sections = document.querySelectorAll(".channel");
+
+    function updateNavActive() {
       let current = "stage";
       sections.forEach((section) => {
-        if (window.scrollY >= section.offsetTop - 120) {
+        if (window.scrollY >= section.offsetTop - 130) {
           current = section.id;
         }
       });
-      links.forEach((link) => {
+
+      navLinks.forEach((link) => {
         link.classList.toggle("active", link.getAttribute("href") === "#" + current);
       });
-    };
+    }
 
-    window.addEventListener("scroll", updateActiveChannel);
-    updateActiveChannel();
+    searchInput.addEventListener("input", renderAll);
+    window.addEventListener("scroll", updateNavActive);
+
+    renderAll();
+    updateNavActive();
   </script>
 </body>
 </html>
