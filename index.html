@@ -3,23 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>珍珍日上TV | 孙珍妮视频主页</title>
-  <meta name="description" content="珍珍日上TV：孙珍妮舞台、综艺、角色、直播回放视频主页，支持站内播放与后台管理。">
+  <title>珍珍日上TV</title>
+  <meta name="description" content="珍珍日上TV：黑金质感视频安利站，支持后台录入视频与站内弹层播放。">
   <style>
     :root {
-      --bg: #06070d;
-      --bg-2: #0d1120;
-      --panel: rgba(15, 19, 34, 0.78);
-      --card: #121938;
-      --line: rgba(255, 255, 255, 0.13);
-      --text: #f8f9ff;
-      --muted: #b8bfd8;
-      --gold: #d7b06d;
-      --gold-soft: #f4d9a3;
-      --cyan: #72e4d0;
-      --shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
-      --danger: #ff7171;
-      --ok: #88e8d7;
+      --bg: #060606;
+      --bg-soft: #111111;
+      --panel: #151515;
+      --panel-2: #1c1c1c;
+      --line: rgba(255, 217, 128, 0.2);
+      --gold: #d6a347;
+      --gold-2: #f2cd86;
+      --text: #f7f3ea;
+      --muted: #c9bc9f;
+      --danger: #d96c6c;
+      --shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
     }
 
     * {
@@ -28,18 +26,14 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      color: var(--text);
       font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-      min-height: 100vh;
+      color: var(--text);
       background:
-        radial-gradient(circle at 85% 8%, rgba(114, 228, 208, 0.12), transparent 32%),
-        radial-gradient(circle at 12% 15%, rgba(215, 176, 109, 0.16), transparent 34%),
-        linear-gradient(180deg, var(--bg), var(--bg-2) 52%, #090d1a);
+        radial-gradient(circle at 85% 0%, rgba(214, 163, 71, 0.13), transparent 36%),
+        radial-gradient(circle at 10% 18%, rgba(214, 163, 71, 0.09), transparent 28%),
+        linear-gradient(180deg, #050505, #0d0d0d 45%, #050505);
+      min-height: 100vh;
     }
 
     .container {
@@ -51,41 +45,41 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      border-bottom: 1px solid var(--line);
       backdrop-filter: blur(10px);
-      background: rgba(6, 7, 13, 0.78);
+      background: rgba(5, 5, 5, 0.88);
+      border-bottom: 1px solid var(--line);
     }
 
     .topbar {
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      height: 72px;
+      gap: 12px;
     }
 
     .brand {
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: 0.6px;
+      font-size: 1.12rem;
+      letter-spacing: 0.5px;
       white-space: nowrap;
+      font-weight: 700;
     }
 
     .brand b {
-      color: var(--gold-soft);
-      font-weight: 700;
+      color: var(--gold-2);
+      margin-right: 4px;
     }
 
     .search {
       flex: 1;
-      max-width: 500px;
-      height: 42px;
+      max-width: 520px;
+      border: 1px solid rgba(255, 224, 160, 0.24);
+      background: rgba(255, 227, 170, 0.06);
+      border-radius: 999px;
+      height: 40px;
+      padding: 0 14px;
       display: flex;
       align-items: center;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.04);
-      padding: 0 14px;
     }
 
     .search input {
@@ -94,11 +88,11 @@
       outline: none;
       background: transparent;
       color: var(--text);
-      font-size: 0.94rem;
+      font-size: 0.92rem;
     }
 
     .search input::placeholder {
-      color: #a9b3d1;
+      color: #b9ac90;
     }
 
     .nav {
@@ -115,48 +109,58 @@
 
     .nav a {
       text-decoration: none;
-      color: #e8edff;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      background: rgba(255, 255, 255, 0.03);
+      color: #f2e7cf;
+      border: 1px solid rgba(255, 219, 147, 0.25);
+      background: rgba(255, 219, 147, 0.06);
       border-radius: 999px;
-      padding: 7px 14px;
-      font-size: 0.88rem;
+      padding: 6px 13px;
+      font-size: 0.84rem;
       white-space: nowrap;
       transition: 0.2s ease;
     }
 
     .nav a:hover,
     .nav a.active {
-      color: #fff7e1;
-      border-color: rgba(215, 176, 109, 0.7);
-      background: rgba(215, 176, 109, 0.16);
+      color: #2d220e;
+      background: linear-gradient(120deg, var(--gold), var(--gold-2));
+      border-color: transparent;
+    }
+
+    main {
+      padding-bottom: 34px;
     }
 
     .hero {
       margin-top: 16px;
-      border-radius: 22px;
+      border-radius: 18px;
       overflow: hidden;
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
       background:
-        linear-gradient(120deg, rgba(10, 14, 29, 0.96) 25%, rgba(8, 11, 22, 0.48)),
-        radial-gradient(circle at 72% 24%, rgba(114, 228, 208, 0.22), transparent 44%);
+        linear-gradient(120deg, rgba(24, 20, 12, 0.96) 20%, rgba(16, 16, 16, 0.75)),
+        radial-gradient(circle at 68% 28%, rgba(214, 163, 71, 0.25), transparent 42%);
       position: relative;
+      min-height: 300px;
     }
 
-    .hero::after {
+    .hero.with-image {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 42%);
+      background: linear-gradient(90deg, rgba(5, 5, 5, 0.78), rgba(5, 5, 5, 0.28));
       pointer-events: none;
     }
 
     .hero-inner {
       position: relative;
       z-index: 1;
-      padding: clamp(28px, 6vw, 62px);
-      min-height: 280px;
+      padding: clamp(24px, 5vw, 54px);
+      min-height: 300px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -164,29 +168,27 @@
     }
 
     .hero-tag {
-      font-size: 0.82rem;
-      color: #ffe2b5;
+      color: #f7d9a2;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
       text-transform: uppercase;
-      letter-spacing: 1.2px;
     }
 
     .hero h1 {
-      font-size: clamp(1.8rem, 3.6vw, 3.1rem);
+      font-size: clamp(1.8rem, 3.8vw, 3rem);
       line-height: 1.25;
-    }
-
-    .hero h1 span {
-      color: var(--gold-soft);
+      color: #fff3d8;
     }
 
     .hero p {
-      max-width: 760px;
-      color: var(--muted);
-      font-size: 0.97rem;
+      max-width: 620px;
+      color: #e5d5b1;
+      font-size: 0.95rem;
+      line-height: 1.55;
     }
 
     .hero-actions {
-      margin-top: 5px;
+      margin-top: 4px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -195,66 +197,200 @@
     .hero-actions a {
       text-decoration: none;
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 9px 14px;
       font-size: 0.9rem;
-      font-weight: 700;
       transition: 0.2s ease;
     }
 
-    .hero-actions a.primary {
-      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
-      color: #19130a;
+    .hero-actions .primary {
+      color: #22170a;
+      background: linear-gradient(120deg, var(--gold), var(--gold-2));
+      font-weight: 700;
     }
 
-    .hero-actions a.secondary {
-      color: #ebf1ff;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      font-weight: 500;
+    .hero-actions .secondary {
+      color: #f4e8d1;
+      border: 1px solid rgba(255, 219, 147, 0.35);
+      background: rgba(255, 219, 147, 0.08);
     }
 
     .hero-actions a:hover {
       transform: translateY(-1px);
-      filter: brightness(1.04);
     }
 
-    .edit-tip {
-      margin-top: 8px;
-      border: 1px dashed rgba(215, 176, 109, 0.5);
-      background: rgba(215, 176, 109, 0.08);
-      color: #f4e4c7;
+    .channel {
+      margin-top: 28px;
+    }
+
+    .channel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+
+    .channel-head h2 {
+      font-size: 1.3rem;
+      color: #f8ead0;
+    }
+
+    .channel-head a {
+      font-size: 0.86rem;
+      text-decoration: none;
+      color: #e4c88f;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .video-card {
+      border: 1px solid rgba(255, 219, 147, 0.19);
+      background: linear-gradient(180deg, #1a1a1a, #121212);
       border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 0.84rem;
-      line-height: 1.5;
-    }
-
-    main {
-      padding-bottom: 36px;
-    }
-
-    .player-wrap {
-      margin-top: 20px;
-      border: 1px solid var(--line);
-      border-radius: 15px;
       overflow: hidden;
-      background: rgba(11, 15, 30, 0.7);
+      cursor: pointer;
+      transition: 0.2s ease;
+      min-width: 0;
+    }
+
+    .video-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 219, 147, 0.52);
+    }
+
+    .thumb {
+      aspect-ratio: 16 / 9;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 219, 147, 0.2);
+      background:
+        linear-gradient(135deg, rgba(214, 163, 71, 0.22), rgba(82, 62, 31, 0.35)),
+        #161616;
+      background-size: cover;
+      background-position: center;
+      display: grid;
+      place-items: center;
+    }
+
+    .play {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 232, 186, 0.5);
+      background: rgba(0, 0, 0, 0.35);
+      color: #ffefcf;
+      display: grid;
+      place-items: center;
+      font-size: 0.86rem;
+    }
+
+    .duration {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      border-radius: 6px;
+      padding: 2px 6px;
+      background: rgba(0, 0, 0, 0.75);
+      color: #f8f1df;
+      font-size: 0.72rem;
+    }
+
+    .info {
+      padding: 10px 10px 12px;
+    }
+
+    .title {
+      font-size: 0.9rem;
+      line-height: 1.36;
+      min-height: 2.45em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: #f6ecd9;
+    }
+
+    .desc {
+      margin-top: 5px;
+      font-size: 0.79rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .empty {
+      grid-column: 1 / -1;
+      border: 1px dashed rgba(255, 219, 147, 0.35);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+      color: #ccb98f;
+      background: rgba(255, 219, 147, 0.05);
+      font-size: 0.9rem;
+    }
+
+    /* player modal */
+    .player-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 90;
+      padding: 20px;
+    }
+
+    .player-modal.show {
+      display: flex;
+    }
+
+    .player-dialog {
+      width: min(1200px, 95vw);
+      background: #0f0f0f;
+      border: 1px solid rgba(255, 219, 147, 0.25);
+      border-radius: 14px;
+      overflow: hidden;
       box-shadow: var(--shadow);
     }
 
-    .player-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
+    .player-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-bottom: 1px solid rgba(255, 219, 147, 0.2);
+      background: #141414;
     }
 
-    .player-main {
-      border-right: 1px solid var(--line);
+    .player-top b {
+      color: #ffe7bc;
+      font-size: 0.95rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-close {
+      border: 1px solid rgba(255, 219, 147, 0.35);
+      border-radius: 8px;
+      background: rgba(255, 219, 147, 0.08);
+      color: #f7e5c1;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.82rem;
     }
 
     .player-frame {
+      width: 100%;
       aspect-ratio: 16 / 9;
+      background: #000;
       position: relative;
-      background: #04050a;
     }
 
     .player-frame iframe,
@@ -272,216 +408,46 @@
       place-items: center;
       text-align: center;
       padding: 20px;
-      color: #c8d0ec;
+      color: #d8c59a;
       background:
-        radial-gradient(circle at 60% 30%, rgba(114, 228, 208, 0.12), transparent 45%),
-        radial-gradient(circle at 20% 10%, rgba(215, 176, 109, 0.16), transparent 38%),
-        #090d1c;
+        radial-gradient(circle at 60% 30%, rgba(214, 163, 71, 0.2), transparent 38%),
+        #080808;
     }
 
-    .player-placeholder p {
-      max-width: 520px;
-      line-height: 1.55;
-      font-size: 0.92rem;
-      color: #aeb9d9;
+    .player-footer {
+      padding: 10px 14px 14px;
+      border-top: 1px solid rgba(255, 219, 147, 0.16);
+      background: #121212;
     }
 
-    .player-meta {
-      padding: 14px 16px 16px;
-      border-top: 1px solid var(--line);
+    .player-footer p {
+      font-size: 0.88rem;
+      color: #d4c19a;
+      line-height: 1.5;
     }
 
-    .player-meta h2 {
-      font-size: 1.08rem;
-      margin-bottom: 6px;
-    }
-
-    .player-meta p {
-      color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.45;
-    }
-
-    .meta-row {
-      margin-top: 10px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .pill {
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      border-radius: 999px;
-      padding: 3px 9px;
-      font-size: 0.76rem;
-      color: #ecf2ff;
-      background: rgba(255, 255, 255, 0.06);
-    }
-
-    .origin-link {
-      text-decoration: none;
-      font-size: 0.8rem;
-      color: #9fe6d8;
+    .player-origin {
+      margin-top: 8px;
       display: none;
+      font-size: 0.82rem;
+      color: #f0d39a;
+      text-decoration: none;
     }
 
-    .origin-link.show {
+    .player-origin.show {
       display: inline-block;
     }
 
-    .player-note {
-      padding: 14px 14px 16px;
-      font-size: 0.84rem;
-      color: #cbd5f5;
-      line-height: 1.55;
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .player-note b {
-      color: #ffe2b5;
-    }
-
-    .channel {
-      margin-top: 26px;
-    }
-
-    .channel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .channel-head h2 {
-      font-size: 1.32rem;
-      font-weight: 700;
-    }
-
-    .channel-head a {
-      text-decoration: none;
-      font-size: 0.88rem;
-      color: #9de8d8;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .video-card {
-      border-radius: 13px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: var(--card);
-      transition: transform 0.2s ease, border-color 0.2s ease;
-      min-width: 0;
-      cursor: pointer;
-    }
-
-    .video-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(114, 228, 208, 0.65);
-    }
-
-    .video-card.active {
-      border-color: rgba(215, 176, 109, 0.9);
-      box-shadow: 0 0 0 1px rgba(215, 176, 109, 0.8) inset;
-    }
-
-    .thumb {
-      aspect-ratio: 16 / 9;
-      position: relative;
-      border-bottom: 1px solid var(--line);
-      background:
-        linear-gradient(135deg, rgba(215, 176, 109, 0.18), rgba(114, 228, 208, 0.22)),
-        #111628;
-      background-size: cover;
-      background-position: center;
-      display: grid;
-      place-items: center;
-    }
-
-    .play {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      background: rgba(0, 0, 0, 0.34);
-      display: grid;
-      place-items: center;
-      font-size: 0.86rem;
-    }
-
-    .duration {
-      position: absolute;
-      right: 8px;
-      bottom: 8px;
-      border-radius: 6px;
-      padding: 2px 6px;
-      background: rgba(0, 0, 0, 0.75);
-      font-size: 0.72rem;
-      color: #f8fbff;
-    }
-
-    .mode {
-      position: absolute;
-      left: 8px;
-      top: 8px;
-      border-radius: 999px;
-      padding: 2px 7px;
-      font-size: 0.68rem;
-      background: rgba(0, 0, 0, 0.58);
-      color: #dff8f2;
-      border: 1px solid rgba(114, 228, 208, 0.45);
-    }
-
-    .info {
-      padding: 10px 10px 12px;
-    }
-
-    .title {
-      font-size: 0.9rem;
-      line-height: 1.35;
-      min-height: 2.45em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .desc {
-      margin-top: 5px;
-      font-size: 0.79rem;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .empty {
-      grid-column: 1 / -1;
-      border: 1px dashed rgba(255, 255, 255, 0.26);
-      border-radius: 10px;
-      padding: 16px;
-      color: #aeb8d5;
-      font-size: 0.9rem;
-      text-align: center;
-      background: rgba(255, 255, 255, 0.02);
-    }
-
+    /* admin modal */
     .admin-modal {
       position: fixed;
       inset: 0;
-      z-index: 80;
+      background: rgba(0, 0, 0, 0.72);
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(3, 4, 10, 0.78);
-      backdrop-filter: blur(6px);
-      padding: 16px;
+      z-index: 100;
+      padding: 20px;
     }
 
     .admin-modal.show {
@@ -489,12 +455,12 @@
     }
 
     .admin-panel {
-      width: min(1040px, 96vw);
-      max-height: 92vh;
+      width: min(1120px, 95vw);
+      max-height: 90vh;
       overflow: auto;
+      border: 1px solid rgba(255, 219, 147, 0.25);
       border-radius: 14px;
-      border: 1px solid rgba(215, 176, 109, 0.3);
-      background: #0f1427;
+      background: #101010;
       box-shadow: var(--shadow);
       padding: 14px;
     }
@@ -503,89 +469,90 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--line);
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .admin-head h2 {
-      font-size: 1.1rem;
+      font-size: 1rem;
+      color: #ffe6bd;
     }
 
     .admin-close {
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      background: rgba(255, 255, 255, 0.05);
-      color: #f2f6ff;
+      border: 1px solid rgba(255, 219, 147, 0.35);
       border-radius: 8px;
-      padding: 7px 10px;
+      background: rgba(255, 219, 147, 0.08);
+      color: #f7e5c1;
+      padding: 6px 10px;
       cursor: pointer;
     }
 
     .admin-alert {
-      margin-top: 10px;
+      margin-bottom: 10px;
       border-radius: 10px;
-      border: 1px dashed rgba(255, 255, 255, 0.25);
-      background: rgba(255, 255, 255, 0.04);
-      color: #d4dcf8;
-      padding: 10px;
-      font-size: 0.82rem;
+      border: 1px solid rgba(255, 219, 147, 0.28);
+      background: rgba(255, 219, 147, 0.08);
+      color: #ecd8b2;
+      font-size: 0.84rem;
+      padding: 10px 12px;
       line-height: 1.5;
     }
 
     .admin-alert.error {
-      border-color: rgba(255, 113, 113, 0.5);
-      color: #ffd6d6;
+      border-color: rgba(217, 108, 108, 0.6);
+      background: rgba(217, 108, 108, 0.12);
+      color: #ffd3d3;
     }
 
     .admin-alert.ok {
-      border-color: rgba(136, 232, 215, 0.55);
-      color: #d8fff8;
+      border-color: rgba(119, 188, 128, 0.5);
+      background: rgba(119, 188, 128, 0.12);
+      color: #d2ffd8;
     }
 
     .admin-grid {
-      margin-top: 12px;
       display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 12px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 10px;
     }
 
     .admin-form,
     .admin-list-wrap {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 219, 147, 0.2);
+      border-radius: 10px;
+      background: #161616;
+      padding: 10px;
     }
 
     .admin-form h3,
     .admin-list-wrap h3 {
-      margin-bottom: 10px;
-      font-size: 0.98rem;
-      color: #ffeac4;
+      font-size: 0.9rem;
+      color: #ffe1ac;
+      margin-bottom: 8px;
     }
 
     .field {
-      margin-bottom: 9px;
+      margin-bottom: 8px;
     }
 
     .field label {
       display: block;
+      font-size: 0.75rem;
+      color: #d8c49b;
       margin-bottom: 4px;
-      font-size: 0.79rem;
-      color: #c6d0ed;
     }
 
     .field input,
     .field textarea,
     .field select {
       width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.04);
-      color: #edf2ff;
+      border: 1px solid rgba(255, 219, 147, 0.2);
       border-radius: 8px;
-      padding: 8px;
-      font-size: 0.86rem;
-      font-family: inherit;
+      background: #101010;
+      color: #f6eddc;
+      font-size: 0.84rem;
+      padding: 8px 9px;
+      outline: none;
     }
 
     .field textarea {
@@ -595,7 +562,7 @@
 
     .split {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 8px;
     }
 
@@ -603,81 +570,73 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 4px;
+      margin-top: 8px;
     }
 
     .btn {
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 219, 147, 0.3);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.06);
-      color: #f4f8ff;
-      padding: 8px 12px;
+      background: rgba(255, 219, 147, 0.07);
+      color: #f4e6c8;
+      font-size: 0.82rem;
+      padding: 7px 10px;
       cursor: pointer;
-      font-size: 0.84rem;
     }
 
     .btn.primary {
-      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
-      color: #241a0f;
-      border-color: rgba(255, 255, 255, 0.3);
+      color: #291c0d;
+      background: linear-gradient(120deg, var(--gold), var(--gold-2));
+      border-color: transparent;
       font-weight: 700;
     }
 
     .btn.danger {
-      background: rgba(255, 113, 113, 0.12);
-      border-color: rgba(255, 113, 113, 0.5);
-      color: #ffc9c9;
-    }
-
-    .tips {
-      margin-top: 6px;
-      font-size: 0.75rem;
-      color: #aeb8d9;
-      line-height: 1.5;
+      color: #ffd2d2;
+      border-color: rgba(217, 108, 108, 0.58);
+      background: rgba(217, 108, 108, 0.14);
     }
 
     .admin-list {
       display: grid;
       gap: 8px;
-      max-height: 52vh;
+      max-height: 55vh;
       overflow: auto;
       padding-right: 2px;
     }
 
     .admin-item {
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
+      border: 1px solid rgba(255, 219, 147, 0.18);
+      border-radius: 9px;
+      background: #111111;
       padding: 8px;
-      background: rgba(0, 0, 0, 0.18);
     }
 
     .admin-item-head {
       display: flex;
       justify-content: space-between;
       gap: 8px;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
     }
 
     .admin-item-head b {
-      color: #f8f1de;
+      color: #ffe7bd;
     }
 
     .admin-item-meta {
       margin-top: 4px;
-      font-size: 0.75rem;
-      color: #aeb7d8;
       display: flex;
-      gap: 6px;
       flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.73rem;
+      color: #cbb98f;
     }
 
     .badge {
-      border: 1px solid rgba(114, 228, 208, 0.45);
-      background: rgba(114, 228, 208, 0.12);
-      color: #dcfff8;
+      border: 1px solid rgba(255, 219, 147, 0.42);
       border-radius: 999px;
       padding: 1px 6px;
-      font-size: 0.72rem;
+      background: rgba(255, 219, 147, 0.12);
+      color: #ffeac3;
     }
 
     .admin-item-actions {
@@ -689,9 +648,9 @@
     footer {
       border-top: 1px solid var(--line);
       text-align: center;
-      color: #9caad0;
-      font-size: 0.84rem;
-      padding: 22px 0 34px;
+      color: #a9966d;
+      font-size: 0.83rem;
+      padding: 20px 0 32px;
     }
 
     @media (max-width: 1200px) {
@@ -701,15 +660,6 @@
     }
 
     @media (max-width: 980px) {
-      .player-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .player-main {
-        border-right: none;
-        border-bottom: 1px solid var(--line);
-      }
-
       .admin-grid {
         grid-template-columns: 1fr;
       }
@@ -721,13 +671,11 @@
         padding: 12px 0;
         flex-wrap: wrap;
       }
-
       .search {
         order: 3;
         max-width: none;
         width: 100%;
       }
-
       .video-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -737,7 +685,6 @@
       .video-grid {
         grid-template-columns: 1fr;
       }
-
       .split {
         grid-template-columns: 1fr;
       }
@@ -747,77 +694,38 @@
 <body>
   <header>
     <div class="container topbar">
-      <div class="brand"><b>珍珍日上TV</b> · 孙珍妮视频主页</div>
+      <div class="brand"><b>珍珍日上TV</b></div>
       <label class="search">
-        <input id="searchInput" type="text" placeholder="搜索视频标题/简介：舞台、综艺、角色、直播...">
+        <input id="searchInput" type="text" placeholder="搜索视频标题/简介">
       </label>
       <nav class="nav">
         <a href="#stage" class="active">舞台</a>
         <a href="#show">综艺</a>
         <a href="#role">角色</a>
         <a href="#live">直播回放</a>
-        <a href="#" id="adminEntry">管理后台</a>
+        <a href="#" id="adminEntry">管理入口</a>
         <a href="/daily-group.html">官群空降</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero">
+    <section class="hero" id="heroBanner">
       <div class="hero-inner">
         <div class="hero-tag">Zhenzhen Rising TV</div>
-        <h1>欢迎来到 <span>珍珍日上TV</span></h1>
-        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频。管理后台支持录入 B 站链接、自动补全可播地址，并支持云端同步。</p>
+        <h1>珍珍日上TV</h1>
+        <p>黑金质感安利首页，按频道浏览，一键打开弹层播放器观看。</p>
         <div class="hero-actions">
-          <a class="primary" href="#player">进入播放器</a>
-          <a class="secondary" href="#stage">先看舞台</a>
-          <a class="secondary" href="#" id="heroAdminEntry">打开管理后台</a>
+          <a class="primary" href="#stage">开始浏览</a>
+          <a class="secondary" href="/daily-group.html">官群空降图鉴</a>
         </div>
-        <div class="edit-tip">
-          内容替换入口：底部脚本中的 <strong>VIDEO_LIBRARY</strong>（默认内容） + 管理后台录入内容（本地缓存 + 可选云端同步）。<br>
-          管理后台默认密码：<strong>zzrs2026</strong>（可在脚本中改）。
-        </div>
-      </div>
-    </section>
-
-    <section class="player-wrap" id="player">
-      <div class="player-grid">
-        <div class="player-main">
-          <div class="player-frame">
-            <iframe id="siteFrame" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
-            <video id="siteVideo" controls playsinline></video>
-            <div id="playerPlaceholder" class="player-placeholder">
-              <div>
-                <h2 style="margin-bottom: 8px;">站内播放器已就绪</h2>
-                <p>点击下方视频卡片即可开始播放。推荐在后台填写 B 站视频链接，系统会自动尝试补全站内可播地址（playUrl）。</p>
-              </div>
-            </div>
-          </div>
-          <div class="player-meta">
-            <h2 id="nowTitle">未选择视频</h2>
-            <p id="nowDesc">先从“舞台安利 / 综艺安利 / 角色安利 / 直播回放”里点一条。</p>
-            <div class="meta-row">
-              <span id="nowChannel" class="pill">频道：-</span>
-              <span id="nowDuration" class="pill">时长：--:--</span>
-              <span id="nowMode" class="pill">播放方式：-</span>
-              <a id="originLink" class="origin-link" href="#" target="_blank" rel="noopener noreferrer">打开原链接</a>
-            </div>
-          </div>
-        </div>
-        <aside class="player-note">
-          <b>链接说明：</b><br>
-          1) 不是所有平台分享页都支持 iframe 播放。<br>
-          2) 最稳妥的是使用平台 embed 链接（如 B 站播放器链接）。<br>
-          3) 如果当前视频不可站内播放，页面会提示并可点击“打开原链接”观看。<br>
-          4) 默认先保存在当前浏览器（IndexedDB），可在后台一键同步到 GitHub 云端。<br>
-        </aside>
       </div>
     </section>
 
     <section class="channel" id="stage">
       <div class="channel-head">
         <h2>舞台安利</h2>
-        <a href="#player">查看播放器 ></a>
+        <a href="#">更多 ></a>
       </div>
       <div class="video-grid" data-channel="stage"></div>
     </section>
@@ -825,7 +733,7 @@
     <section class="channel" id="show">
       <div class="channel-head">
         <h2>综艺安利</h2>
-        <a href="#player">查看播放器 ></a>
+        <a href="#">更多 ></a>
       </div>
       <div class="video-grid" data-channel="show"></div>
     </section>
@@ -833,7 +741,7 @@
     <section class="channel" id="role">
       <div class="channel-head">
         <h2>角色安利</h2>
-        <a href="#player">查看播放器 ></a>
+        <a href="#">更多 ></a>
       </div>
       <div class="video-grid" data-channel="role"></div>
     </section>
@@ -841,24 +749,64 @@
     <section class="channel" id="live">
       <div class="channel-head">
         <h2>直播回放</h2>
-        <a href="#player">查看播放器 ></a>
+        <a href="#">更多 ></a>
       </div>
       <div class="video-grid" data-channel="live"></div>
     </section>
   </main>
 
+  <div id="playerModal" class="player-modal" aria-hidden="true">
+    <div class="player-dialog">
+      <div class="player-top">
+        <b id="playerTitle">未选择视频</b>
+        <button id="playerClose" class="player-close" type="button">关闭播放器</button>
+      </div>
+      <div class="player-frame">
+        <iframe id="siteFrame" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+        <video id="siteVideo" controls playsinline></video>
+        <div id="playerPlaceholder" class="player-placeholder">
+          <div>
+            <h3 style="margin-bottom:8px;">当前视频暂不支持站内播放</h3>
+            <p style="font-size:0.88rem;line-height:1.5;">可点击下方“打开原链接”在新窗口观看。</p>
+          </div>
+        </div>
+      </div>
+      <div class="player-footer">
+        <p id="playerDesc">-</p>
+        <a id="playerOrigin" class="player-origin" href="#" target="_blank" rel="noopener noreferrer">打开原链接</a>
+      </div>
+    </div>
+  </div>
+
   <div id="adminModal" class="admin-modal" aria-hidden="true">
     <div class="admin-panel">
       <div class="admin-head">
-        <h2>管理后台 · 链接录入 / 自动转换 / 云端同步</h2>
+        <h2>管理后台</h2>
         <button id="adminClose" class="admin-close" type="button">关闭</button>
       </div>
-      <div id="adminAlert" class="admin-alert">
-        在这里录入视频链接（推荐 B 站）和封面链接，填写标题、简介、时长与分区。支持自动转换 b23 链接，并可同步到 GitHub 云端。
+      <div id="adminAlert" class="admin-alert">后台已就绪。</div>
+
+      <div class="admin-alert" style="margin-top:8px;">
+        <div class="split">
+          <div class="field">
+            <label for="heroImageUrl">首页横幅图片链接</label>
+            <input id="heroImageUrl" type="url" placeholder="https://...">
+          </div>
+          <div class="field">
+            <label for="heroImageOn">横幅图片开关</label>
+            <select id="heroImageOn">
+              <option value="on">启用</option>
+              <option value="off">关闭</option>
+            </select>
+          </div>
+        </div>
+        <div class="btn-row" style="margin-top:8px;">
+          <button id="saveHeroBtn" class="btn" type="button">保存横幅设置</button>
+        </div>
       </div>
 
       <div class="admin-alert" style="margin-top:8px;">
-        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+        <div class="split">
           <div class="field">
             <label for="ghOwner">GitHub Owner</label>
             <input id="ghOwner" type="text" placeholder="例如：glow0505">
@@ -877,8 +825,8 @@
           </div>
         </div>
         <div class="field" style="margin-top:8px;">
-          <label for="ghToken">GitHub Token（需要 contents 写权限）</label>
-          <input id="ghToken" type="password" placeholder="ghp_xxx 或 fine-grained token">
+          <label for="ghToken">GitHub Token（contents 写权限）</label>
+          <input id="ghToken" type="password" placeholder="ghp_xxx">
         </div>
         <div class="btn-row" style="margin-top:8px;">
           <button id="saveCloudConfigBtn" class="btn" type="button">保存云配置</button>
@@ -886,7 +834,7 @@
           <button id="pushCloudBtn" class="btn" type="button">上传到云端</button>
           <label style="margin-left:auto;font-size:.8rem;display:flex;align-items:center;gap:6px;color:#e3e9ff;">
             <input id="autoSyncCloud" type="checkbox">
-            保存后自动云同步
+            自动云同步
           </label>
         </div>
       </div>
@@ -898,11 +846,11 @@
             <input type="hidden" id="editId">
             <div class="field">
               <label for="videoTitle">视频标题 *</label>
-              <input id="videoTitle" type="text" required placeholder="例如：舞台直拍｜神级卡点">
+              <input id="videoTitle" type="text" required>
             </div>
             <div class="field">
               <label for="videoDesc">视频简介</label>
-              <textarea id="videoDesc" placeholder="一句话介绍这个视频亮点"></textarea>
+              <textarea id="videoDesc"></textarea>
             </div>
             <div class="split">
               <div class="field">
@@ -920,13 +868,13 @@
               </div>
             </div>
             <div class="field">
-              <label for="videoSourceUrl">原链接（可选）</label>
-              <input id="videoSourceUrl" type="url" placeholder="https://...">
+              <label for="videoSourceUrl">原链接（B站链接）</label>
+              <input id="videoSourceUrl" type="url" placeholder="https://b23.tv/... 或 https://www.bilibili.com/video/BV...">
             </div>
             <div class="split">
               <div class="field">
-                <label for="videoPlayUrl">站内播放链接（playUrl）</label>
-                <input id="videoPlayUrl" type="url" placeholder="推荐填写 B 站播放器链接（player.bilibili.com）">
+                <label for="videoPlayUrl">playUrl（可选）</label>
+                <input id="videoPlayUrl" type="url" placeholder="https://player.bilibili.com/player.html?...">
               </div>
               <div class="field">
                 <label for="videoPlayType">播放类型（可选）</label>
@@ -939,24 +887,19 @@
             </div>
             <div class="field">
               <label for="coverUrl">封面链接（可选）</label>
-              <input id="coverUrl" type="url" placeholder="https://... 或 /images/cover.jpg">
+              <input id="coverUrl" type="url" placeholder="https://...">
             </div>
             <div class="btn-row">
               <button class="btn primary" type="submit">保存视频</button>
               <button class="btn" id="resetFormBtn" type="button">清空表单</button>
             </div>
-            <p class="tips">
-              - 建议填写 B 站原链接，系统会自动尝试转换成 playUrl。<br>
-              - 若配置了 GitHub，可一键拉取/上传云端，不再只在本地保存。<br>
-              - 如 b23 短链解析失败，可手动补充 playUrl。
-            </p>
           </form>
         </section>
 
         <section class="admin-list-wrap">
-          <h3>已上传内容（可编辑/删除）</h3>
+          <h3>已上传内容</h3>
           <div id="adminList" class="admin-list">
-            <div class="empty">暂无后台上传内容。</div>
+            <div class="empty">暂无内容。</div>
           </div>
         </section>
       </div>
@@ -964,54 +907,15 @@
   </div>
 
   <footer>
-    <div class="container">珍珍日上TV · 站内播放与链接后台管理已启用</div>
+    <div class="container">珍珍日上TV</div>
   </footer>
 
   <script>
-    /*
-      ==================== 默认内容（仍可手动改） ====================
-      字段说明：
-      - title: 标题
-      - desc: 简介
-      - duration: 时长文本，如 "04:21"
-      - url: 原始分享链接（可选）
-      - playUrl: 站内播放地址（推荐填写）
-      - playType: "iframe" 或 "video"（不填会自动识别）
-      - cover: 封面图链接（可留空）
-    */
     const VIDEO_LIBRARY = {
-      stage: [
-        { title: "舞台 1 · 高能开场直拍", desc: "卡点干净，爆发力足", duration: "04:12", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "舞台 2 · 合作舞台完整版", desc: "互动自然，镜头感强", duration: "03:58", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "舞台 3 · 抒情慢歌 Focus", desc: "情绪递进细腻稳定", duration: "05:01", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "舞台 4 · 练习室版", desc: "动作细节一目了然", duration: "02:49", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "舞台 5 · 名场面混剪", desc: "新粉速入坑推荐", duration: "03:33", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "舞台 6 · 年度特别舞台", desc: "舞台叙事完整有层次", duration: "04:26", url: "#", playUrl: "", playType: "iframe", cover: "" }
-      ],
-      show: [
-        { title: "综艺 1 · 团综高笑点合集", desc: "综艺感在线，轻松下饭", duration: "12:10", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "综艺 2 · 游戏挑战高能片段", desc: "反应快，梗密度高", duration: "08:42", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "综艺 3 · 默契挑战名场面", desc: "团队互动有看点", duration: "09:36", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "综艺 4 · 访谈金句片段", desc: "表达清晰，有态度", duration: "07:55", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "综艺 5 · 幕后日常花絮", desc: "松弛感和亲和力拉满", duration: "10:02", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "综艺 6 · 入坑必看导览", desc: "一条视频看懂亮点", duration: "06:21", url: "#", playUrl: "", playType: "iframe", cover: "" }
-      ],
-      role: [
-        { title: "角色 1 · 高智感角色剪辑", desc: "眼神戏细节很耐看", duration: "05:47", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "角色 2 · 青春成长线", desc: "台词自然，代入感强", duration: "07:06", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "角色 3 · 情绪爆发名场面", desc: "层次完整，起伏自然", duration: "04:50", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "角色 4 · 台词高光集锦", desc: "节奏和力度兼具", duration: "06:28", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "角色 5 · 人物关系梳理", desc: "剧情友好，适合新粉", duration: "08:03", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "角色 6 · 1分钟快速安利", desc: "适合转发安利朋友", duration: "03:29", url: "#", playUrl: "", playType: "iframe", cover: "" }
-      ],
-      live: [
-        { title: "直播 1 · 日常聊天精华", desc: "松弛自然，入坑友好", duration: "15:32", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "直播 2 · 粉丝问答合集", desc: "幕后内容密度高", duration: "13:47", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "直播 3 · 高能反应瞬间", desc: "名场面时间轴整理", duration: "09:59", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "直播 4 · 舞台幕后聊天", desc: "分享真实工作感受", duration: "11:18", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "直播 5 · 轻松互动夜", desc: "互动感强，氛围好", duration: "14:05", url: "#", playUrl: "", playType: "iframe", cover: "" },
-        { title: "直播 6 · 新粉速看导览", desc: "关键片段集中补档", duration: "07:44", url: "#", playUrl: "", playType: "iframe", cover: "" }
-      ]
+      stage: [],
+      show: [],
+      role: [],
+      live: []
     };
 
     const channelLabels = {
@@ -1022,20 +926,36 @@
     };
     const channelOrder = ["stage", "show", "role", "live"];
 
+    const ADMIN_PASSWORD_KEY = "zzrs-admin-password";
+    const DEFAULT_ADMIN_PASSWORD = "zzrs2026";
+    const CLOUD_CONFIG_KEY = "zzrs-cloud-config";
+    const CLOUD_TOKEN_KEY = "zzrs-cloud-token";
+    const HERO_CONFIG_KEY = "zzrs-hero-config";
+
+    const DB_NAME = "zzrs-media-db";
+    const DB_VERSION = 1;
+    const STORE_NAME = "videos";
+    let dbPromise = null;
+
+    let adminAuthed = false;
+    let uploadedRecords = [];
+    let uploadedByChannel = { stage: [], show: [], role: [], live: [] };
+    let renderedMap = { stage: [], show: [], role: [], live: [] };
+
     const searchInput = document.getElementById("searchInput");
+    const heroBanner = document.getElementById("heroBanner");
+
+    const playerModal = document.getElementById("playerModal");
+    const playerClose = document.getElementById("playerClose");
+    const playerTitle = document.getElementById("playerTitle");
+    const playerDesc = document.getElementById("playerDesc");
+    const playerOrigin = document.getElementById("playerOrigin");
     const siteFrame = document.getElementById("siteFrame");
     const siteVideo = document.getElementById("siteVideo");
     const playerPlaceholder = document.getElementById("playerPlaceholder");
-    const nowTitle = document.getElementById("nowTitle");
-    const nowDesc = document.getElementById("nowDesc");
-    const nowChannel = document.getElementById("nowChannel");
-    const nowDuration = document.getElementById("nowDuration");
-    const nowMode = document.getElementById("nowMode");
-    const originLink = document.getElementById("originLink");
 
     const adminModal = document.getElementById("adminModal");
     const adminEntry = document.getElementById("adminEntry");
-    const heroAdminEntry = document.getElementById("heroAdminEntry");
     const adminClose = document.getElementById("adminClose");
     const adminAlert = document.getElementById("adminAlert");
     const adminForm = document.getElementById("adminForm");
@@ -1052,6 +972,11 @@
     const videoPlayUrl = document.getElementById("videoPlayUrl");
     const videoPlayType = document.getElementById("videoPlayType");
     const coverUrl = document.getElementById("coverUrl");
+
+    const heroImageUrl = document.getElementById("heroImageUrl");
+    const heroImageOn = document.getElementById("heroImageOn");
+    const saveHeroBtn = document.getElementById("saveHeroBtn");
+
     const ghOwner = document.getElementById("ghOwner");
     const ghRepo = document.getElementById("ghRepo");
     const ghBranch = document.getElementById("ghBranch");
@@ -1061,21 +986,6 @@
     const saveCloudConfigBtn = document.getElementById("saveCloudConfigBtn");
     const pullCloudBtn = document.getElementById("pullCloudBtn");
     const pushCloudBtn = document.getElementById("pushCloudBtn");
-
-    const ADMIN_PASSWORD_KEY = "zzrs-admin-password";
-    const DEFAULT_ADMIN_PASSWORD = "zzrs2026";
-    const CLOUD_CONFIG_KEY = "zzrs-cloud-config";
-    const CLOUD_TOKEN_KEY = "zzrs-cloud-token";
-
-    const DB_NAME = "zzrs-media-db";
-    const DB_VERSION = 1;
-    const STORE_NAME = "videos";
-    let dbPromise = null;
-
-    let adminAuthed = false;
-    let uploadedRecords = [];
-    let uploadedByChannel = { stage: [], show: [], role: [], live: [] };
-    let renderedMap = { stage: [], show: [], role: [], live: [] };
 
     function escapeHTML(value) {
       return String(value || "")
@@ -1098,11 +1008,8 @@
     }
 
     function openDB() {
-      if (!("indexedDB" in window)) {
-        return Promise.reject(new Error("当前浏览器不支持 IndexedDB"));
-      }
+      if (!("indexedDB" in window)) return Promise.reject(new Error("浏览器不支持 IndexedDB"));
       if (dbPromise) return dbPromise;
-
       dbPromise = new Promise((resolve, reject) => {
         const req = indexedDB.open(DB_NAME, DB_VERSION);
         req.onerror = () => reject(req.error);
@@ -1121,8 +1028,7 @@
       const db = await openDB();
       return new Promise((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, "readonly");
-        const store = tx.objectStore(STORE_NAME);
-        const req = store.getAll();
+        const req = tx.objectStore(STORE_NAME).getAll();
         req.onerror = () => reject(req.error);
         req.onsuccess = () => resolve(req.result || []);
       });
@@ -1132,8 +1038,7 @@
       const db = await openDB();
       return new Promise((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, "readwrite");
-        const store = tx.objectStore(STORE_NAME);
-        const req = store.put(record);
+        const req = tx.objectStore(STORE_NAME).put(record);
         req.onerror = () => reject(req.error);
         req.onsuccess = () => resolve(record);
       });
@@ -1143,8 +1048,7 @@
       const db = await openDB();
       return new Promise((resolve, reject) => {
         const tx = db.transaction(STORE_NAME, "readwrite");
-        const store = tx.objectStore(STORE_NAME);
-        const req = store.delete(id);
+        const req = tx.objectStore(STORE_NAME).delete(id);
         req.onerror = () => reject(req.error);
         req.onsuccess = () => resolve(true);
       });
@@ -1158,10 +1062,10 @@
         const clearReq = store.clear();
         clearReq.onerror = () => reject(clearReq.error);
         clearReq.onsuccess = () => {
-          records.forEach((record) => store.put(record));
+          records.forEach((r) => store.put(r));
         };
         tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error || new Error("写入本地数据库失败"));
+        tx.onerror = () => reject(tx.error || new Error("写入失败"));
       });
     }
 
@@ -1170,9 +1074,7 @@
     }
 
     function base64ToUtf8(input) {
-      const binary = atob(input);
-      const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
-      return new TextDecoder().decode(bytes);
+      return decodeURIComponent(escape(atob(input)));
     }
 
     function normalizeRepoPath(path) {
@@ -1184,9 +1086,8 @@
     }
 
     function sanitizeCloudRecord(record) {
-      const id = safeText(record.id, "video_" + Date.now().toString(36));
       return {
-        id,
+        id: safeText(record.id, "video_" + Date.now().toString(36)),
         title: safeText(record.title, "未命名视频"),
         desc: safeText(record.desc, ""),
         duration: safeText(record.duration, ""),
@@ -1201,13 +1102,9 @@
     }
 
     function loadCloudConfigToForm() {
-      const savedRaw = localStorage.getItem(CLOUD_CONFIG_KEY);
+      const raw = localStorage.getItem(CLOUD_CONFIG_KEY);
       let saved = {};
-      try {
-        saved = savedRaw ? JSON.parse(savedRaw) : {};
-      } catch {
-        saved = {};
-      }
+      try { saved = raw ? JSON.parse(raw) : {}; } catch { saved = {}; }
       ghOwner.value = safeText(saved.owner, "glow0505");
       ghRepo.value = safeText(saved.repo, "glow0505.github.io");
       ghBranch.value = safeText(saved.branch, "main");
@@ -1230,16 +1127,10 @@
     function saveCloudConfigFromForm() {
       const cfg = getCloudConfigFromForm();
       localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify({
-        owner: cfg.owner,
-        repo: cfg.repo,
-        branch: cfg.branch,
-        path: cfg.path,
-        autoSync: cfg.autoSync
+        owner: cfg.owner, repo: cfg.repo, branch: cfg.branch, path: cfg.path, autoSync: cfg.autoSync
       }));
-      if (cfg.token) {
-        localStorage.setItem(CLOUD_TOKEN_KEY, cfg.token);
-      }
-      showAlert("云端配置已保存。", "ok");
+      if (cfg.token) localStorage.setItem(CLOUD_TOKEN_KEY, cfg.token);
+      showAlert("云配置已保存。", "ok");
     }
 
     async function fetchCloudFileMeta(config) {
@@ -1250,42 +1141,30 @@
           "Authorization": `Bearer ${config.token}`
         }
       });
-      if (response.status === 404) {
-        return { exists: false, sha: "" };
-      }
-      if (!response.ok) {
-        throw new Error(`读取云端失败：HTTP ${response.status}`);
-      }
+      if (response.status === 404) return { exists: false, sha: "" };
+      if (!response.ok) throw new Error(`读取云端失败：HTTP ${response.status}`);
       const data = await response.json();
       return { exists: true, sha: data.sha || "", data };
     }
 
     async function pullFromCloud() {
       const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) {
-        throw new Error("请先填写 GitHub owner/repo/token");
-      }
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 GitHub owner/repo/token");
       const meta = await fetchCloudFileMeta(cfg);
-      if (!meta.exists) {
-        throw new Error("云端数据文件不存在，请先上传一次");
-      }
-      const contentBase64 = (meta.data && meta.data.content) ? String(meta.data.content).replace(/\n/g, "") : "";
-      const text = base64ToUtf8(contentBase64 || "");
+      if (!meta.exists) throw new Error("云端数据文件不存在");
+      const b64 = meta.data && meta.data.content ? String(meta.data.content).replace(/\n/g, "") : "";
+      const text = base64ToUtf8(b64 || "");
       const parsed = JSON.parse(text);
-      if (!Array.isArray(parsed)) {
-        throw new Error("云端数据格式错误（应为数组）");
-      }
-      const sanitized = parsed.map(sanitizeCloudRecord);
-      await dbReplaceAll(sanitized);
+      if (!Array.isArray(parsed)) throw new Error("云端数据格式错误");
+      const list = parsed.map(sanitizeCloudRecord);
+      await dbReplaceAll(list);
       await refreshUploadedLibrary();
-      return sanitized.length;
+      return list.length;
     }
 
     async function pushToCloud() {
       const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) {
-        throw new Error("请先填写 GitHub owner/repo/token");
-      }
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 GitHub owner/repo/token");
       const meta = await fetchCloudFileMeta(cfg);
       const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
       const payload = {
@@ -1293,9 +1172,7 @@
         content: utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)),
         branch: cfg.branch
       };
-      if (meta.exists && meta.sha) {
-        payload.sha = meta.sha;
-      }
+      if (meta.exists && meta.sha) payload.sha = meta.sha;
       const response = await fetch(endpoint, {
         method: "PUT",
         headers: {
@@ -1305,9 +1182,7 @@
         },
         body: JSON.stringify(payload)
       });
-      if (!response.ok) {
-        throw new Error(`上传云端失败：HTTP ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`上传云端失败：HTTP ${response.status}`);
       return true;
     }
 
@@ -1326,8 +1201,8 @@
       const response = await fetch(proxyUrl);
       if (!response.ok) return "";
       const text = await response.text();
-      const fromFull = text.match(/https?:\/\/www\.bilibili\.com\/video\/(BV[0-9A-Za-z]{10})/i);
-      if (fromFull && fromFull[1]) return fromFull[1];
+      const full = text.match(/https?:\/\/www\.bilibili\.com\/video\/(BV[0-9A-Za-z]{10})/i);
+      if (full && full[1]) return full[1];
       return extractBvidFromText(text);
     }
 
@@ -1338,13 +1213,16 @@
 
       if (url.includes("b23.tv/")) {
         const bvid = extractBvidFromText(url);
-        if (bvid) {
-          return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + bvid + "&page=1" };
-        }
+        if (bvid) return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + bvid + "&page=1" };
       }
 
       if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg")) {
         return { type: "video", src: url };
+      }
+
+      if (url.includes("bilibili.com/video/")) {
+        const match = url.match(/\/video\/(BV[0-9A-Za-z]+)/);
+        if (match && match[1]) return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + match[1] + "&page=1" };
       }
 
       if (url.includes("youtube.com/watch?v=")) {
@@ -1353,17 +1231,9 @@
           if (v) return { type: "iframe", src: "https://www.youtube.com/embed/" + v };
         } catch {}
       }
-
       if (url.includes("youtu.be/")) {
         const id = url.split("youtu.be/")[1].split("?")[0];
         if (id) return { type: "iframe", src: "https://www.youtube.com/embed/" + id };
-      }
-
-      if (url.includes("bilibili.com/video/")) {
-        const match = url.match(/\/video\/(BV[0-9A-Za-z]+)/);
-        if (match && match[1]) {
-          return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + match[1] + "&page=1" };
-        }
       }
 
       if (url.includes("player.bilibili.com") || url.includes("player.youku.com") || url.includes("youtube.com/embed/") || url.includes("v.qq.com/txp/iframe/player.html")) {
@@ -1377,31 +1247,20 @@
       const type = (item.playType || "").trim();
       const playUrl = (item.playUrl || "").trim();
       if (playUrl) {
-        if (type === "video" || type === "iframe") {
-          return { type, src: playUrl };
-        }
+        if (type === "video" || type === "iframe") return { type, src: playUrl };
         return detectSourceFromUrl(playUrl);
       }
       return detectSourceFromUrl(item.url || "");
     }
 
-    function getModeBadge(item) {
-      const playable = getPlayableSource(item);
-      if (!playable) return "仅跳转";
-      if (item.fromAdmin) return "后台上传";
-      return playable.type === "video" ? "视频直播" : "站内可播";
-    }
-
-    function buildCard(channel, item, itemIndex) {
+    function buildCard(channel, item, idx) {
       const bg = item.cover && item.cover.trim()
-        ? ` style="background-image: linear-gradient(135deg, rgba(215,176,109,0.2), rgba(114,228,208,0.2)), url('${escapeHTML(item.cover)}');"`
+        ? ` style="background-image: linear-gradient(135deg, rgba(214,163,71,0.22), rgba(82,62,31,0.35)), url('${escapeHTML(item.cover)}');"`
         : "";
-
       return `
-        <article class="video-card" data-channel="${channel}" data-index="${itemIndex}">
+        <article class="video-card" data-channel="${channel}" data-index="${idx}">
           <div class="thumb"${bg}>
             <div class="play">▶</div>
-            <span class="mode">${getModeBadge(item)}</span>
             <span class="duration">${escapeHTML(item.duration || "00:00")}</span>
           </div>
           <div class="info">
@@ -1423,26 +1282,22 @@
       channelOrder.forEach((channel) => {
         const mount = document.querySelector(`.video-grid[data-channel="${channel}"]`);
         if (!mount) return;
-
         const source = getChannelItems(channel);
         const filtered = source.filter((item) => {
           if (!keyword) return true;
           const text = `${item.title || ""} ${item.desc || ""}`.toLowerCase();
           return text.includes(keyword);
         });
-
         renderedMap[channel] = filtered;
-
-        if (filtered.length === 0) {
-          mount.innerHTML = '<div class="empty">没有匹配内容，可清空搜索词后查看全部视频。</div>';
+        if (!filtered.length) {
+          mount.innerHTML = '<div class="empty">暂无内容，请先在后台上传。</div>';
           return;
         }
-
-        mount.innerHTML = filtered.map((item, idx) => buildCard(channel, item, idx)).join("");
+        mount.innerHTML = filtered.map((item, i) => buildCard(channel, item, i)).join("");
       });
     }
 
-    function stopAllPlayers() {
+    function stopPlayer() {
       siteFrame.src = "";
       siteFrame.style.display = "none";
       siteVideo.pause();
@@ -1451,87 +1306,58 @@
       siteVideo.style.display = "none";
     }
 
-    function activateCard(channel, index) {
-      document.querySelectorAll(".video-card.active").forEach((el) => el.classList.remove("active"));
-      const activeCard = document.querySelector(`.video-card[data-channel="${channel}"][data-index="${index}"]`);
-      if (activeCard) activeCard.classList.add("active");
-    }
-
-    function playInSite(channel, index) {
-      const item = (renderedMap[channel] || [])[index];
-      if (!item) return;
+    function openPlayer(item) {
       const playable = getPlayableSource(item);
-
-      stopAllPlayers();
-      activateCard(channel, index);
-
-      nowTitle.textContent = safeText(item.title, "未命名视频");
-      nowDesc.textContent = safeText(item.desc, "暂无简介");
-      nowChannel.textContent = "频道：" + (channelLabels[channel] || channel);
-      nowDuration.textContent = "时长：" + safeText(item.duration, "--:--");
-
+      playerTitle.textContent = safeText(item.title, "未命名视频");
+      playerDesc.textContent = safeText(item.desc, "暂无简介");
       const rawUrl = safeText(item.url, "");
       if (rawUrl && rawUrl !== "#") {
-        originLink.href = rawUrl;
-        originLink.classList.add("show");
+        playerOrigin.href = rawUrl;
+        playerOrigin.classList.add("show");
       } else {
-        originLink.classList.remove("show");
+        playerOrigin.classList.remove("show");
       }
-
+      stopPlayer();
       if (!playable) {
-        nowMode.textContent = "播放方式：不可嵌入";
         playerPlaceholder.style.display = "grid";
-        playerPlaceholder.innerHTML = `
-          <div>
-            <h2 style="margin-bottom: 8px;">当前链接暂不支持站内播放</h2>
-            <p>请在管理后台补充可播放链接（playUrl）或填写 B 站原链接。你也可以先点“打开原链接”跳转观看。</p>
-          </div>
-        `;
-        return;
-      }
-
-      playerPlaceholder.style.display = "none";
-      playerPlaceholder.innerHTML = "";
-
-      if (playable.type === "video") {
-        nowMode.textContent = "播放方式：站内 video";
-        siteVideo.src = playable.src;
-        siteVideo.style.display = "block";
-        siteVideo.play().catch(() => {});
       } else {
-        nowMode.textContent = "播放方式：站内 iframe";
-        siteFrame.src = playable.src;
-        siteFrame.style.display = "block";
+        playerPlaceholder.style.display = "none";
+        if (playable.type === "video") {
+          siteVideo.src = playable.src;
+          siteVideo.style.display = "block";
+          siteVideo.play().catch(() => {});
+        } else {
+          siteFrame.src = playable.src;
+          siteFrame.style.display = "block";
+        }
       }
+      playerModal.classList.add("show");
+      playerModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
     }
 
-    function bindCardEvents() {
-      document.addEventListener("click", (event) => {
-        const card = event.target.closest(".video-card");
-        if (!card) return;
-        const channel = card.dataset.channel;
-        const index = Number(card.dataset.index);
-        if (!channel || Number.isNaN(index)) return;
-        playInSite(channel, index);
-        const playerSection = document.getElementById("player");
-        if (playerSection) playerSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
+    function closePlayer() {
+      playerModal.classList.remove("show");
+      playerModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      stopPlayer();
     }
 
     function makeUploadedItem(record) {
-      const item = {
+      return {
         id: record.id,
         title: safeText(record.title, "未命名视频"),
-        desc: safeText(record.desc, "暂无简介"),
+        desc: safeText(record.desc, ""),
         duration: safeText(record.duration, "00:00"),
+        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
         url: safeText(record.url, "#"),
         playUrl: safeText(record.playUrl, ""),
         playType: safeText(record.playType, ""),
         cover: safeText(record.cover, ""),
+        updatedAt: Number(record.updatedAt) || Date.now(),
+        createdAt: Number(record.createdAt) || Date.now(),
         fromAdmin: true
       };
-
-      return item;
     }
 
     async function refreshUploadedLibrary() {
@@ -1552,14 +1378,13 @@
 
     function renderAdminList() {
       if (!uploadedRecords.length) {
-        adminList.innerHTML = '<div class="empty">暂无后台上传内容。</div>';
+        adminList.innerHTML = '<div class="empty">暂无内容。</div>';
         return;
       }
-
       adminList.innerHTML = uploadedRecords.map((record) => {
-        const channelName = channelLabels[record.channel] || "舞台安利";
-        const playInfo = safeText(record.playUrl, "") ? "播放链接" : "仅原链接";
-        const updateTime = record.updatedAt ? new Date(record.updatedAt).toLocaleString() : "-";
+        const ch = channelLabels[record.channel] || "舞台安利";
+        const playInfo = safeText(record.playUrl, "") ? "站内可播" : "仅跳转";
+        const time = record.updatedAt ? new Date(record.updatedAt).toLocaleString() : "-";
         return `
           <article class="admin-item">
             <div class="admin-item-head">
@@ -1567,9 +1392,9 @@
               <span>${escapeHTML(record.duration || "--:--")}</span>
             </div>
             <div class="admin-item-meta">
-              <span class="badge">${escapeHTML(channelName)}</span>
+              <span class="badge">${escapeHTML(ch)}</span>
               <span>${escapeHTML(playInfo)}</span>
-              <span>${escapeHTML(updateTime)}</span>
+              <span>${escapeHTML(time)}</span>
             </div>
             <div class="admin-item-actions">
               <button class="btn" type="button" data-action="edit" data-id="${escapeHTML(record.id)}">编辑</button>
@@ -1597,7 +1422,44 @@
       videoPlayType.value = record.playType || "";
       coverUrl.value = record.cover || "";
       formTitle.textContent = "编辑视频";
-      showAlert("正在编辑：修改后保存即可更新频道内容。", "ok");
+      showAlert("正在编辑。", "ok");
+    }
+
+    function loadHeroConfig() {
+      let cfg = {};
+      try {
+        cfg = JSON.parse(localStorage.getItem(HERO_CONFIG_KEY) || "{}");
+      } catch {
+        cfg = {};
+      }
+      heroImageUrl.value = cfg.url || "";
+      heroImageOn.value = cfg.enabled === false ? "off" : "on";
+      applyHeroConfig(cfg);
+    }
+
+    function applyHeroConfig(cfg) {
+      const enabled = cfg && cfg.enabled !== false;
+      const url = safeText(cfg && cfg.url, "");
+      if (enabled && url) {
+        heroBanner.classList.add("with-image");
+        heroBanner.style.backgroundImage = `linear-gradient(120deg, rgba(24,20,12,0.92) 20%, rgba(16,16,16,0.52)), url('${url}')`;
+      } else {
+        heroBanner.classList.remove("with-image");
+        heroBanner.style.backgroundImage = "";
+      }
+    }
+
+    async function saveHeroConfig() {
+      const cfg = {
+        enabled: heroImageOn.value !== "off",
+        url: heroImageUrl.value.trim()
+      };
+      localStorage.setItem(HERO_CONFIG_KEY, JSON.stringify(cfg));
+      applyHeroConfig(cfg);
+      if (autoSyncCloud.checked) {
+        try { await pushToCloud(); } catch {}
+      }
+      showAlert("横幅设置已保存。", "ok");
     }
 
     function getAdminPassword() {
@@ -1618,7 +1480,7 @@
       adminModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
       loadCloudConfigToForm();
-      showAlert("在这里录入和编辑链接内容，保存后会立即显示在频道中。");
+      showAlert("管理后台已打开。");
       renderAdminList();
     }
 
@@ -1629,31 +1491,40 @@
       resetAdminForm();
     }
 
-    function bindAdminEvents() {
+    function bindMainEvents() {
+      document.addEventListener("click", (event) => {
+        const card = event.target.closest(".video-card");
+        if (!card) return;
+        const channel = card.dataset.channel;
+        const idx = Number(card.dataset.index);
+        if (!channel || Number.isNaN(idx)) return;
+        const item = (renderedMap[channel] || [])[idx];
+        if (!item) return;
+        openPlayer(item);
+      });
+
+      playerClose.addEventListener("click", closePlayer);
+      playerModal.addEventListener("click", (e) => {
+        if (e.target === playerModal) closePlayer();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && playerModal.classList.contains("show")) closePlayer();
+      });
+
       adminEntry.addEventListener("click", (e) => {
         e.preventDefault();
         openAdmin();
       });
-
-      heroAdminEntry.addEventListener("click", (e) => {
-        e.preventDefault();
-        openAdmin();
-      });
-
       adminClose.addEventListener("click", closeAdmin);
       adminModal.addEventListener("click", (e) => {
         if (e.target === adminModal) closeAdmin();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && adminModal.classList.contains("show")) {
-          closeAdmin();
-        }
       });
 
       resetFormBtn.addEventListener("click", () => {
         resetAdminForm();
         showAlert("表单已清空。");
       });
+      saveHeroBtn.addEventListener("click", saveHeroConfig);
 
       saveCloudConfigBtn.addEventListener("click", () => {
         saveCloudConfigFromForm();
@@ -1662,7 +1533,7 @@
       pullCloudBtn.addEventListener("click", async () => {
         try {
           const count = await pullFromCloud();
-          showAlert(`云端拉取成功，共 ${count} 条。`, "ok");
+          showAlert(`已从云端拉取 ${count} 条。`, "ok");
         } catch (error) {
           showAlert(error.message, "error");
         }
@@ -1680,19 +1551,11 @@
       adminForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const id = editId.value || "video_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-        const existing = uploadedRecords.find((record) => record.id === id);
-
+        const existing = uploadedRecords.find((x) => x.id === id);
         const channel = videoChannel.value;
         const title = videoTitle.value.trim();
-        if (!title) {
-          showAlert("请填写视频标题。", "error");
-          return;
-        }
-
-        if (!channelOrder.includes(channel)) {
-          showAlert("请选择正确的分区。", "error");
-          return;
-        }
+        if (!title) return showAlert("请填写视频标题。", "error");
+        if (!channelOrder.includes(channel)) return showAlert("分区无效。", "error");
 
         const sourceUrl = videoSourceUrl.value.trim();
         let playUrl = videoPlayUrl.value.trim();
@@ -1705,21 +1568,18 @@
         }
 
         if (!playUrl && sourceUrl && sourceUrl.includes("b23.tv/")) {
-          showAlert("正在解析 b23 短链，请稍候...", "ok");
+          showAlert("正在解析 b23 短链...", "ok");
           try {
             const bvid = await resolveB23ToBvid(sourceUrl);
             if (bvid) {
               playUrl = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1`;
               videoPlayUrl.value = playUrl;
             }
-          } catch {
-            // ignore and keep manual fallback
-          }
+          } catch {}
         }
 
         if (!playUrl && !sourceUrl) {
-          showAlert("请至少填写一种链接：playUrl 或原链接（url）。", "error");
-          return;
+          return showAlert("请至少填写一种链接。", "error");
         }
 
         const record = {
@@ -1743,55 +1603,44 @@
             await pushToCloud();
           }
           resetAdminForm();
-          showAlert("保存成功，频道已刷新。", "ok");
+          showAlert("保存成功。", "ok");
         } catch (error) {
           showAlert("保存失败：" + error.message, "error");
         }
       });
 
       adminList.addEventListener("click", async (e) => {
-        const target = e.target.closest("button[data-action]");
-        if (!target) return;
-
-        const id = target.getAttribute("data-id");
-        const action = target.getAttribute("data-action");
-        const record = uploadedRecords.find((item) => item.id === id);
+        const btn = e.target.closest("button[data-action]");
+        if (!btn) return;
+        const id = btn.getAttribute("data-id");
+        const action = btn.getAttribute("data-action");
+        const record = uploadedRecords.find((x) => x.id === id);
         if (!record) return;
-
         if (action === "edit") {
           fillAdminForm(record);
           return;
         }
-
         if (action === "delete") {
-          const ok = window.confirm("确定删除这个视频吗？删除后将从频道列表移除。");
-          if (!ok) return;
+          if (!window.confirm("确定删除该视频？")) return;
           try {
             await dbDelete(id);
             await refreshUploadedLibrary();
-            if (autoSyncCloud.checked) {
-              await pushToCloud();
-            }
+            if (autoSyncCloud.checked) await pushToCloud();
             showAlert("删除成功。", "ok");
           } catch (error) {
             showAlert("删除失败：" + error.message, "error");
           }
         }
       });
-
     }
 
     const navLinks = document.querySelectorAll(".nav a[href^='#']");
     const sections = document.querySelectorAll(".channel");
-
     function updateNavActive() {
       let current = "stage";
       sections.forEach((section) => {
-        if (window.scrollY >= section.offsetTop - 130) {
-          current = section.id;
-        }
+        if (window.scrollY >= section.offsetTop - 130) current = section.id;
       });
-
       navLinks.forEach((link) => {
         link.classList.toggle("active", link.getAttribute("href") === "#" + current);
       });
@@ -1800,10 +1649,10 @@
     searchInput.addEventListener("input", renderAll);
     window.addEventListener("scroll", updateNavActive);
 
+    loadHeroConfig();
     loadCloudConfigToForm();
     renderAll();
-    bindCardEvents();
-    bindAdminEvents();
+    bindMainEvents();
     updateNavActive();
     refreshUploadedLibrary();
   </script>
