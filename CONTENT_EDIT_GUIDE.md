@@ -1,20 +1,35 @@
 # 珍珍日上TV 内容替换说明
 
-## 1) 替换首页视频（index.html）
+## 1) 视频链接是不是哪里都行？
 
-打开 `index.html`，找到脚本里的 `VIDEO_LIBRARY`：
+不完全是。要实现“在本站内播放 + 可切视频”，建议优先使用 **可嵌入链接**：
+
+- B站：`https://player.bilibili.com/player.html?...`
+- 腾讯视频：`https://v.qq.com/txp/iframe/player.html?...`
+- 优酷：`https://player.youku.com/embed/...`
+- YouTube：`https://www.youtube.com/embed/...`
+
+> 注意：普通网页详情链接（如 `https://www.bilibili.com/video/BV...`）通常不能直接在 iframe 内稳定播放。  
+> 推荐填平台提供的“分享嵌入代码”里的 iframe `src` 链接。
+
+---
+
+## 2) 替换首页视频（index.html）
+
+打开 `index.html`，找到脚本中的 `VIDEO_LIBRARY`：
 
 - `stage`：舞台安利
 - `show`：综艺安利
 - `role`：角色安利
 - `live`：直播回放
 
-每条视频可改字段：
+每条视频字段：
 
 - `title`：标题
 - `desc`：简介
 - `duration`：时长（如 `04:12`）
-- `url`：点击跳转链接（B站/微博/腾讯视频/优酷等）
+- `embedUrl`：站内播放器使用的嵌入链接（最重要）
+- `originUrl`：源站链接（“源站打开”按钮使用）
 - `cover`：封面图链接（可留空）
 
 示例：
@@ -24,21 +39,24 @@
   title: "舞台直拍｜神级卡点",
   desc: "动作和镜头表现都很稳",
   duration: "03:45",
-  url: "https://www.bilibili.com/video/BVxxxx",
+  embedUrl: "https://player.bilibili.com/player.html?bvid=BVxxxx&page=1",
+  originUrl: "https://www.bilibili.com/video/BVxxxx",
   cover: "https://your-cdn.com/szn-stage-1.jpg"
 }
 ```
 
-## 2) 替换官群空降截图（daily-group.html）
+---
 
-打开 `daily-group.html`，找到脚本里的 `SCREENSHOT_LIBRARY`。
+## 3) 官群空降截图（daily-group.html）
 
-每条截图可改字段：
+打开 `daily-group.html`，找到 `SCREENSHOT_LIBRARY`。
+
+字段：
 
 - `date`：日期
 - `title`：标题
-- `desc`：描述
-- `image`：截图链接（可留空）
+- `desc`：说明
+- `image`：图片链接
 
 示例：
 
@@ -51,9 +69,11 @@
 }
 ```
 
-## 3) 图片建议
+---
 
-- 封面比例建议：`16:9`
-- 官群截图比例建议：`9:16` 或手机长图
-- 图片可放仓库目录（如 `/images/...`），或使用图床/CDN 链接
+## 4) 现在的播放逻辑
+
+- 点击任一视频卡片，会在首页顶部播放器区“站内切换并播放”
+- 播放器右上角有“源站打开”按钮
+- 若 `embedUrl` 为空，会提示先补充嵌入链接
 

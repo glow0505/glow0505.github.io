@@ -109,6 +109,30 @@
       max-width: 760px;
     }
 
+    .hero-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions a {
+      text-decoration: none;
+      color: #12101a;
+      background: linear-gradient(120deg, #d7b06d, #f4ddb4);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      transition: 0.2s ease;
+    }
+
+    .hero-actions a:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
     .hint {
       margin-top: 12px;
       border-radius: 12px;
@@ -246,6 +270,9 @@
       <div class="hero-inner">
         <h1>日常官群空降截图</h1>
         <p>这个页面用于持续收录“官群空降”相关截图与时间记录。你可以把每次空降截图更新到下方图鉴里，方便整理和回顾。</p>
+        <div class="hero-actions">
+          <a href="/index.html">返回珍珍日上TV主页</a>
+        </div>
         <div class="hint">内容替换入口：编辑本文件底部脚本中的 <strong>SCREENSHOT_LIBRARY</strong> 数据。</div>
       </div>
     </section>

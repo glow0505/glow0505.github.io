@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>珍珍日上TV | 孙珍妮视频主页</title>
-  <meta name="description" content="珍珍日上TV：孙珍妮舞台、综艺、角色、直播回放视频安利主页。">
+  <meta name="description" content="珍珍日上TV：支持站内播放与切换的孙珍妮视频安利主页。">
   <style>
     :root {
       --bg: #06070d;
@@ -154,7 +154,7 @@
       position: relative;
       z-index: 1;
       padding: clamp(28px, 6vw, 62px);
-      min-height: 320px;
+      min-height: 300px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -226,6 +226,117 @@
       font-size: 0.84rem;
     }
 
+    .player-wrap {
+      margin-top: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .player-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+      gap: 0;
+    }
+
+    .player-main {
+      border-right: 1px solid var(--line);
+      background: rgba(5, 8, 16, 0.8);
+    }
+
+    .player-frame {
+      aspect-ratio: 16 / 9;
+      position: relative;
+      background: #04050a;
+    }
+
+    .player-frame iframe,
+    .player-frame video {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: none;
+    }
+
+    .player-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 20px;
+      color: #c8d0ec;
+      background:
+        radial-gradient(circle at 60% 30%, rgba(114, 228, 208, 0.12), transparent 45%),
+        radial-gradient(circle at 20% 10%, rgba(215, 176, 109, 0.16), transparent 38%),
+        #090d1c;
+    }
+
+    .player-placeholder p {
+      max-width: 480px;
+      line-height: 1.55;
+      font-size: 0.92rem;
+      color: #aeb9d9;
+    }
+
+    .player-meta {
+      padding: 14px 16px 16px;
+      border-top: 1px solid var(--line);
+    }
+
+    .player-meta h2 {
+      font-size: 1.08rem;
+      margin-bottom: 6px;
+    }
+
+    .player-meta p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .meta-row {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .pill {
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 0.76rem;
+      color: #ecf2ff;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .origin-link {
+      text-decoration: none;
+      font-size: 0.8rem;
+      color: #9fe6d8;
+      display: none;
+    }
+
+    .origin-link.show {
+      display: inline-block;
+    }
+
+    .player-note {
+      padding: 14px 14px 16px;
+      font-size: 0.84rem;
+      color: #cbd5f5;
+      line-height: 1.55;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .player-note b {
+      color: #ffe2b5;
+    }
+
     main {
       padding-bottom: 36px;
     }
@@ -260,20 +371,23 @@
     }
 
     .video-card {
-      display: block;
-      text-decoration: none;
-      color: inherit;
       border-radius: 13px;
       overflow: hidden;
       border: 1px solid var(--line);
       background: var(--card);
       transition: transform 0.2s ease, border-color 0.2s ease;
       min-width: 0;
+      cursor: pointer;
     }
 
     .video-card:hover {
       transform: translateY(-2px);
       border-color: rgba(114, 228, 208, 0.65);
+    }
+
+    .video-card.active {
+      border-color: rgba(215, 176, 109, 0.9);
+      box-shadow: 0 0 0 1px rgba(215, 176, 109, 0.8) inset;
     }
 
     .thumb {
@@ -309,6 +423,18 @@
       background: rgba(0, 0, 0, 0.75);
       font-size: 0.72rem;
       color: #f8fbff;
+    }
+
+    .mode {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-size: 0.68rem;
+      background: rgba(0, 0, 0, 0.58);
+      color: #dff8f2;
+      border: 1px solid rgba(114, 228, 208, 0.45);
     }
 
     .info {
@@ -359,6 +485,17 @@
       }
     }
 
+    @media (max-width: 980px) {
+      .player-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .player-main {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+    }
+
     @media (max-width: 900px) {
       .topbar {
         height: auto;
@@ -406,22 +543,57 @@
       <div class="hero-inner">
         <div class="hero-tag">Zhenzhen Rising TV</div>
         <h1>欢迎来到 <span>珍珍日上TV</span></h1>
-        <p>做成了类似视频平台首页的安利站结构：频道分区 + 视频卡片 + 搜索筛选。你可以直接替换每条视频的标题、简介、封面、时长和链接。</p>
+        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频，使用体验更像视频平台首页。</p>
         <div class="hero-actions">
-          <a class="primary" href="#stage">先看舞台</a>
-          <a class="secondary" href="#show">再看综艺</a>
+          <a class="primary" href="#player">进入播放器</a>
+          <a class="secondary" href="#stage">先看舞台</a>
           <a class="secondary" href="/daily-group.html">看官群空降截图</a>
         </div>
         <div class="edit-tip">
-          内容替换入口：请编辑本文件底部脚本中的 <strong>VIDEO_LIBRARY</strong> 数据。
+          内容替换入口：编辑本文件底部脚本中的 <strong>VIDEO_LIBRARY</strong>。<br>
+          站内播放优先使用 <strong>playUrl</strong>（可嵌入地址），原始分享链接放在 <strong>url</strong>。
         </div>
+      </div>
+    </section>
+
+    <section class="player-wrap" id="player">
+      <div class="player-grid">
+        <div class="player-main">
+          <div class="player-frame">
+            <iframe id="siteFrame" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
+            <video id="siteVideo" controls playsinline></video>
+            <div id="playerPlaceholder" class="player-placeholder">
+              <div>
+                <h2 style="margin-bottom: 8px;">站内播放器已就绪</h2>
+                <p>点击下方视频卡片即可开始播放。建议为每条视频填写可嵌入地址（playUrl），这样就可以像视频平台一样在站内连续切换。</p>
+              </div>
+            </div>
+          </div>
+          <div class="player-meta">
+            <h2 id="nowTitle">未选择视频</h2>
+            <p id="nowDesc">先从“舞台安利 / 综艺安利 / 角色安利 / 直播回放”里点一条。</p>
+            <div class="meta-row">
+              <span id="nowChannel" class="pill">频道：-</span>
+              <span id="nowDuration" class="pill">时长：--:--</span>
+              <span id="nowMode" class="pill">播放方式：-</span>
+              <a id="originLink" class="origin-link" href="#" target="_blank" rel="noopener noreferrer">打开原链接</a>
+            </div>
+          </div>
+        </div>
+        <aside class="player-note">
+          <b>链接说明：</b><br>
+          1) 不是所有平台分享链接都能被站内 iframe 播放。<br>
+          2) 最稳妥的是使用可嵌入链接（如平台 embed 地址）或直链视频（mp4/webm）。<br>
+          3) 如果当前链接不可嵌入，播放器会提示，可点“打开原链接”跳转观看。<br>
+          4) 你可以在 <code>VIDEO_LIBRARY</code> 中给每条视频单独设置 <code>playUrl</code> + <code>playType</code>。
+        </aside>
       </div>
     </section>
 
     <section class="channel" id="stage">
       <div class="channel-head">
         <h2>舞台安利</h2>
-        <a href="#">查看更多 ></a>
+        <a href="#player">查看播放器 ></a>
       </div>
       <div class="video-grid" data-channel="stage"></div>
     </section>
@@ -429,7 +601,7 @@
     <section class="channel" id="show">
       <div class="channel-head">
         <h2>综艺安利</h2>
-        <a href="#">查看更多 ></a>
+        <a href="#player">查看播放器 ></a>
       </div>
       <div class="video-grid" data-channel="show"></div>
     </section>
@@ -437,7 +609,7 @@
     <section class="channel" id="role">
       <div class="channel-head">
         <h2>角色安利</h2>
-        <a href="#">查看更多 ></a>
+        <a href="#player">查看播放器 ></a>
       </div>
       <div class="video-grid" data-channel="role"></div>
     </section>
@@ -445,14 +617,14 @@
     <section class="channel" id="live">
       <div class="channel-head">
         <h2>直播回放</h2>
-        <a href="#">查看更多 ></a>
+        <a href="#player">查看播放器 ></a>
       </div>
       <div class="video-grid" data-channel="live"></div>
     </section>
   </main>
 
   <footer>
-    <div class="container">珍珍日上TV · 支持按数据配置快速替换视频内容</div>
+    <div class="container">珍珍日上TV · 站内播放与频道切换已启用</div>
   </footer>
 
   <script>
@@ -462,88 +634,239 @@
       - title: 标题
       - desc: 简介
       - duration: 时长文本，如 "04:21"
-      - url: 点击后跳转链接（B站/微博/腾讯视频等）
-      - cover: 封面图链接（可留空 ""，留空会显示默认渐变封面）
+      - url: 原始分享链接（可选）
+      - playUrl: 站内播放地址（推荐填写）
+      - playType: "iframe" 或 "video"（不填会自动识别）
+      - cover: 封面图链接（可留空 ""）
     */
     const VIDEO_LIBRARY = {
       stage: [
-        { title: "舞台 1 · 高能开场直拍", desc: "卡点干净，爆发力足", duration: "04:12", url: "#", cover: "" },
-        { title: "舞台 2 · 合作舞台完整版", desc: "互动自然，镜头感强", duration: "03:58", url: "#", cover: "" },
-        { title: "舞台 3 · 抒情慢歌 Focus", desc: "情绪递进细腻稳定", duration: "05:01", url: "#", cover: "" },
-        { title: "舞台 4 · 练习室版", desc: "动作细节一目了然", duration: "02:49", url: "#", cover: "" },
-        { title: "舞台 5 · 名场面混剪", desc: "新粉速入坑推荐", duration: "03:33", url: "#", cover: "" },
-        { title: "舞台 6 · 年度特别舞台", desc: "舞台叙事完整有层次", duration: "04:26", url: "#", cover: "" }
+        { title: "舞台 1 · 高能开场直拍", desc: "卡点干净，爆发力足", duration: "04:12", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "舞台 2 · 合作舞台完整版", desc: "互动自然，镜头感强", duration: "03:58", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "舞台 3 · 抒情慢歌 Focus", desc: "情绪递进细腻稳定", duration: "05:01", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "舞台 4 · 练习室版", desc: "动作细节一目了然", duration: "02:49", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "舞台 5 · 名场面混剪", desc: "新粉速入坑推荐", duration: "03:33", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "舞台 6 · 年度特别舞台", desc: "舞台叙事完整有层次", duration: "04:26", url: "#", playUrl: "", playType: "iframe", cover: "" }
       ],
       show: [
-        { title: "综艺 1 · 团综高笑点合集", desc: "综艺感在线，轻松下饭", duration: "12:10", url: "#", cover: "" },
-        { title: "综艺 2 · 游戏挑战高能片段", desc: "反应快，梗密度高", duration: "08:42", url: "#", cover: "" },
-        { title: "综艺 3 · 默契挑战名场面", desc: "团队互动有看点", duration: "09:36", url: "#", cover: "" },
-        { title: "综艺 4 · 访谈金句片段", desc: "表达清晰，有态度", duration: "07:55", url: "#", cover: "" },
-        { title: "综艺 5 · 幕后日常花絮", desc: "松弛感和亲和力拉满", duration: "10:02", url: "#", cover: "" },
-        { title: "综艺 6 · 入坑必看导览", desc: "一条视频看懂亮点", duration: "06:21", url: "#", cover: "" }
+        { title: "综艺 1 · 团综高笑点合集", desc: "综艺感在线，轻松下饭", duration: "12:10", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "综艺 2 · 游戏挑战高能片段", desc: "反应快，梗密度高", duration: "08:42", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "综艺 3 · 默契挑战名场面", desc: "团队互动有看点", duration: "09:36", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "综艺 4 · 访谈金句片段", desc: "表达清晰，有态度", duration: "07:55", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "综艺 5 · 幕后日常花絮", desc: "松弛感和亲和力拉满", duration: "10:02", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "综艺 6 · 入坑必看导览", desc: "一条视频看懂亮点", duration: "06:21", url: "#", playUrl: "", playType: "iframe", cover: "" }
       ],
       role: [
-        { title: "角色 1 · 高智感角色剪辑", desc: "眼神戏细节很耐看", duration: "05:47", url: "#", cover: "" },
-        { title: "角色 2 · 青春成长线", desc: "台词自然，代入感强", duration: "07:06", url: "#", cover: "" },
-        { title: "角色 3 · 情绪爆发名场面", desc: "层次完整，起伏自然", duration: "04:50", url: "#", cover: "" },
-        { title: "角色 4 · 台词高光集锦", desc: "节奏和力度兼具", duration: "06:28", url: "#", cover: "" },
-        { title: "角色 5 · 人物关系梳理", desc: "剧情友好，适合新粉", duration: "08:03", url: "#", cover: "" },
-        { title: "角色 6 · 1分钟快速安利", desc: "适合转发安利朋友", duration: "03:29", url: "#", cover: "" }
+        { title: "角色 1 · 高智感角色剪辑", desc: "眼神戏细节很耐看", duration: "05:47", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "角色 2 · 青春成长线", desc: "台词自然，代入感强", duration: "07:06", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "角色 3 · 情绪爆发名场面", desc: "层次完整，起伏自然", duration: "04:50", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "角色 4 · 台词高光集锦", desc: "节奏和力度兼具", duration: "06:28", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "角色 5 · 人物关系梳理", desc: "剧情友好，适合新粉", duration: "08:03", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "角色 6 · 1分钟快速安利", desc: "适合转发安利朋友", duration: "03:29", url: "#", playUrl: "", playType: "iframe", cover: "" }
       ],
       live: [
-        { title: "直播 1 · 日常聊天精华", desc: "松弛自然，入坑友好", duration: "15:32", url: "#", cover: "" },
-        { title: "直播 2 · 粉丝问答合集", desc: "幕后内容密度高", duration: "13:47", url: "#", cover: "" },
-        { title: "直播 3 · 高能反应瞬间", desc: "名场面时间轴整理", duration: "09:59", url: "#", cover: "" },
-        { title: "直播 4 · 舞台幕后聊天", desc: "分享真实工作感受", duration: "11:18", url: "#", cover: "" },
-        { title: "直播 5 · 轻松互动夜", desc: "互动感强，氛围好", duration: "14:05", url: "#", cover: "" },
-        { title: "直播 6 · 新粉速看导览", desc: "关键片段集中补档", duration: "07:44", url: "#", cover: "" }
+        { title: "直播 1 · 日常聊天精华", desc: "松弛自然，入坑友好", duration: "15:32", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "直播 2 · 粉丝问答合集", desc: "幕后内容密度高", duration: "13:47", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "直播 3 · 高能反应瞬间", desc: "名场面时间轴整理", duration: "09:59", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "直播 4 · 舞台幕后聊天", desc: "分享真实工作感受", duration: "11:18", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "直播 5 · 轻松互动夜", desc: "互动感强，氛围好", duration: "14:05", url: "#", playUrl: "", playType: "iframe", cover: "" },
+        { title: "直播 6 · 新粉速看导览", desc: "关键片段集中补档", duration: "07:44", url: "#", playUrl: "", playType: "iframe", cover: "" }
       ]
+    };
+
+    const channelLabels = {
+      stage: "舞台安利",
+      show: "综艺安利",
+      role: "角色安利",
+      live: "直播回放"
     };
 
     const channelOrder = ["stage", "show", "role", "live"];
     const searchInput = document.getElementById("searchInput");
 
-    function buildCard(item) {
-      const link = item.url && item.url.trim() ? item.url : "#";
-      const target = link === "#" ? "" : ' target="_blank" rel="noopener noreferrer"';
+    const siteFrame = document.getElementById("siteFrame");
+    const siteVideo = document.getElementById("siteVideo");
+    const playerPlaceholder = document.getElementById("playerPlaceholder");
+    const nowTitle = document.getElementById("nowTitle");
+    const nowDesc = document.getElementById("nowDesc");
+    const nowChannel = document.getElementById("nowChannel");
+    const nowDuration = document.getElementById("nowDuration");
+    const nowMode = document.getElementById("nowMode");
+    const originLink = document.getElementById("originLink");
+
+    function escapeHTML(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function detectSourceFromUrl(rawUrl) {
+      const url = (rawUrl || "").trim();
+      if (!url || url === "#") return null;
+      const lower = url.toLowerCase();
+
+      if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg")) {
+        return { type: "video", src: url };
+      }
+
+      if (url.includes("youtube.com/watch?v=")) {
+        const v = new URL(url).searchParams.get("v");
+        if (v) return { type: "iframe", src: "https://www.youtube.com/embed/" + v };
+      }
+
+      if (url.includes("youtu.be/")) {
+        const id = url.split("youtu.be/")[1].split("?")[0];
+        if (id) return { type: "iframe", src: "https://www.youtube.com/embed/" + id };
+      }
+
+      if (url.includes("bilibili.com/video/")) {
+        const match = url.match(/\/video\/(BV[0-9A-Za-z]+)/);
+        if (match && match[1]) {
+          return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + match[1] + "&page=1" };
+        }
+      }
+
+      return null;
+    }
+
+    function getPlayableSource(item) {
+      const type = (item.playType || "").trim();
+      const playUrl = (item.playUrl || "").trim();
+      if (playUrl) {
+        if (type === "video" || type === "iframe") {
+          return { type, src: playUrl };
+        }
+        return detectSourceFromUrl(playUrl);
+      }
+      return detectSourceFromUrl(item.url || "");
+    }
+
+    function getModeBadge(item) {
+      return getPlayableSource(item) ? "站内可播" : "仅跳转";
+    }
+
+    function buildCard(channel, item, itemIndex) {
       const bg = item.cover && item.cover.trim()
-        ? ` style="background-image: linear-gradient(135deg, rgba(215,176,109,0.2), rgba(114,228,208,0.2)), url('${item.cover}');"`
+        ? ` style="background-image: linear-gradient(135deg, rgba(215,176,109,0.2), rgba(114,228,208,0.2)), url('${escapeHTML(item.cover)}');"`
         : "";
 
       return `
-        <a class="video-card" href="${link}"${target}>
+        <article class="video-card" data-channel="${channel}" data-index="${itemIndex}">
           <div class="thumb"${bg}>
             <div class="play">▶</div>
-            <span class="duration">${item.duration || "00:00"}</span>
+            <span class="mode">${getModeBadge(item)}</span>
+            <span class="duration">${escapeHTML(item.duration || "00:00")}</span>
           </div>
           <div class="info">
-            <div class="title">${item.title || "未命名视频"}</div>
-            <div class="desc">${item.desc || "暂无简介"}</div>
+            <div class="title">${escapeHTML(item.title || "未命名视频")}</div>
+            <div class="desc">${escapeHTML(item.desc || "暂无简介")}</div>
           </div>
-        </a>
+        </article>
       `;
     }
 
     function renderAll() {
       const keyword = (searchInput.value || "").trim().toLowerCase();
-
       channelOrder.forEach((channel) => {
         const mount = document.querySelector(`.video-grid[data-channel="${channel}"]`);
         if (!mount) return;
 
         const source = VIDEO_LIBRARY[channel] || [];
-        const filtered = source.filter((item) => {
-          if (!keyword) return true;
-          const text = `${item.title || ""} ${item.desc || ""}`.toLowerCase();
-          return text.includes(keyword);
-        });
+        const filtered = source
+          .map((item, idx) => ({ ...item, __index: idx }))
+          .filter((item) => {
+            if (!keyword) return true;
+            const text = `${item.title || ""} ${item.desc || ""}`.toLowerCase();
+            return text.includes(keyword);
+          });
 
         if (filtered.length === 0) {
           mount.innerHTML = '<div class="empty">没有匹配内容，可清空搜索词后查看全部视频。</div>';
           return;
         }
 
-        mount.innerHTML = filtered.map(buildCard).join("");
+        mount.innerHTML = filtered
+          .map((item) => buildCard(channel, item, item.__index))
+          .join("");
+      });
+    }
+
+    function stopAllPlayers() {
+      siteFrame.src = "";
+      siteFrame.style.display = "none";
+      siteVideo.pause();
+      siteVideo.removeAttribute("src");
+      siteVideo.load();
+      siteVideo.style.display = "none";
+    }
+
+    function activateCard(channel, index) {
+      document.querySelectorAll(".video-card.active").forEach((el) => el.classList.remove("active"));
+      const activeCard = document.querySelector(`.video-card[data-channel="${channel}"][data-index="${index}"]`);
+      if (activeCard) activeCard.classList.add("active");
+    }
+
+    function playInSite(channel, index) {
+      const item = (VIDEO_LIBRARY[channel] || [])[index];
+      if (!item) return;
+      const playable = getPlayableSource(item);
+
+      stopAllPlayers();
+      activateCard(channel, index);
+
+      nowTitle.textContent = item.title || "未命名视频";
+      nowDesc.textContent = item.desc || "暂无简介";
+      nowChannel.textContent = "频道：" + (channelLabels[channel] || channel);
+      nowDuration.textContent = "时长：" + (item.duration || "--:--");
+
+      const rawUrl = (item.url || "").trim();
+      if (rawUrl && rawUrl !== "#") {
+        originLink.href = rawUrl;
+        originLink.classList.add("show");
+      } else {
+        originLink.classList.remove("show");
+      }
+
+      if (!playable) {
+        nowMode.textContent = "播放方式：不可嵌入";
+        playerPlaceholder.style.display = "grid";
+        playerPlaceholder.innerHTML = `
+          <div>
+            <h2 style="margin-bottom: 8px;">当前链接暂不支持站内播放</h2>
+            <p>请给这条视频补充 <code>playUrl</code>（可嵌入地址）或直链视频（mp4/webm）。你也可以先点“打开原链接”跳转观看。</p>
+          </div>
+        `;
+        return;
+      }
+
+      playerPlaceholder.style.display = "none";
+      playerPlaceholder.innerHTML = "";
+
+      if (playable.type === "video") {
+        nowMode.textContent = "播放方式：站内 video";
+        siteVideo.src = playable.src;
+        siteVideo.style.display = "block";
+        siteVideo.play().catch(() => {});
+      } else {
+        nowMode.textContent = "播放方式：站内 iframe";
+        siteFrame.src = playable.src;
+        siteFrame.style.display = "block";
+      }
+    }
+
+    function bindCardEvents() {
+      document.addEventListener("click", (event) => {
+        const card = event.target.closest(".video-card");
+        if (!card) return;
+        const channel = card.dataset.channel;
+        const index = Number(card.dataset.index);
+        if (!channel || Number.isNaN(index)) return;
+        playInSite(channel, index);
+        const playerSection = document.getElementById("player");
+        if (playerSection) playerSection.scrollIntoView({ behavior: "smooth", block: "start" });
       });
     }
 
@@ -567,6 +890,7 @@
     window.addEventListener("scroll", updateNavActive);
 
     renderAll();
+    bindCardEvents();
     updateNavActive();
   </script>
 </body>
