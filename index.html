@@ -767,7 +767,7 @@
       <div class="hero-inner">
         <div class="hero-tag">Zhenzhen Rising TV</div>
         <h1>欢迎来到 <span>珍珍日上TV</span></h1>
-        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频。管理后台支持直接上传视频和封面并编辑内容。</p>
+        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频。管理后台支持直接录入链接（如 B 站）并编辑内容。</p>
         <div class="hero-actions">
           <a class="primary" href="#player">进入播放器</a>
           <a class="secondary" href="#stage">先看舞台</a>
@@ -789,7 +789,7 @@
             <div id="playerPlaceholder" class="player-placeholder">
               <div>
                 <h2 style="margin-bottom: 8px;">站内播放器已就绪</h2>
-                <p>点击下方视频卡片即可开始播放。推荐在后台给每条视频填写可播放地址（playUrl）或直接上传 mp4/webm 文件。</p>
+                <p>点击下方视频卡片即可开始播放。推荐在后台给每条视频填写可播放地址（playUrl）或 B 站视频链接。</p>
               </div>
             </div>
           </div>
@@ -807,9 +807,9 @@
         <aside class="player-note">
           <b>链接说明：</b><br>
           1) 不是所有平台分享页都支持 iframe 播放。<br>
-          2) 最稳妥的是使用平台 embed 链接，或者直接上传 mp4/webm 文件。<br>
+          2) 最稳妥的是使用平台 embed 链接（如 B 站播放器链接）。<br>
           3) 如果当前视频不可站内播放，页面会提示并可点击“打开原链接”观看。<br>
-          4) 上传内容保存在当前浏览器（IndexedDB），换浏览器或清缓存后不会自动同步。<br>
+          4) 后台内容保存在当前浏览器（IndexedDB），换浏览器或清缓存后不会自动同步。<br>
         </aside>
       </div>
     </section>
@@ -850,11 +850,11 @@
   <div id="adminModal" class="admin-modal" aria-hidden="true">
     <div class="admin-panel">
       <div class="admin-head">
-        <h2>管理后台 · 上传与编辑视频</h2>
+        <h2>管理后台 · 链接录入与编辑视频</h2>
         <button id="adminClose" class="admin-close" type="button">关闭</button>
       </div>
       <div id="adminAlert" class="admin-alert">
-        在这里可以直接上传视频文件和封面，填写标题、简介、时长与分区。保存后会立即出现在对应频道。
+        在这里录入视频链接（推荐 B 站）和封面链接，填写标题、简介、时长与分区。保存后会立即出现在对应频道。
       </div>
 
       <div class="admin-grid">
@@ -892,7 +892,7 @@
             <div class="split">
               <div class="field">
                 <label for="videoPlayUrl">站内播放链接（playUrl）</label>
-                <input id="videoPlayUrl" type="url" placeholder="可嵌入链接或直链 mp4/webm">
+                <input id="videoPlayUrl" type="url" placeholder="推荐填写 B 站播放器链接（player.bilibili.com）">
               </div>
               <div class="field">
                 <label for="videoPlayType">播放类型（可选）</label>
@@ -901,16 +901,6 @@
                   <option value="iframe">iframe</option>
                   <option value="video">video</option>
                 </select>
-              </div>
-            </div>
-            <div class="split">
-              <div class="field">
-                <label for="videoFile">上传视频文件（mp4/webm）</label>
-                <input id="videoFile" type="file" accept="video/mp4,video/webm,video/ogg">
-              </div>
-              <div class="field">
-                <label for="coverFile">上传封面图片</label>
-                <input id="coverFile" type="file" accept="image/*">
               </div>
             </div>
             <div class="field">
@@ -922,8 +912,8 @@
               <button class="btn" id="resetFormBtn" type="button">清空表单</button>
             </div>
             <p class="tips">
-              - 若上传了视频文件，会优先使用上传文件站内播放。<br>
-              - 若不上传文件，请填写可播放链接（playUrl）或至少填写原链接（url）。<br>
+              - 建议填写 B 站播放器链接到 playUrl，站内播放更稳定。<br>
+              - 若只填 B 站原链接（url），系统会尝试自动识别并转换为播放器地址。<br>
               - 数据保存于当前浏览器，本地持久化。
             </p>
           </form>
@@ -940,7 +930,7 @@
   </div>
 
   <footer>
-    <div class="container">珍珍日上TV · 站内播放与后台管理已启用</div>
+    <div class="container">珍珍日上TV · 站内播放与链接后台管理已启用</div>
   </footer>
 
   <script>
@@ -1027,8 +1017,6 @@
     const videoSourceUrl = document.getElementById("videoSourceUrl");
     const videoPlayUrl = document.getElementById("videoPlayUrl");
     const videoPlayType = document.getElementById("videoPlayType");
-    const videoFile = document.getElementById("videoFile");
-    const coverFile = document.getElementById("coverFile");
     const coverUrl = document.getElementById("coverUrl");
 
     const ADMIN_PASSWORD_KEY = "zzrs-admin-password";
@@ -1043,7 +1031,6 @@
     let uploadedRecords = [];
     let uploadedByChannel = { stage: [], show: [], role: [], live: [] };
     let renderedMap = { stage: [], show: [], role: [], live: [] };
-    const tempObjectUrls = [];
 
     function escapeHTML(value) {
       return String(value || "")
@@ -1118,27 +1105,10 @@
       });
     }
 
-    function revokeTempObjectUrls() {
-      while (tempObjectUrls.length) {
-        const url = tempObjectUrls.pop();
-        URL.revokeObjectURL(url);
-      }
-    }
-
-    function registerObjectUrl(blob) {
-      const url = URL.createObjectURL(blob);
-      tempObjectUrls.push(url);
-      return url;
-    }
-
     function detectSourceFromUrl(rawUrl) {
       const url = (rawUrl || "").trim();
       if (!url || url === "#") return null;
       const lower = url.toLowerCase();
-
-      if (lower.startsWith("blob:")) {
-        return { type: "video", src: url };
-      }
 
       if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg")) {
         return { type: "video", src: url };
@@ -1281,7 +1251,7 @@
         playerPlaceholder.innerHTML = `
           <div>
             <h2 style="margin-bottom: 8px;">当前链接暂不支持站内播放</h2>
-            <p>请在管理后台补充可播放链接（playUrl）或上传 mp4/webm 文件。你也可以先点“打开原链接”跳转观看。</p>
+            <p>请在管理后台补充可播放链接（playUrl）或填写 B 站原链接。你也可以先点“打开原链接”跳转观看。</p>
           </div>
         `;
         return;
@@ -1328,16 +1298,6 @@
         fromAdmin: true
       };
 
-      if (record.videoBlob instanceof Blob) {
-        const videoBlobUrl = registerObjectUrl(record.videoBlob);
-        item.playUrl = videoBlobUrl;
-        item.playType = "video";
-        if (!item.url || item.url === "#") item.url = videoBlobUrl;
-      }
-
-      if (record.coverBlob instanceof Blob) {
-        item.cover = registerObjectUrl(record.coverBlob);
-      }
       return item;
     }
 
@@ -1345,7 +1305,6 @@
       try {
         const records = await dbGetAll();
         uploadedRecords = records.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-        revokeTempObjectUrls();
         uploadedByChannel = { stage: [], show: [], role: [], live: [] };
         uploadedRecords.forEach((record) => {
           const channel = channelOrder.includes(record.channel) ? record.channel : "stage";
@@ -1366,7 +1325,7 @@
 
       adminList.innerHTML = uploadedRecords.map((record) => {
         const channelName = channelLabels[record.channel] || "舞台安利";
-        const playInfo = record.videoBlob ? "上传文件" : safeText(record.playUrl, "") ? "播放链接" : "仅原链接";
+        const playInfo = safeText(record.playUrl, "") ? "播放链接" : "仅原链接";
         const updateTime = record.updatedAt ? new Date(record.updatedAt).toLocaleString() : "-";
         return `
           <article class="admin-item">
@@ -1405,7 +1364,7 @@
       videoPlayType.value = record.playType || "";
       coverUrl.value = record.cover || "";
       formTitle.textContent = "编辑视频";
-      showAlert("正在编辑：不重新选择文件则沿用原视频/封面。", "ok");
+      showAlert("正在编辑：修改后保存即可更新频道内容。", "ok");
     }
 
     function getAdminPassword() {
@@ -1425,7 +1384,7 @@
       adminModal.classList.add("show");
       adminModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-      showAlert("在这里上传和编辑视频内容，保存后会立即显示在频道中。");
+      showAlert("在这里录入和编辑链接内容，保存后会立即显示在频道中。");
       renderAdminList();
     }
 
@@ -1479,13 +1438,11 @@
           return;
         }
 
-        const nextVideoBlob = videoFile.files[0] || (existing ? existing.videoBlob : null);
-        const nextCoverBlob = coverFile.files[0] || (existing ? existing.coverBlob : null);
         const sourceUrl = videoSourceUrl.value.trim();
         const playUrl = videoPlayUrl.value.trim();
 
-        if (!nextVideoBlob && !playUrl && !sourceUrl) {
-          showAlert("请至少提供一种可访问方式：上传视频文件、填写 playUrl 或填写原链接。", "error");
+        if (!playUrl && !sourceUrl) {
+          showAlert("请至少填写一种链接：playUrl 或原链接（url）。", "error");
           return;
         }
 
@@ -1499,8 +1456,6 @@
           playUrl,
           playType: videoPlayType.value.trim(),
           cover: coverUrl.value.trim(),
-          videoBlob: nextVideoBlob || null,
-          coverBlob: nextCoverBlob || null,
           createdAt: existing ? existing.createdAt : Date.now(),
           updatedAt: Date.now()
         };
