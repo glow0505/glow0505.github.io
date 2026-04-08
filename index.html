@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>珍珍日上TV | 孙珍妮视频主页</title>
-  <meta name="description" content="珍珍日上TV：支持站内播放与切换的孙珍妮视频安利主页。">
+  <meta name="description" content="珍珍日上TV：孙珍妮舞台、综艺、角色、直播回放视频主页，支持站内播放与后台管理。">
   <style>
     :root {
       --bg: #06070d;
@@ -18,6 +18,8 @@
       --gold-soft: #f4d9a3;
       --cyan: #72e4d0;
       --shadow: 0 22px 45px rgba(0, 0, 0, 0.45);
+      --danger: #ff7171;
+      --ok: #88e8d7;
     }
 
     * {
@@ -76,7 +78,7 @@
 
     .search {
       flex: 1;
-      max-width: 540px;
+      max-width: 500px;
       height: 42px;
       display: flex;
       align-items: center;
@@ -154,11 +156,11 @@
       position: relative;
       z-index: 1;
       padding: clamp(28px, 6vw, 62px);
-      min-height: 300px;
+      min-height: 280px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .hero-tag {
@@ -180,11 +182,11 @@
     .hero p {
       max-width: 760px;
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: 0.97rem;
     }
 
     .hero-actions {
-      margin-top: 4px;
+      margin-top: 5px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -217,33 +219,36 @@
     }
 
     .edit-tip {
-      margin-top: 14px;
+      margin-top: 8px;
       border: 1px dashed rgba(215, 176, 109, 0.5);
       background: rgba(215, 176, 109, 0.08);
       color: #f4e4c7;
       border-radius: 12px;
       padding: 10px 12px;
       font-size: 0.84rem;
+      line-height: 1.5;
+    }
+
+    main {
+      padding-bottom: 36px;
     }
 
     .player-wrap {
       margin-top: 20px;
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 15px;
       overflow: hidden;
-      background: var(--panel);
+      background: rgba(11, 15, 30, 0.7);
       box-shadow: var(--shadow);
     }
 
     .player-grid {
       display: grid;
-      grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
-      gap: 0;
+      grid-template-columns: 2fr 1fr;
     }
 
     .player-main {
       border-right: 1px solid var(--line);
-      background: rgba(5, 8, 16, 0.8);
     }
 
     .player-frame {
@@ -275,7 +280,7 @@
     }
 
     .player-placeholder p {
-      max-width: 480px;
+      max-width: 520px;
       line-height: 1.55;
       font-size: 0.92rem;
       color: #aeb9d9;
@@ -335,10 +340,6 @@
 
     .player-note b {
       color: #ffe2b5;
-    }
-
-    main {
-      padding-bottom: 36px;
     }
 
     .channel {
@@ -471,6 +472,220 @@
       background: rgba(255, 255, 255, 0.02);
     }
 
+    .admin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(3, 4, 10, 0.78);
+      backdrop-filter: blur(6px);
+      padding: 16px;
+    }
+
+    .admin-modal.show {
+      display: flex;
+    }
+
+    .admin-panel {
+      width: min(1040px, 96vw);
+      max-height: 92vh;
+      overflow: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(215, 176, 109, 0.3);
+      background: #0f1427;
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .admin-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .admin-head h2 {
+      font-size: 1.1rem;
+    }
+
+    .admin-close {
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      background: rgba(255, 255, 255, 0.05);
+      color: #f2f6ff;
+      border-radius: 8px;
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+
+    .admin-alert {
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.04);
+      color: #d4dcf8;
+      padding: 10px;
+      font-size: 0.82rem;
+      line-height: 1.5;
+    }
+
+    .admin-alert.error {
+      border-color: rgba(255, 113, 113, 0.5);
+      color: #ffd6d6;
+    }
+
+    .admin-alert.ok {
+      border-color: rgba(136, 232, 215, 0.55);
+      color: #d8fff8;
+    }
+
+    .admin-grid {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 12px;
+    }
+
+    .admin-form,
+    .admin-list-wrap {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .admin-form h3,
+    .admin-list-wrap h3 {
+      margin-bottom: 10px;
+      font-size: 0.98rem;
+      color: #ffeac4;
+    }
+
+    .field {
+      margin-bottom: 9px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.79rem;
+      color: #c6d0ed;
+    }
+
+    .field input,
+    .field textarea,
+    .field select {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.04);
+      color: #edf2ff;
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 0.86rem;
+      font-family: inherit;
+    }
+
+    .field textarea {
+      min-height: 74px;
+      resize: vertical;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .btn {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #f4f8ff;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 0.84rem;
+    }
+
+    .btn.primary {
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+      color: #241a0f;
+      border-color: rgba(255, 255, 255, 0.3);
+      font-weight: 700;
+    }
+
+    .btn.danger {
+      background: rgba(255, 113, 113, 0.12);
+      border-color: rgba(255, 113, 113, 0.5);
+      color: #ffc9c9;
+    }
+
+    .tips {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      color: #aeb8d9;
+      line-height: 1.5;
+    }
+
+    .admin-list {
+      display: grid;
+      gap: 8px;
+      max-height: 52vh;
+      overflow: auto;
+      padding-right: 2px;
+    }
+
+    .admin-item {
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 10px;
+      padding: 8px;
+      background: rgba(0, 0, 0, 0.18);
+    }
+
+    .admin-item-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.82rem;
+    }
+
+    .admin-item-head b {
+      color: #f8f1de;
+    }
+
+    .admin-item-meta {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: #aeb7d8;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      border: 1px solid rgba(114, 228, 208, 0.45);
+      background: rgba(114, 228, 208, 0.12);
+      color: #dcfff8;
+      border-radius: 999px;
+      padding: 1px 6px;
+      font-size: 0.72rem;
+    }
+
+    .admin-item-actions {
+      margin-top: 8px;
+      display: flex;
+      gap: 6px;
+    }
+
     footer {
       border-top: 1px solid var(--line);
       text-align: center;
@@ -493,6 +708,10 @@
       .player-main {
         border-right: none;
         border-bottom: 1px solid var(--line);
+      }
+
+      .admin-grid {
+        grid-template-columns: 1fr;
       }
     }
 
@@ -518,6 +737,10 @@
       .video-grid {
         grid-template-columns: 1fr;
       }
+
+      .split {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -533,6 +756,7 @@
         <a href="#show">综艺</a>
         <a href="#role">角色</a>
         <a href="#live">直播回放</a>
+        <a href="#" id="adminEntry">管理后台</a>
         <a href="/daily-group.html">官群空降</a>
       </nav>
     </div>
@@ -543,15 +767,15 @@
       <div class="hero-inner">
         <div class="hero-tag">Zhenzhen Rising TV</div>
         <h1>欢迎来到 <span>珍珍日上TV</span></h1>
-        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频，使用体验更像视频平台首页。</p>
+        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频。管理后台支持直接上传视频和封面并编辑内容。</p>
         <div class="hero-actions">
           <a class="primary" href="#player">进入播放器</a>
           <a class="secondary" href="#stage">先看舞台</a>
-          <a class="secondary" href="/daily-group.html">看官群空降截图</a>
+          <a class="secondary" href="#" id="heroAdminEntry">打开管理后台</a>
         </div>
         <div class="edit-tip">
-          内容替换入口：编辑本文件底部脚本中的 <strong>VIDEO_LIBRARY</strong>。<br>
-          站内播放优先使用 <strong>playUrl</strong>（可嵌入地址），原始分享链接放在 <strong>url</strong>。
+          内容替换入口：底部脚本中的 <strong>VIDEO_LIBRARY</strong>（默认内容） + 管理后台上传内容（浏览器本地持久化）。<br>
+          管理后台默认密码：<strong>zzrs2026</strong>（可在脚本中改）。
         </div>
       </div>
     </section>
@@ -565,7 +789,7 @@
             <div id="playerPlaceholder" class="player-placeholder">
               <div>
                 <h2 style="margin-bottom: 8px;">站内播放器已就绪</h2>
-                <p>点击下方视频卡片即可开始播放。建议为每条视频填写可嵌入地址（playUrl），这样就可以像视频平台一样在站内连续切换。</p>
+                <p>点击下方视频卡片即可开始播放。推荐在后台给每条视频填写可播放地址（playUrl）或直接上传 mp4/webm 文件。</p>
               </div>
             </div>
           </div>
@@ -582,10 +806,10 @@
         </div>
         <aside class="player-note">
           <b>链接说明：</b><br>
-          1) 不是所有平台分享链接都能被站内 iframe 播放。<br>
-          2) 最稳妥的是使用可嵌入链接（如平台 embed 地址）或直链视频（mp4/webm）。<br>
-          3) 如果当前链接不可嵌入，播放器会提示，可点“打开原链接”跳转观看。<br>
-          4) 你可以在 <code>VIDEO_LIBRARY</code> 中给每条视频单独设置 <code>playUrl</code> + <code>playType</code>。
+          1) 不是所有平台分享页都支持 iframe 播放。<br>
+          2) 最稳妥的是使用平台 embed 链接，或者直接上传 mp4/webm 文件。<br>
+          3) 如果当前视频不可站内播放，页面会提示并可点击“打开原链接”观看。<br>
+          4) 上传内容保存在当前浏览器（IndexedDB），换浏览器或清缓存后不会自动同步。<br>
         </aside>
       </div>
     </section>
@@ -623,21 +847,113 @@
     </section>
   </main>
 
+  <div id="adminModal" class="admin-modal" aria-hidden="true">
+    <div class="admin-panel">
+      <div class="admin-head">
+        <h2>管理后台 · 上传与编辑视频</h2>
+        <button id="adminClose" class="admin-close" type="button">关闭</button>
+      </div>
+      <div id="adminAlert" class="admin-alert">
+        在这里可以直接上传视频文件和封面，填写标题、简介、时长与分区。保存后会立即出现在对应频道。
+      </div>
+
+      <div class="admin-grid">
+        <section class="admin-form">
+          <h3 id="formTitle">新增视频</h3>
+          <form id="adminForm">
+            <input type="hidden" id="editId">
+            <div class="field">
+              <label for="videoTitle">视频标题 *</label>
+              <input id="videoTitle" type="text" required placeholder="例如：舞台直拍｜神级卡点">
+            </div>
+            <div class="field">
+              <label for="videoDesc">视频简介</label>
+              <textarea id="videoDesc" placeholder="一句话介绍这个视频亮点"></textarea>
+            </div>
+            <div class="split">
+              <div class="field">
+                <label for="videoDuration">时长</label>
+                <input id="videoDuration" type="text" placeholder="例如：04:12">
+              </div>
+              <div class="field">
+                <label for="videoChannel">所属分区 *</label>
+                <select id="videoChannel" required>
+                  <option value="stage">舞台安利</option>
+                  <option value="show">综艺安利</option>
+                  <option value="role">角色安利</option>
+                  <option value="live">直播回放</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="videoSourceUrl">原链接（可选）</label>
+              <input id="videoSourceUrl" type="url" placeholder="https://...">
+            </div>
+            <div class="split">
+              <div class="field">
+                <label for="videoPlayUrl">站内播放链接（playUrl）</label>
+                <input id="videoPlayUrl" type="url" placeholder="可嵌入链接或直链 mp4/webm">
+              </div>
+              <div class="field">
+                <label for="videoPlayType">播放类型（可选）</label>
+                <select id="videoPlayType">
+                  <option value="">自动识别</option>
+                  <option value="iframe">iframe</option>
+                  <option value="video">video</option>
+                </select>
+              </div>
+            </div>
+            <div class="split">
+              <div class="field">
+                <label for="videoFile">上传视频文件（mp4/webm）</label>
+                <input id="videoFile" type="file" accept="video/mp4,video/webm,video/ogg">
+              </div>
+              <div class="field">
+                <label for="coverFile">上传封面图片</label>
+                <input id="coverFile" type="file" accept="image/*">
+              </div>
+            </div>
+            <div class="field">
+              <label for="coverUrl">封面链接（可选）</label>
+              <input id="coverUrl" type="url" placeholder="https://... 或 /images/cover.jpg">
+            </div>
+            <div class="btn-row">
+              <button class="btn primary" type="submit">保存视频</button>
+              <button class="btn" id="resetFormBtn" type="button">清空表单</button>
+            </div>
+            <p class="tips">
+              - 若上传了视频文件，会优先使用上传文件站内播放。<br>
+              - 若不上传文件，请填写可播放链接（playUrl）或至少填写原链接（url）。<br>
+              - 数据保存于当前浏览器，本地持久化。
+            </p>
+          </form>
+        </section>
+
+        <section class="admin-list-wrap">
+          <h3>已上传内容（可编辑/删除）</h3>
+          <div id="adminList" class="admin-list">
+            <div class="empty">暂无后台上传内容。</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
   <footer>
-    <div class="container">珍珍日上TV · 站内播放与频道切换已启用</div>
+    <div class="container">珍珍日上TV · 站内播放与后台管理已启用</div>
   </footer>
 
   <script>
     /*
-      ==================== 如何替换内容（最常改这里） ====================
-      每个视频对象字段说明：
+      ==================== 默认内容（仍可手动改） ====================
+      字段说明：
       - title: 标题
       - desc: 简介
       - duration: 时长文本，如 "04:21"
       - url: 原始分享链接（可选）
       - playUrl: 站内播放地址（推荐填写）
       - playType: "iframe" 或 "video"（不填会自动识别）
-      - cover: 封面图链接（可留空 ""）
+      - cover: 封面图链接（可留空）
     */
     const VIDEO_LIBRARY = {
       stage: [
@@ -680,10 +996,9 @@
       role: "角色安利",
       live: "直播回放"
     };
-
     const channelOrder = ["stage", "show", "role", "live"];
-    const searchInput = document.getElementById("searchInput");
 
+    const searchInput = document.getElementById("searchInput");
     const siteFrame = document.getElementById("siteFrame");
     const siteVideo = document.getElementById("siteVideo");
     const playerPlaceholder = document.getElementById("playerPlaceholder");
@@ -694,6 +1009,42 @@
     const nowMode = document.getElementById("nowMode");
     const originLink = document.getElementById("originLink");
 
+    const adminModal = document.getElementById("adminModal");
+    const adminEntry = document.getElementById("adminEntry");
+    const heroAdminEntry = document.getElementById("heroAdminEntry");
+    const adminClose = document.getElementById("adminClose");
+    const adminAlert = document.getElementById("adminAlert");
+    const adminForm = document.getElementById("adminForm");
+    const adminList = document.getElementById("adminList");
+    const formTitle = document.getElementById("formTitle");
+    const resetFormBtn = document.getElementById("resetFormBtn");
+
+    const editId = document.getElementById("editId");
+    const videoTitle = document.getElementById("videoTitle");
+    const videoDesc = document.getElementById("videoDesc");
+    const videoDuration = document.getElementById("videoDuration");
+    const videoChannel = document.getElementById("videoChannel");
+    const videoSourceUrl = document.getElementById("videoSourceUrl");
+    const videoPlayUrl = document.getElementById("videoPlayUrl");
+    const videoPlayType = document.getElementById("videoPlayType");
+    const videoFile = document.getElementById("videoFile");
+    const coverFile = document.getElementById("coverFile");
+    const coverUrl = document.getElementById("coverUrl");
+
+    const ADMIN_PASSWORD_KEY = "zzrs-admin-password";
+    const DEFAULT_ADMIN_PASSWORD = "zzrs2026";
+
+    const DB_NAME = "zzrs-media-db";
+    const DB_VERSION = 1;
+    const STORE_NAME = "videos";
+    let dbPromise = null;
+
+    let adminAuthed = false;
+    let uploadedRecords = [];
+    let uploadedByChannel = { stage: [], show: [], role: [], live: [] };
+    let renderedMap = { stage: [], show: [], role: [], live: [] };
+    const tempObjectUrls = [];
+
     function escapeHTML(value) {
       return String(value || "")
         .replaceAll("&", "&amp;")
@@ -703,18 +1054,101 @@
         .replaceAll("'", "&#39;");
     }
 
+    function safeText(v, fallback) {
+      return v && String(v).trim() ? String(v).trim() : fallback;
+    }
+
+    function showAlert(message, type) {
+      adminAlert.textContent = message;
+      adminAlert.classList.remove("error", "ok");
+      if (type === "error") adminAlert.classList.add("error");
+      if (type === "ok") adminAlert.classList.add("ok");
+    }
+
+    function openDB() {
+      if (!("indexedDB" in window)) {
+        return Promise.reject(new Error("当前浏览器不支持 IndexedDB"));
+      }
+      if (dbPromise) return dbPromise;
+
+      dbPromise = new Promise((resolve, reject) => {
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onerror = () => reject(req.error);
+        req.onupgradeneeded = () => {
+          const db = req.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: "id" });
+          }
+        };
+        req.onsuccess = () => resolve(req.result);
+      });
+      return dbPromise;
+    }
+
+    async function dbGetAll() {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readonly");
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.getAll();
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => resolve(req.result || []);
+      });
+    }
+
+    async function dbPut(record) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.put(record);
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => resolve(record);
+      });
+    }
+
+    async function dbDelete(id) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.delete(id);
+        req.onerror = () => reject(req.error);
+        req.onsuccess = () => resolve(true);
+      });
+    }
+
+    function revokeTempObjectUrls() {
+      while (tempObjectUrls.length) {
+        const url = tempObjectUrls.pop();
+        URL.revokeObjectURL(url);
+      }
+    }
+
+    function registerObjectUrl(blob) {
+      const url = URL.createObjectURL(blob);
+      tempObjectUrls.push(url);
+      return url;
+    }
+
     function detectSourceFromUrl(rawUrl) {
       const url = (rawUrl || "").trim();
       if (!url || url === "#") return null;
       const lower = url.toLowerCase();
+
+      if (lower.startsWith("blob:")) {
+        return { type: "video", src: url };
+      }
 
       if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg")) {
         return { type: "video", src: url };
       }
 
       if (url.includes("youtube.com/watch?v=")) {
-        const v = new URL(url).searchParams.get("v");
-        if (v) return { type: "iframe", src: "https://www.youtube.com/embed/" + v };
+        try {
+          const v = new URL(url).searchParams.get("v");
+          if (v) return { type: "iframe", src: "https://www.youtube.com/embed/" + v };
+        } catch {}
       }
 
       if (url.includes("youtu.be/")) {
@@ -727,6 +1161,10 @@
         if (match && match[1]) {
           return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + match[1] + "&page=1" };
         }
+      }
+
+      if (url.includes("player.bilibili.com") || url.includes("player.youku.com") || url.includes("youtube.com/embed/") || url.includes("v.qq.com/txp/iframe/player.html")) {
+        return { type: "iframe", src: url };
       }
 
       return null;
@@ -745,7 +1183,10 @@
     }
 
     function getModeBadge(item) {
-      return getPlayableSource(item) ? "站内可播" : "仅跳转";
+      const playable = getPlayableSource(item);
+      if (!playable) return "仅跳转";
+      if (item.fromAdmin) return "后台上传";
+      return playable.type === "video" ? "视频直播" : "站内可播";
     }
 
     function buildCard(channel, item, itemIndex) {
@@ -768,29 +1209,33 @@
       `;
     }
 
+    function getChannelItems(channel) {
+      const uploaded = uploadedByChannel[channel] || [];
+      const defaults = VIDEO_LIBRARY[channel] || [];
+      return [...uploaded, ...defaults];
+    }
+
     function renderAll() {
       const keyword = (searchInput.value || "").trim().toLowerCase();
       channelOrder.forEach((channel) => {
         const mount = document.querySelector(`.video-grid[data-channel="${channel}"]`);
         if (!mount) return;
 
-        const source = VIDEO_LIBRARY[channel] || [];
-        const filtered = source
-          .map((item, idx) => ({ ...item, __index: idx }))
-          .filter((item) => {
-            if (!keyword) return true;
-            const text = `${item.title || ""} ${item.desc || ""}`.toLowerCase();
-            return text.includes(keyword);
-          });
+        const source = getChannelItems(channel);
+        const filtered = source.filter((item) => {
+          if (!keyword) return true;
+          const text = `${item.title || ""} ${item.desc || ""}`.toLowerCase();
+          return text.includes(keyword);
+        });
+
+        renderedMap[channel] = filtered;
 
         if (filtered.length === 0) {
           mount.innerHTML = '<div class="empty">没有匹配内容，可清空搜索词后查看全部视频。</div>';
           return;
         }
 
-        mount.innerHTML = filtered
-          .map((item) => buildCard(channel, item, item.__index))
-          .join("");
+        mount.innerHTML = filtered.map((item, idx) => buildCard(channel, item, idx)).join("");
       });
     }
 
@@ -810,19 +1255,19 @@
     }
 
     function playInSite(channel, index) {
-      const item = (VIDEO_LIBRARY[channel] || [])[index];
+      const item = (renderedMap[channel] || [])[index];
       if (!item) return;
       const playable = getPlayableSource(item);
 
       stopAllPlayers();
       activateCard(channel, index);
 
-      nowTitle.textContent = item.title || "未命名视频";
-      nowDesc.textContent = item.desc || "暂无简介";
+      nowTitle.textContent = safeText(item.title, "未命名视频");
+      nowDesc.textContent = safeText(item.desc, "暂无简介");
       nowChannel.textContent = "频道：" + (channelLabels[channel] || channel);
-      nowDuration.textContent = "时长：" + (item.duration || "--:--");
+      nowDuration.textContent = "时长：" + safeText(item.duration, "--:--");
 
-      const rawUrl = (item.url || "").trim();
+      const rawUrl = safeText(item.url, "");
       if (rawUrl && rawUrl !== "#") {
         originLink.href = rawUrl;
         originLink.classList.add("show");
@@ -836,7 +1281,7 @@
         playerPlaceholder.innerHTML = `
           <div>
             <h2 style="margin-bottom: 8px;">当前链接暂不支持站内播放</h2>
-            <p>请给这条视频补充 <code>playUrl</code>（可嵌入地址）或直链视频（mp4/webm）。你也可以先点“打开原链接”跳转观看。</p>
+            <p>请在管理后台补充可播放链接（playUrl）或上传 mp4/webm 文件。你也可以先点“打开原链接”跳转观看。</p>
           </div>
         `;
         return;
@@ -870,6 +1315,234 @@
       });
     }
 
+    function makeUploadedItem(record) {
+      const item = {
+        id: record.id,
+        title: safeText(record.title, "未命名视频"),
+        desc: safeText(record.desc, "暂无简介"),
+        duration: safeText(record.duration, "00:00"),
+        url: safeText(record.url, "#"),
+        playUrl: safeText(record.playUrl, ""),
+        playType: safeText(record.playType, ""),
+        cover: safeText(record.cover, ""),
+        fromAdmin: true
+      };
+
+      if (record.videoBlob instanceof Blob) {
+        const videoBlobUrl = registerObjectUrl(record.videoBlob);
+        item.playUrl = videoBlobUrl;
+        item.playType = "video";
+        if (!item.url || item.url === "#") item.url = videoBlobUrl;
+      }
+
+      if (record.coverBlob instanceof Blob) {
+        item.cover = registerObjectUrl(record.coverBlob);
+      }
+      return item;
+    }
+
+    async function refreshUploadedLibrary() {
+      try {
+        const records = await dbGetAll();
+        uploadedRecords = records.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+        revokeTempObjectUrls();
+        uploadedByChannel = { stage: [], show: [], role: [], live: [] };
+        uploadedRecords.forEach((record) => {
+          const channel = channelOrder.includes(record.channel) ? record.channel : "stage";
+          uploadedByChannel[channel].push(makeUploadedItem(record));
+        });
+      } catch (error) {
+        showAlert("读取后台数据失败：" + error.message, "error");
+      }
+      renderAll();
+      renderAdminList();
+    }
+
+    function renderAdminList() {
+      if (!uploadedRecords.length) {
+        adminList.innerHTML = '<div class="empty">暂无后台上传内容。</div>';
+        return;
+      }
+
+      adminList.innerHTML = uploadedRecords.map((record) => {
+        const channelName = channelLabels[record.channel] || "舞台安利";
+        const playInfo = record.videoBlob ? "上传文件" : safeText(record.playUrl, "") ? "播放链接" : "仅原链接";
+        const updateTime = record.updatedAt ? new Date(record.updatedAt).toLocaleString() : "-";
+        return `
+          <article class="admin-item">
+            <div class="admin-item-head">
+              <b>${escapeHTML(record.title || "未命名视频")}</b>
+              <span>${escapeHTML(record.duration || "--:--")}</span>
+            </div>
+            <div class="admin-item-meta">
+              <span class="badge">${escapeHTML(channelName)}</span>
+              <span>${escapeHTML(playInfo)}</span>
+              <span>${escapeHTML(updateTime)}</span>
+            </div>
+            <div class="admin-item-actions">
+              <button class="btn" type="button" data-action="edit" data-id="${escapeHTML(record.id)}">编辑</button>
+              <button class="btn danger" type="button" data-action="delete" data-id="${escapeHTML(record.id)}">删除</button>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function resetAdminForm() {
+      adminForm.reset();
+      editId.value = "";
+      formTitle.textContent = "新增视频";
+    }
+
+    function fillAdminForm(record) {
+      editId.value = record.id;
+      videoTitle.value = record.title || "";
+      videoDesc.value = record.desc || "";
+      videoDuration.value = record.duration || "";
+      videoChannel.value = channelOrder.includes(record.channel) ? record.channel : "stage";
+      videoSourceUrl.value = record.url && record.url !== "#" ? record.url : "";
+      videoPlayUrl.value = record.playUrl || "";
+      videoPlayType.value = record.playType || "";
+      coverUrl.value = record.cover || "";
+      formTitle.textContent = "编辑视频";
+      showAlert("正在编辑：不重新选择文件则沿用原视频/封面。", "ok");
+    }
+
+    function getAdminPassword() {
+      return localStorage.getItem(ADMIN_PASSWORD_KEY) || DEFAULT_ADMIN_PASSWORD;
+    }
+
+    function openAdmin() {
+      if (!adminAuthed) {
+        const input = window.prompt("请输入管理后台密码");
+        if (input === null) return;
+        if (input !== getAdminPassword()) {
+          window.alert("密码错误");
+          return;
+        }
+        adminAuthed = true;
+      }
+      adminModal.classList.add("show");
+      adminModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      showAlert("在这里上传和编辑视频内容，保存后会立即显示在频道中。");
+      renderAdminList();
+    }
+
+    function closeAdmin() {
+      adminModal.classList.remove("show");
+      adminModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      resetAdminForm();
+    }
+
+    function bindAdminEvents() {
+      adminEntry.addEventListener("click", (e) => {
+        e.preventDefault();
+        openAdmin();
+      });
+
+      heroAdminEntry.addEventListener("click", (e) => {
+        e.preventDefault();
+        openAdmin();
+      });
+
+      adminClose.addEventListener("click", closeAdmin);
+      adminModal.addEventListener("click", (e) => {
+        if (e.target === adminModal) closeAdmin();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && adminModal.classList.contains("show")) {
+          closeAdmin();
+        }
+      });
+
+      resetFormBtn.addEventListener("click", () => {
+        resetAdminForm();
+        showAlert("表单已清空。");
+      });
+
+      adminForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const id = editId.value || "video_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+        const existing = uploadedRecords.find((record) => record.id === id);
+
+        const channel = videoChannel.value;
+        const title = videoTitle.value.trim();
+        if (!title) {
+          showAlert("请填写视频标题。", "error");
+          return;
+        }
+
+        if (!channelOrder.includes(channel)) {
+          showAlert("请选择正确的分区。", "error");
+          return;
+        }
+
+        const nextVideoBlob = videoFile.files[0] || (existing ? existing.videoBlob : null);
+        const nextCoverBlob = coverFile.files[0] || (existing ? existing.coverBlob : null);
+        const sourceUrl = videoSourceUrl.value.trim();
+        const playUrl = videoPlayUrl.value.trim();
+
+        if (!nextVideoBlob && !playUrl && !sourceUrl) {
+          showAlert("请至少提供一种可访问方式：上传视频文件、填写 playUrl 或填写原链接。", "error");
+          return;
+        }
+
+        const record = {
+          id,
+          title,
+          desc: videoDesc.value.trim(),
+          duration: videoDuration.value.trim(),
+          channel,
+          url: sourceUrl || "#",
+          playUrl,
+          playType: videoPlayType.value.trim(),
+          cover: coverUrl.value.trim(),
+          videoBlob: nextVideoBlob || null,
+          coverBlob: nextCoverBlob || null,
+          createdAt: existing ? existing.createdAt : Date.now(),
+          updatedAt: Date.now()
+        };
+
+        try {
+          await dbPut(record);
+          await refreshUploadedLibrary();
+          resetAdminForm();
+          showAlert("保存成功，频道已刷新。", "ok");
+        } catch (error) {
+          showAlert("保存失败：" + error.message, "error");
+        }
+      });
+
+      adminList.addEventListener("click", async (e) => {
+        const target = e.target.closest("button[data-action]");
+        if (!target) return;
+
+        const id = target.getAttribute("data-id");
+        const action = target.getAttribute("data-action");
+        const record = uploadedRecords.find((item) => item.id === id);
+        if (!record) return;
+
+        if (action === "edit") {
+          fillAdminForm(record);
+          return;
+        }
+
+        if (action === "delete") {
+          const ok = window.confirm("确定删除这个视频吗？删除后将从频道列表移除。");
+          if (!ok) return;
+          try {
+            await dbDelete(id);
+            await refreshUploadedLibrary();
+            showAlert("删除成功。", "ok");
+          } catch (error) {
+            showAlert("删除失败：" + error.message, "error");
+          }
+        }
+      });
+    }
+
     const navLinks = document.querySelectorAll(".nav a[href^='#']");
     const sections = document.querySelectorAll(".channel");
 
@@ -891,7 +1564,9 @@
 
     renderAll();
     bindCardEvents();
+    bindAdminEvents();
     updateNavActive();
+    refreshUploadedLibrary();
   </script>
 </body>
 </html>
