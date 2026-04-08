@@ -1,92 +1,73 @@
 # 珍珍日上TV 内容维护说明
 
-## 一、后台上传链接（推荐）
+## 一、管理后台（链接模式，B站优先）
 
-现在首页已经有 **管理后台**（导航栏可打开），本版为**链接管理模式**。
+首页导航栏有 **管理后台**（默认密码：`zzrs2026`）。
 
-- 默认密码：`zzrs2026`
-- 可编辑字段：标题、简介、时长、分区（舞台/综艺/角色/直播）、B站原链接、站内播放链接、封面链接
-- 不再上传本地视频/图片文件，统一使用链接方式
+可编辑字段：
 
-### 使用步骤
+- 标题、简介、时长
+- 所属分区（舞台/综艺/角色/直播）
+- 原链接（推荐填 B 站分享页）
+- `playUrl`（站内播放器链接，可留空自动尝试）
+- 播放类型（自动 / iframe / video）
+- 封面链接
 
-1. 打开首页右上角 **管理后台**
-2. 输入密码进入
-3. 填写标题、分区等信息
-4. 填写 B 站链接 / 播放链接 / 封面链接
-5. 点击「保存视频」
-6. 页面分区会立即出现新卡片，点击即可在站内播放器播放
+### 快速步骤
 
-> 后台数据保存在当前浏览器的 IndexedDB。  
-> 换浏览器、清缓存、换设备后不会自动同步。
-
----
-
-## 二、手动改默认内容（`index.html`）
-
-如果你想把“默认示例卡片”改成固定内容，可以编辑 `index.html` 里的 `VIDEO_LIBRARY`。
-
-每条视频字段：
-
-- `title`：标题
-- `desc`：简介
-- `duration`：时长（例如 `04:12`）
-- `url`：原站链接（可选）
-- `playUrl`：站内播放地址（推荐）
-- `playType`：`iframe`（后台默认） / 留空自动识别
-- `cover`：封面图链接
-
-示例：
-
-```js
-{
-  title: "舞台直拍｜神级卡点",
-  desc: "动作干净，镜头表现稳定",
-  duration: "03:45",
-  url: "https://www.bilibili.com/video/BVxxxx",
-  playUrl: "https://player.bilibili.com/player.html?bvid=BVxxxx&page=1",
-  playType: "iframe",
-  cover: "/images/stage-01.jpg"
-}
-```
+1. 打开管理后台
+2. 填标题和分区
+3. 粘贴 B 站链接（可先只填原链接）
+4. 点「保存视频」
 
 ---
 
-## 三、B站链接怎么填最省心？
+## 二、b23 短链自动转换说明
 
-后台已经针对 B 站做了自动处理：
+例如你给的：
 
-- 你填 `url` 为普通 B 站视频页：`https://www.bilibili.com/video/BV...`
-- 若 `playUrl` 为空，系统会自动尝试转换成可播放地址
-- 你也可以手动填：
-  - `playUrl = https://player.bilibili.com/player.html?bvid=BV...&page=1`
+`https://b23.tv/GYfUvfT`
 
----
+保存时系统会尝试：
 
-## 四、哪些链接能站内播放？
+1. 识别是否已包含 BV 号  
+2. 若无 BV，自动解析短链并提取 BV  
+3. 自动生成 `playUrl`：  
+   `https://player.bilibili.com/player.html?bvid=BVxxxx&page=1`
 
-### 推荐（稳定）
-
-- 直链视频：`.mp4` / `.webm`
-- 平台 embed 链接：
-  - B站：`https://player.bilibili.com/player.html?...`
-  - 腾讯：`https://v.qq.com/txp/iframe/player.html?...`
-  - 优酷：`https://player.youku.com/embed/...`
-  - YouTube：`https://www.youtube.com/embed/...`
-
-### 可能不稳定
-
-- 普通详情页链接（很多平台禁止 iframe 嵌入）
-
-如果不可嵌入，播放器会提示，并可使用「打开原链接」跳转观看。
+> 若短链解析失败（网络或跨域限制），请手动补充 `playUrl`，或先打开短链拿到完整 BV 链接再粘贴。
 
 ---
 
-## 五、官群空降截图页
+## 三、不是只本地：GitHub 云端同步
 
-文件：`daily-group.html`
+后台已新增云同步区：
 
-- 顶部和正文按钮都可返回主页
-- 截图数据在 `SCREENSHOT_LIBRARY` 中维护
-- 字段：`date` / `title` / `desc` / `image`
+- `GitHub Owner`
+- `GitHub Repo`
+- `分支`
+- `云端数据文件路径`
+- `GitHub Token`（需要 contents 写权限）
+
+按钮功能：
+
+- **保存云配置**：保存配置到本地
+- **从云端拉取**：把云端数据拉回后台
+- **上传到云端**：把当前后台数据推到 GitHub
+- **保存后自动云同步**：勾选后每次保存/删除自动上传
+
+默认推荐值：
+
+- Owner: `glow0505`
+- Repo: `glow0505.github.io`
+- 分支: `main`
+- 路径: `data/zzrs-videos.json`
+
+> 注意：Token 在浏览器本地保存，仅你自己可见；不要在公共设备使用。
+
+---
+
+## 四、默认示例内容（可选）
+
+如果你想改静态默认卡片，可编辑 `index.html` 的 `VIDEO_LIBRARY`。
 

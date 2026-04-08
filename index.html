@@ -767,14 +767,14 @@
       <div class="hero-inner">
         <div class="hero-tag">Zhenzhen Rising TV</div>
         <h1>欢迎来到 <span>珍珍日上TV</span></h1>
-        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频。管理后台支持直接录入链接（如 B 站）并编辑内容。</p>
+        <p>现在是站内播放器模式：点击下方任意视频卡片，会在本页播放器里直接播放，并可连续切换不同视频。管理后台支持录入 B 站链接、自动补全可播地址，并支持云端同步。</p>
         <div class="hero-actions">
           <a class="primary" href="#player">进入播放器</a>
           <a class="secondary" href="#stage">先看舞台</a>
           <a class="secondary" href="#" id="heroAdminEntry">打开管理后台</a>
         </div>
         <div class="edit-tip">
-          内容替换入口：底部脚本中的 <strong>VIDEO_LIBRARY</strong>（默认内容） + 管理后台上传内容（浏览器本地持久化）。<br>
+          内容替换入口：底部脚本中的 <strong>VIDEO_LIBRARY</strong>（默认内容） + 管理后台录入内容（本地缓存 + 可选云端同步）。<br>
           管理后台默认密码：<strong>zzrs2026</strong>（可在脚本中改）。
         </div>
       </div>
@@ -789,7 +789,7 @@
             <div id="playerPlaceholder" class="player-placeholder">
               <div>
                 <h2 style="margin-bottom: 8px;">站内播放器已就绪</h2>
-                <p>点击下方视频卡片即可开始播放。推荐在后台给每条视频填写可播放地址（playUrl）或 B 站视频链接。</p>
+                <p>点击下方视频卡片即可开始播放。推荐在后台填写 B 站视频链接，系统会自动尝试补全站内可播地址（playUrl）。</p>
               </div>
             </div>
           </div>
@@ -809,7 +809,7 @@
           1) 不是所有平台分享页都支持 iframe 播放。<br>
           2) 最稳妥的是使用平台 embed 链接（如 B 站播放器链接）。<br>
           3) 如果当前视频不可站内播放，页面会提示并可点击“打开原链接”观看。<br>
-          4) 后台内容保存在当前浏览器（IndexedDB），换浏览器或清缓存后不会自动同步。<br>
+          4) 默认先保存在当前浏览器（IndexedDB），可在后台一键同步到 GitHub 云端。<br>
         </aside>
       </div>
     </section>
@@ -850,11 +850,45 @@
   <div id="adminModal" class="admin-modal" aria-hidden="true">
     <div class="admin-panel">
       <div class="admin-head">
-        <h2>管理后台 · 链接录入与编辑视频</h2>
+        <h2>管理后台 · 链接录入 / 自动转换 / 云端同步</h2>
         <button id="adminClose" class="admin-close" type="button">关闭</button>
       </div>
       <div id="adminAlert" class="admin-alert">
-        在这里录入视频链接（推荐 B 站）和封面链接，填写标题、简介、时长与分区。保存后会立即出现在对应频道。
+        在这里录入视频链接（推荐 B 站）和封面链接，填写标题、简介、时长与分区。支持自动转换 b23 链接，并可同步到 GitHub 云端。
+      </div>
+
+      <div class="admin-alert" style="margin-top:8px;">
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
+          <div class="field">
+            <label for="ghOwner">GitHub Owner</label>
+            <input id="ghOwner" type="text" placeholder="例如：glow0505">
+          </div>
+          <div class="field">
+            <label for="ghRepo">GitHub Repo</label>
+            <input id="ghRepo" type="text" placeholder="例如：glow0505.github.io">
+          </div>
+          <div class="field">
+            <label for="ghBranch">分支</label>
+            <input id="ghBranch" type="text" placeholder="main">
+          </div>
+          <div class="field">
+            <label for="ghPath">云端数据文件路径</label>
+            <input id="ghPath" type="text" placeholder="data/zzrs-videos.json">
+          </div>
+        </div>
+        <div class="field" style="margin-top:8px;">
+          <label for="ghToken">GitHub Token（需要 contents 写权限）</label>
+          <input id="ghToken" type="password" placeholder="ghp_xxx 或 fine-grained token">
+        </div>
+        <div class="btn-row" style="margin-top:8px;">
+          <button id="saveCloudConfigBtn" class="btn" type="button">保存云配置</button>
+          <button id="pullCloudBtn" class="btn" type="button">从云端拉取</button>
+          <button id="pushCloudBtn" class="btn" type="button">上传到云端</button>
+          <label style="margin-left:auto;font-size:.8rem;display:flex;align-items:center;gap:6px;color:#e3e9ff;">
+            <input id="autoSyncCloud" type="checkbox">
+            保存后自动云同步
+          </label>
+        </div>
       </div>
 
       <div class="admin-grid">
@@ -912,9 +946,9 @@
               <button class="btn" id="resetFormBtn" type="button">清空表单</button>
             </div>
             <p class="tips">
-              - 建议填写 B 站播放器链接到 playUrl，站内播放更稳定。<br>
-              - 若只填 B 站原链接（url），系统会尝试自动识别并转换为播放器地址。<br>
-              - 数据保存于当前浏览器，本地持久化。
+              - 建议填写 B 站原链接，系统会自动尝试转换成 playUrl。<br>
+              - 若配置了 GitHub，可一键拉取/上传云端，不再只在本地保存。<br>
+              - 如 b23 短链解析失败，可手动补充 playUrl。
             </p>
           </form>
         </section>
@@ -1018,9 +1052,20 @@
     const videoPlayUrl = document.getElementById("videoPlayUrl");
     const videoPlayType = document.getElementById("videoPlayType");
     const coverUrl = document.getElementById("coverUrl");
+    const ghOwner = document.getElementById("ghOwner");
+    const ghRepo = document.getElementById("ghRepo");
+    const ghBranch = document.getElementById("ghBranch");
+    const ghPath = document.getElementById("ghPath");
+    const ghToken = document.getElementById("ghToken");
+    const autoSyncCloud = document.getElementById("autoSyncCloud");
+    const saveCloudConfigBtn = document.getElementById("saveCloudConfigBtn");
+    const pullCloudBtn = document.getElementById("pullCloudBtn");
+    const pushCloudBtn = document.getElementById("pushCloudBtn");
 
     const ADMIN_PASSWORD_KEY = "zzrs-admin-password";
     const DEFAULT_ADMIN_PASSWORD = "zzrs2026";
+    const CLOUD_CONFIG_KEY = "zzrs-cloud-config";
+    const CLOUD_TOKEN_KEY = "zzrs-cloud-token";
 
     const DB_NAME = "zzrs-media-db";
     const DB_VERSION = 1;
@@ -1105,10 +1150,198 @@
       });
     }
 
+    async function dbReplaceAll(records) {
+      const db = await openDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, "readwrite");
+        const store = tx.objectStore(STORE_NAME);
+        const clearReq = store.clear();
+        clearReq.onerror = () => reject(clearReq.error);
+        clearReq.onsuccess = () => {
+          records.forEach((record) => store.put(record));
+        };
+        tx.oncomplete = () => resolve(true);
+        tx.onerror = () => reject(tx.error || new Error("写入本地数据库失败"));
+      });
+    }
+
+    function utf8ToBase64(input) {
+      return btoa(unescape(encodeURIComponent(input)));
+    }
+
+    function base64ToUtf8(input) {
+      const binary = atob(input);
+      const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+      return new TextDecoder().decode(bytes);
+    }
+
+    function normalizeRepoPath(path) {
+      return (path || "data/zzrs-videos.json").trim().replace(/^\/+/, "");
+    }
+
+    function encodeRepoPath(path) {
+      return normalizeRepoPath(path).split("/").map(encodeURIComponent).join("/");
+    }
+
+    function sanitizeCloudRecord(record) {
+      const id = safeText(record.id, "video_" + Date.now().toString(36));
+      return {
+        id,
+        title: safeText(record.title, "未命名视频"),
+        desc: safeText(record.desc, ""),
+        duration: safeText(record.duration, ""),
+        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
+        url: safeText(record.url, "#"),
+        playUrl: safeText(record.playUrl, ""),
+        playType: safeText(record.playType, ""),
+        cover: safeText(record.cover, ""),
+        createdAt: Number(record.createdAt) || Date.now(),
+        updatedAt: Number(record.updatedAt) || Date.now()
+      };
+    }
+
+    function loadCloudConfigToForm() {
+      const savedRaw = localStorage.getItem(CLOUD_CONFIG_KEY);
+      let saved = {};
+      try {
+        saved = savedRaw ? JSON.parse(savedRaw) : {};
+      } catch {
+        saved = {};
+      }
+      ghOwner.value = safeText(saved.owner, "glow0505");
+      ghRepo.value = safeText(saved.repo, "glow0505.github.io");
+      ghBranch.value = safeText(saved.branch, "main");
+      ghPath.value = safeText(saved.path, "data/zzrs-videos.json");
+      autoSyncCloud.checked = Boolean(saved.autoSync);
+      ghToken.value = localStorage.getItem(CLOUD_TOKEN_KEY) || "";
+    }
+
+    function getCloudConfigFromForm() {
+      return {
+        owner: ghOwner.value.trim(),
+        repo: ghRepo.value.trim(),
+        branch: ghBranch.value.trim() || "main",
+        path: normalizeRepoPath(ghPath.value),
+        token: ghToken.value.trim(),
+        autoSync: autoSyncCloud.checked
+      };
+    }
+
+    function saveCloudConfigFromForm() {
+      const cfg = getCloudConfigFromForm();
+      localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify({
+        owner: cfg.owner,
+        repo: cfg.repo,
+        branch: cfg.branch,
+        path: cfg.path,
+        autoSync: cfg.autoSync
+      }));
+      if (cfg.token) {
+        localStorage.setItem(CLOUD_TOKEN_KEY, cfg.token);
+      }
+      showAlert("云端配置已保存。", "ok");
+    }
+
+    async function fetchCloudFileMeta(config) {
+      const endpoint = `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${encodeRepoPath(config.path)}?ref=${encodeURIComponent(config.branch)}`;
+      const response = await fetch(endpoint, {
+        headers: {
+          "Accept": "application/vnd.github+json",
+          "Authorization": `Bearer ${config.token}`
+        }
+      });
+      if (response.status === 404) {
+        return { exists: false, sha: "" };
+      }
+      if (!response.ok) {
+        throw new Error(`读取云端失败：HTTP ${response.status}`);
+      }
+      const data = await response.json();
+      return { exists: true, sha: data.sha || "", data };
+    }
+
+    async function pullFromCloud() {
+      const cfg = getCloudConfigFromForm();
+      if (!cfg.owner || !cfg.repo || !cfg.token) {
+        throw new Error("请先填写 GitHub owner/repo/token");
+      }
+      const meta = await fetchCloudFileMeta(cfg);
+      if (!meta.exists) {
+        throw new Error("云端数据文件不存在，请先上传一次");
+      }
+      const contentBase64 = (meta.data && meta.data.content) ? String(meta.data.content).replace(/\n/g, "") : "";
+      const text = base64ToUtf8(contentBase64 || "");
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed)) {
+        throw new Error("云端数据格式错误（应为数组）");
+      }
+      const sanitized = parsed.map(sanitizeCloudRecord);
+      await dbReplaceAll(sanitized);
+      await refreshUploadedLibrary();
+      return sanitized.length;
+    }
+
+    async function pushToCloud() {
+      const cfg = getCloudConfigFromForm();
+      if (!cfg.owner || !cfg.repo || !cfg.token) {
+        throw new Error("请先填写 GitHub owner/repo/token");
+      }
+      const meta = await fetchCloudFileMeta(cfg);
+      const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
+      const payload = {
+        message: `update zzrs videos ${new Date().toISOString()}`,
+        content: utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)),
+        branch: cfg.branch
+      };
+      if (meta.exists && meta.sha) {
+        payload.sha = meta.sha;
+      }
+      const response = await fetch(endpoint, {
+        method: "PUT",
+        headers: {
+          "Accept": "application/vnd.github+json",
+          "Authorization": `Bearer ${cfg.token}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        throw new Error(`上传云端失败：HTTP ${response.status}`);
+      }
+      return true;
+    }
+
+    function extractBvidFromText(text) {
+      const match = String(text || "").match(/BV[0-9A-Za-z]{10}/i);
+      if (!match) return "";
+      return match[0].replace(/^bv/, "BV");
+    }
+
+    async function resolveB23ToBvid(shortUrl) {
+      const direct = extractBvidFromText(shortUrl);
+      if (direct) return direct;
+      const normalized = String(shortUrl || "").trim().replace(/^https?:\/\//, "");
+      if (!normalized) return "";
+      const proxyUrl = `https://r.jina.ai/http://${normalized}`;
+      const response = await fetch(proxyUrl);
+      if (!response.ok) return "";
+      const text = await response.text();
+      const fromFull = text.match(/https?:\/\/www\.bilibili\.com\/video\/(BV[0-9A-Za-z]{10})/i);
+      if (fromFull && fromFull[1]) return fromFull[1];
+      return extractBvidFromText(text);
+    }
+
     function detectSourceFromUrl(rawUrl) {
       const url = (rawUrl || "").trim();
       if (!url || url === "#") return null;
       const lower = url.toLowerCase();
+
+      if (url.includes("b23.tv/")) {
+        const bvid = extractBvidFromText(url);
+        if (bvid) {
+          return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + bvid + "&page=1" };
+        }
+      }
 
       if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg")) {
         return { type: "video", src: url };
@@ -1384,6 +1617,7 @@
       adminModal.classList.add("show");
       adminModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
+      loadCloudConfigToForm();
       showAlert("在这里录入和编辑链接内容，保存后会立即显示在频道中。");
       renderAdminList();
     }
@@ -1421,6 +1655,28 @@
         showAlert("表单已清空。");
       });
 
+      saveCloudConfigBtn.addEventListener("click", () => {
+        saveCloudConfigFromForm();
+      });
+
+      pullCloudBtn.addEventListener("click", async () => {
+        try {
+          const count = await pullFromCloud();
+          showAlert(`云端拉取成功，共 ${count} 条。`, "ok");
+        } catch (error) {
+          showAlert(error.message, "error");
+        }
+      });
+
+      pushCloudBtn.addEventListener("click", async () => {
+        try {
+          await pushToCloud();
+          showAlert("已上传到云端。", "ok");
+        } catch (error) {
+          showAlert(error.message, "error");
+        }
+      });
+
       adminForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const id = editId.value || "video_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
@@ -1439,7 +1695,27 @@
         }
 
         const sourceUrl = videoSourceUrl.value.trim();
-        const playUrl = videoPlayUrl.value.trim();
+        let playUrl = videoPlayUrl.value.trim();
+
+        if (!playUrl && sourceUrl) {
+          const autoPlayable = detectSourceFromUrl(sourceUrl);
+          if (autoPlayable && autoPlayable.type === "iframe") {
+            playUrl = autoPlayable.src;
+          }
+        }
+
+        if (!playUrl && sourceUrl && sourceUrl.includes("b23.tv/")) {
+          showAlert("正在解析 b23 短链，请稍候...", "ok");
+          try {
+            const bvid = await resolveB23ToBvid(sourceUrl);
+            if (bvid) {
+              playUrl = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1`;
+              videoPlayUrl.value = playUrl;
+            }
+          } catch {
+            // ignore and keep manual fallback
+          }
+        }
 
         if (!playUrl && !sourceUrl) {
           showAlert("请至少填写一种链接：playUrl 或原链接（url）。", "error");
@@ -1463,6 +1739,9 @@
         try {
           await dbPut(record);
           await refreshUploadedLibrary();
+          if (autoSyncCloud.checked) {
+            await pushToCloud();
+          }
           resetAdminForm();
           showAlert("保存成功，频道已刷新。", "ok");
         } catch (error) {
@@ -1490,12 +1769,16 @@
           try {
             await dbDelete(id);
             await refreshUploadedLibrary();
+            if (autoSyncCloud.checked) {
+              await pushToCloud();
+            }
             showAlert("删除成功。", "ok");
           } catch (error) {
             showAlert("删除失败：" + error.message, "error");
           }
         }
       });
+
     }
 
     const navLinks = document.querySelectorAll(".nav a[href^='#']");
@@ -1517,6 +1800,7 @@
     searchInput.addEventListener("input", renderAll);
     window.addEventListener("scroll", updateNavActive);
 
+    loadCloudConfigToForm();
     renderAll();
     bindCardEvents();
     bindAdminEvents();
