@@ -39,31 +39,33 @@
 
 ---
 
-## 三、不是只本地：GitHub 云端同步
+## 三、不是只本地：Gitee 云端同步
 
-后台已新增云同步区：
+后台已新增云同步区（Gitee）：
 
-- `GitHub Owner`
-- `GitHub Repo`
+- `Gitee Owner`
+- `Gitee Repo`
 - `分支`
 - `云端数据文件路径`
-- `GitHub Token`（需要 contents 写权限）
+- `Gitee Token`（需要 `projects` / `pull_requests` 之外的仓库内容读写权限，通常开仓库代码读写即可）
 
 按钮功能：
 
 - **保存云配置**：保存配置到本地
 - **从云端拉取**：把云端数据拉回后台
-- **上传到云端**：把当前后台数据推到 GitHub
+- **上传到云端**：把当前后台数据推到 Gitee
 - **保存后自动云同步**：勾选后每次保存/删除自动上传
 
-默认推荐值：
+默认示例值：
 
-- Owner: `glow0505`
-- Repo: `glow0505.github.io`
-- 分支: `main`
+- Owner: `你的 Gitee 用户名`
+- Repo: `你的仓库名`
+- 分支: `master`（或你的默认分支）
 - 路径: `data/zzrs-videos.json`
 
 > 注意：Token 在浏览器本地保存，仅你自己可见；不要在公共设备使用。
+>
+> 如果你把站点从 GitHub Pages 迁到 Gitee Pages，建议同时把页面内链接改为相对路径（本项目已处理），避免子路径部署时 404。
 
 ---
 

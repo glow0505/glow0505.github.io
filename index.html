@@ -545,7 +545,7 @@
         <a href="#show">综艺</a>
         <a href="#live">直播回放</a>
         <a href="#" id="adminEntry">管理</a>
-        <a href="/daily-group.html">官群空降</a>
+        <a href="./daily-group.html">官群空降</a>
       </nav>
     </div>
   </header>
@@ -615,25 +615,25 @@
       <div class="admin-alert">
         <div class="split">
           <div class="field">
-            <label for="ghOwner">GitHub Owner</label>
-            <input id="ghOwner" type="text" placeholder="例如：glow0505">
+            <label for="gtOwner">Gitee Owner</label>
+            <input id="gtOwner" type="text" placeholder="例如：yourname">
           </div>
           <div class="field">
-            <label for="ghRepo">GitHub Repo</label>
-            <input id="ghRepo" type="text" placeholder="例如：glow0505.github.io">
+            <label for="gtRepo">Gitee Repo</label>
+            <input id="gtRepo" type="text" placeholder="例如：your-repo">
           </div>
           <div class="field">
-            <label for="ghBranch">分支</label>
-            <input id="ghBranch" type="text" placeholder="main">
+            <label for="gtBranch">分支</label>
+            <input id="gtBranch" type="text" placeholder="master">
           </div>
           <div class="field">
-            <label for="ghPath">云端数据路径</label>
-            <input id="ghPath" type="text" placeholder="data/zzrs-videos.json">
+            <label for="gtPath">云端数据路径</label>
+            <input id="gtPath" type="text" placeholder="data/zzrs-videos.json">
           </div>
         </div>
         <div class="field">
-          <label for="ghToken">GitHub Token</label>
-          <input id="ghToken" type="password" placeholder="ghp_xxx">
+          <label for="gtToken">Gitee Token</label>
+          <input id="gtToken" type="password" placeholder="gitee_pat_xxx">
         </div>
         <div class="btn-row">
           <button id="saveCloudConfigBtn" class="btn" type="button">保存云配置</button>
@@ -758,11 +758,11 @@
     const heroImageUrl = document.getElementById("heroImageUrl");
     const saveHeroBtn = document.getElementById("saveHeroBtn");
 
-    const ghOwner = document.getElementById("ghOwner");
-    const ghRepo = document.getElementById("ghRepo");
-    const ghBranch = document.getElementById("ghBranch");
-    const ghPath = document.getElementById("ghPath");
-    const ghToken = document.getElementById("ghToken");
+    const gtOwner = document.getElementById("gtOwner");
+    const gtRepo = document.getElementById("gtRepo");
+    const gtBranch = document.getElementById("gtBranch");
+    const gtPath = document.getElementById("gtPath");
+    const gtToken = document.getElementById("gtToken");
     const autoSyncCloud = document.getElementById("autoSyncCloud");
     const saveCloudConfigBtn = document.getElementById("saveCloudConfigBtn");
     const pullCloudBtn = document.getElementById("pullCloudBtn");
@@ -855,21 +855,21 @@
       } catch {
         saved = {};
       }
-      ghOwner.value = safeText(saved.owner, "glow0505");
-      ghRepo.value = safeText(saved.repo, "glow0505.github.io");
-      ghBranch.value = safeText(saved.branch, "main");
-      ghPath.value = safeText(saved.path, "data/zzrs-videos.json");
+      gtOwner.value = safeText(saved.owner, "");
+      gtRepo.value = safeText(saved.repo, "");
+      gtBranch.value = safeText(saved.branch, "master");
+      gtPath.value = safeText(saved.path, "data/zzrs-videos.json");
       autoSyncCloud.checked = Boolean(saved.autoSync);
-      ghToken.value = localStorage.getItem(CLOUD_TOKEN_KEY) || "";
+      gtToken.value = localStorage.getItem(CLOUD_TOKEN_KEY) || "";
     }
 
     function getCloudConfigFromForm() {
       return {
-        owner: ghOwner.value.trim(),
-        repo: ghRepo.value.trim(),
-        branch: ghBranch.value.trim() || "main",
-        path: normalizeRepoPath(ghPath.value),
-        token: ghToken.value.trim(),
+        owner: gtOwner.value.trim(),
+        repo: gtRepo.value.trim(),
+        branch: gtBranch.value.trim() || "master",
+        path: normalizeRepoPath(gtPath.value),
+        token: gtToken.value.trim(),
         autoSync: autoSyncCloud.checked
       };
     }
@@ -887,12 +887,18 @@
       showAlert("云配置已保存。", "ok");
     }
 
+    function buildGiteeContentEndpoint(config, includeRef) {
+      const query = new URLSearchParams();
+      query.set("access_token", config.token);
+      if (includeRef && config.branch) query.set("ref", config.branch);
+      return `https://gitee.com/api/v5/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${encodeRepoPath(config.path)}?${query.toString()}`;
+    }
+
     async function fetchCloudFileMeta(config) {
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${encodeRepoPath(config.path)}?ref=${encodeURIComponent(config.branch)}`;
+      const endpoint = buildGiteeContentEndpoint(config, true);
       const response = await fetch(endpoint, {
         headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${config.token}`
+          "Accept": "application/json"
         }
       });
       if (response.status === 404) return { exists: false, sha: "" };
@@ -903,7 +909,7 @@
 
     async function pullFromCloud() {
       const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 GitHub owner/repo/token");
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
       const meta = await fetchCloudFileMeta(cfg);
       if (!meta.exists) throw new Error("云端文件不存在");
       const contentBase64 = String(meta.data.content || "").replace(/\n/g, "");
@@ -918,26 +924,28 @@
 
     async function pushToCloud() {
       const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 GitHub owner/repo/token");
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
       const meta = await fetchCloudFileMeta(cfg);
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
-      const payload = {
-        message: `update zzrs videos ${new Date().toISOString()}`,
-        content: utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)),
-        branch: cfg.branch
-      };
-      if (meta.exists && meta.sha) payload.sha = meta.sha;
+      const endpoint = `https://gitee.com/api/v5/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
+      const payload = new URLSearchParams();
+      payload.set("access_token", cfg.token);
+      payload.set("message", `update zzrs videos ${new Date().toISOString()}`);
+      payload.set("content", utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)));
+      payload.set("branch", cfg.branch);
+      if (meta.exists && meta.sha) payload.set("sha", meta.sha);
 
       const response = await fetch(endpoint, {
-        method: "PUT",
+        method: meta.exists ? "PUT" : "POST",
         headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${cfg.token}`,
-          "Content-Type": "application/json"
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
         },
-        body: JSON.stringify(payload)
+        body: payload.toString()
       });
-      if (!response.ok) throw new Error(`上传云端失败：HTTP ${response.status}`);
+      if (!response.ok) {
+        const txt = await response.text();
+        throw new Error(`上传云端失败：HTTP ${response.status} ${txt ? "- " + txt.slice(0, 120) : ""}`);
+      }
       return true;
     }
 
