@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>官群空降图鉴 | 珍珍日上TV</title>
+  <meta name="description" content="珍珍日上TV：日常官群空降截图整理页。">
+  <style>
+    :root {
+      --bg: #080b15;
+      --bg-2: #0f1427;
+      --panel: rgba(18, 23, 43, 0.78);
+      --line: rgba(255, 255, 255, 0.14);
+      --text: #f6f8ff;
+      --muted: #b2bddc;
+      --gold: #d7b06d;
+      --cyan: #72e4d0;
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(215, 176, 109, 0.16), transparent 34%),
+        radial-gradient(circle at 82% 0%, rgba(114, 228, 208, 0.13), transparent 35%),
+        linear-gradient(180deg, var(--bg), var(--bg-2));
+    }
+
+    .container {
+      width: min(1200px, 94vw);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      background: rgba(8, 11, 21, 0.76);
+    }
+
+    .topbar {
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+    }
+
+    .brand b {
+      color: #f4ddb4;
+    }
+
+    .topbar a {
+      text-decoration: none;
+      color: #e8eeff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      transition: 0.2s ease;
+    }
+
+    .topbar a:hover {
+      border-color: rgba(215, 176, 109, 0.7);
+      background: rgba(215, 176, 109, 0.14);
+      color: #fff7e5;
+    }
+
+    .hero {
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      background:
+        linear-gradient(118deg, rgba(15, 20, 40, 0.95), rgba(12, 16, 29, 0.6)),
+        radial-gradient(circle at 75% 30%, rgba(114, 228, 208, 0.24), transparent 40%);
+    }
+
+    .hero-inner {
+      padding: clamp(22px, 5vw, 48px);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions a {
+      text-decoration: none;
+      color: #12101a;
+      background: linear-gradient(120deg, #d7b06d, #f4ddb4);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      transition: 0.2s ease;
+    }
+
+    .hero-actions a:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .hint {
+      margin-top: 12px;
+      border-radius: 12px;
+      border: 1px dashed rgba(215, 176, 109, 0.52);
+      background: rgba(215, 176, 109, 0.1);
+      color: #f4e7cf;
+      padding: 10px 12px;
+      font-size: 0.85rem;
+    }
+
+    main {
+      padding: 24px 0 36px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .shot-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .shot-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(114, 228, 208, 0.7);
+    }
+
+    .shot-thumb {
+      aspect-ratio: 9 / 16;
+      background:
+        linear-gradient(135deg, rgba(215, 176, 109, 0.22), rgba(114, 228, 208, 0.22)),
+        #151b31;
+      background-size: cover;
+      background-position: center;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.86rem;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+    }
+
+    .shot-info {
+      padding: 10px 11px 12px;
+    }
+
+    .shot-date {
+      color: #f4ddb4;
+      font-size: 0.78rem;
+      margin-bottom: 5px;
+    }
+
+    .shot-title {
+      font-size: 0.94rem;
+      margin-bottom: 4px;
+    }
+
+    .shot-desc {
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .guide {
+      margin-top: 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 14px;
+    }
+
+    .guide h2 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .guide ol {
+      margin-left: 20px;
+      color: #e8eeff;
+      display: grid;
+      gap: 8px;
+      font-size: 0.9rem;
+    }
+
+    .guide code {
+      display: block;
+      margin-top: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 8px;
+      color: #d8ffe7;
+      font-size: 0.82rem;
+      white-space: pre-wrap;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      text-align: center;
+      padding: 20px 0 30px;
+      color: #9eadcf;
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container topbar">
+      <div class="brand"><b>珍珍日上TV</b> · 官群空降图鉴</div>
+      <a href="/index.html">返回首页</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>日常官群空降截图</h1>
+        <p>这个页面用于持续收录“官群空降”相关截图与时间记录。你可以把每次空降截图更新到下方图鉴里，方便整理和回顾。</p>
+        <div class="hero-actions">
+          <a href="/index.html">返回珍珍日上TV主页</a>
+        </div>
+        <div class="hint">内容替换入口：编辑本文件底部脚本中的 <strong>SCREENSHOT_LIBRARY</strong> 数据。</div>
+      </div>
+    </section>
+
+    <section style="margin-top: 18px;">
+      <div class="grid" id="shotGrid"></div>
+    </section>
+
+    <section class="guide">
+      <h2>怎么替换成你自己的截图？</h2>
+      <ol>
+        <li>把截图先上传到图床，或放到仓库里（例如 <code>/images/xxx.jpg</code>）。</li>
+        <li>编辑本页面脚本里的 <strong>SCREENSHOT_LIBRARY</strong>，替换 <code>image</code>、<code>date</code>、<code>title</code>、<code>desc</code>。</li>
+        <li>保存后刷新页面即可看到更新效果。</li>
+      </ol>
+      <code>{
+  date: "2026-04-08",
+  title: "晚间空降互动",
+  desc: "聊了舞台准备和最近日常，气氛特别好。",
+  image: "/images/kongjiang-20260408.jpg"
+}</code>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">珍珍日上TV · 官群空降截图页</div>
+  </footer>
+
+  <script>
+    /*
+      字段说明：
+      - date: 日期
+      - title: 标题
+      - desc: 说明
+      - image: 图片链接（可留空）
+    */
+    const SCREENSHOT_LIBRARY = [
+      {
+        date: "2026-04-08",
+        title: "晚间空降互动",
+        desc: "空降聊天持续了很久，聊到近期舞台准备和日常状态。",
+        image: ""
+      },
+      {
+        date: "2026-04-03",
+        title: "午后 surprise 空降",
+        desc: "中午突然空降，现场气氛很活跃，互动回复很密集。",
+        image: ""
+      },
+      {
+        date: "2026-03-30",
+        title: "直播后官群返场",
+        desc: "补充了直播里没展开的话题，粉丝问答信息量很大。",
+        image: ""
+      },
+      {
+        date: "2026-03-24",
+        title: "舞台彩排日空降",
+        desc: "分享了彩排当天状态，提到很多幕后细节。",
+        image: ""
+      },
+      {
+        date: "2026-03-18",
+        title: "周末夜聊空降",
+        desc: "氛围轻松，表情包和互动梗非常多。",
+        image: ""
+      },
+      {
+        date: "2026-03-10",
+        title: "工作日深夜空降",
+        desc: "短时空降但信息密度高，回复节奏快。",
+        image: ""
+      }
+    ];
+
+    const shotGrid = document.getElementById("shotGrid");
+
+    function cardHTML(item) {
+      const bg = item.image && item.image.trim()
+        ? ` style="background-image: linear-gradient(135deg, rgba(215,176,109,0.2), rgba(114,228,208,0.2)), url('${item.image}');"`
+        : "";
+      const placeholder = item.image && item.image.trim() ? "" : "空降截图待替换";
+
+      return `
+        <article class="shot-card">
+          <div class="shot-thumb"${bg}>${placeholder}</div>
+          <div class="shot-info">
+            <div class="shot-date">${item.date || "日期待补充"}</div>
+            <div class="shot-title">${item.title || "标题待补充"}</div>
+            <div class="shot-desc">${item.desc || "描述待补充"}</div>
+          </div>
+        </article>
+      `;
+    }
+
+    shotGrid.innerHTML = SCREENSHOT_LIBRARY.map(cardHTML).join("");
+  </script>
+</body>
+</html>
