@@ -3,19 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>珍藏 | 孙珍妮安利站</title>
-  <meta name="description" content="孙珍妮角色安利、综艺安利、舞台安利与入坑指南，一站式收藏。">
+  <title>孙珍妮视频安利首页</title>
+  <meta name="description" content="仿视频平台风格的孙珍妮安利首页，按舞台、综艺、角色、直播等频道分区展示。">
   <style>
     :root {
-      --bg: #080a11;
-      --bg-soft: #121728;
-      --card: rgba(20, 25, 40, 0.75);
-      --line: rgba(255, 255, 255, 0.14);
-      --text: #f5f7ff;
-      --muted: #c6cbe0;
-      --accent: #e8c986;
-      --accent-strong: #f6d68f;
-      --shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      --bg: #0b0f1c;
+      --bg-soft: #131a2f;
+      --panel: #171f36;
+      --card: #1b2441;
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f4f7ff;
+      --muted: #acb7db;
+      --accent: #31d0aa;
+      --accent-2: #8c7dff;
+      --shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
     }
 
     * {
@@ -24,510 +25,502 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
-      color: var(--text);
       font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-      line-height: 1.6;
       background:
-        radial-gradient(circle at 15% 20%, rgba(151, 103, 255, 0.18), transparent 40%),
-        radial-gradient(circle at 80% 15%, rgba(54, 109, 255, 0.16), transparent 40%),
-        radial-gradient(circle at 50% 80%, rgba(255, 176, 89, 0.12), transparent 35%),
+        radial-gradient(circle at 0% 0%, rgba(49, 208, 170, 0.12), transparent 32%),
+        radial-gradient(circle at 100% 0%, rgba(140, 125, 255, 0.16), transparent 38%),
         var(--bg);
+      color: var(--text);
       min-height: 100vh;
     }
 
-    .overlay {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background: linear-gradient(180deg, rgba(5, 7, 13, 0.6), rgba(5, 7, 13, 0.85));
-      z-index: -1;
-    }
-
     .container {
-      width: min(1140px, 92vw);
+      width: min(1280px, 94vw);
       margin: 0 auto;
     }
 
     header {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 50;
       backdrop-filter: blur(10px);
-      background: rgba(8, 10, 17, 0.75);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(9, 12, 22, 0.82);
+      border-bottom: 1px solid var(--line);
     }
 
-    .nav {
-      height: 72px;
+    .topbar {
+      height: 66px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 16px;
     }
 
-    .brand {
-      letter-spacing: 1px;
-      font-weight: 700;
+    .logo {
       font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
       white-space: nowrap;
     }
 
-    .brand .sep {
-      margin: 0 8px;
+    .logo span {
       color: var(--accent);
-      opacity: 0.85;
+      margin: 0 6px;
     }
 
-    .nav-links {
+    .search {
+      flex: 1;
+      max-width: 520px;
       display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #e7ebff;
-      font-size: 0.98rem;
-      padding: 8px 12px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 999px;
-      transition: 0.2s ease;
-      border: 1px solid transparent;
+      padding: 0 14px;
+      height: 40px;
     }
 
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: var(--accent-strong);
-      border-color: rgba(246, 214, 143, 0.55);
-      background: rgba(246, 214, 143, 0.08);
+    .search input {
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      width: 100%;
+      font-size: 0.95rem;
+    }
+
+    .channels {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 10px;
+    }
+
+    .channels::-webkit-scrollbar {
+      display: none;
+    }
+
+    .channels a {
+      text-decoration: none;
+      color: #deebff;
+      font-size: 0.9rem;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.03);
+      white-space: nowrap;
+      transition: 0.2s ease;
+    }
+
+    .channels a:hover,
+    .channels a.active {
+      color: #ffffff;
+      border-color: rgba(49, 208, 170, 0.72);
+      background: rgba(49, 208, 170, 0.16);
     }
 
     .hero {
-      min-height: calc(100vh - 72px);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 36px 0 54px;
-    }
-
-    .hero-inner {
-      width: min(820px, 92vw);
-      background: linear-gradient(135deg, rgba(15, 20, 34, 0.7), rgba(11, 14, 22, 0.58));
+      margin-top: 16px;
+      margin-bottom: 28px;
+      border-radius: 20px;
       border: 1px solid var(--line);
-      border-radius: 24px;
-      padding: clamp(28px, 5vw, 52px) clamp(20px, 5vw, 42px);
+      overflow: hidden;
+      background:
+        linear-gradient(115deg, rgba(14, 20, 40, 0.96) 22%, rgba(11, 15, 29, 0.55)),
+        radial-gradient(circle at 80% 32%, rgba(49, 208, 170, 0.22), transparent 45%);
       box-shadow: var(--shadow);
     }
 
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 3.4rem);
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-      font-weight: 700;
+    .hero-inner {
+      padding: clamp(24px, 5vw, 56px);
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
     }
 
-    .hero h1 span {
-      color: var(--accent);
+    .hero-badge {
+      font-size: 0.8rem;
+      color: #b8ffe8;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+      line-height: 1.25;
     }
 
     .hero p {
       color: var(--muted);
-      font-size: clamp(1rem, 2.8vw, 1.26rem);
-      margin-bottom: 28px;
+      max-width: 680px;
     }
 
     .hero-actions {
       display: flex;
-      justify-content: center;
+      gap: 10px;
       flex-wrap: wrap;
-      gap: 12px;
+      margin-top: 6px;
     }
 
     .hero-actions a {
       text-decoration: none;
-      color: #f8fbff;
-      border: 1px solid rgba(255, 255, 255, 0.34);
-      border-radius: 12px;
-      padding: 11px 20px;
-      min-width: 122px;
-      transition: 0.2s ease;
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .hero-actions a:hover {
-      border-color: var(--accent);
-      color: var(--accent-strong);
-      transform: translateY(-1px);
-      background: rgba(246, 214, 143, 0.08);
-    }
-
-    section {
-      padding: 78px 0 8px;
-    }
-
-    .section-head {
-      margin-bottom: 24px;
-    }
-
-    .section-head h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      margin-bottom: 8px;
-    }
-
-    .section-head p {
-      color: var(--muted);
-      font-size: 0.98rem;
-    }
-
-    .grid {
-      display: grid;
-      gap: 16px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    .card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(246, 214, 143, 0.55);
-    }
-
-    .card h3 {
-      font-size: 1.05rem;
-      margin-bottom: 8px;
-      color: #fff;
-    }
-
-    .meta {
-      font-size: 0.86rem;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-      margin-bottom: 12px;
-    }
-
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .tag {
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 0.78rem;
-      color: #e7ecff;
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .guide {
-      background: linear-gradient(135deg, rgba(246, 214, 143, 0.08), rgba(85, 108, 255, 0.1));
-      border: 1px solid rgba(246, 214, 143, 0.32);
-      border-radius: 16px;
-      padding: clamp(20px, 4vw, 28px);
-      margin-top: 8px;
-    }
-
-    .guide ol {
-      margin-left: 22px;
-      color: #eef2ff;
-      display: grid;
-      gap: 10px;
-    }
-
-    .guide li span {
-      color: var(--muted);
-      display: block;
-      font-size: 0.95rem;
-      margin-top: 2px;
-    }
-
-    .cta {
-      margin-top: 22px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .btn {
-      text-decoration: none;
-      color: #0f1320;
-      background: var(--accent-strong);
-      border-radius: 10px;
-      padding: 10px 14px;
+      color: #081028;
+      background: #ecf7ff;
+      border-radius: 9px;
+      padding: 9px 14px;
+      font-size: 0.9rem;
       font-weight: 700;
-      font-size: 0.92rem;
-      border: 1px solid rgba(255, 255, 255, 0.4);
       transition: 0.2s ease;
     }
 
-    .btn.secondary {
-      color: #eaf0ff;
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.23);
+    .hero-actions a.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #e7efff;
+      border: 1px solid rgba(255, 255, 255, 0.24);
       font-weight: 500;
     }
 
-    .btn:hover {
+    .hero-actions a:hover {
       transform: translateY(-1px);
-      filter: brightness(1.05);
+    }
+
+    main {
+      padding-bottom: 30px;
+    }
+
+    .section {
+      margin-bottom: 26px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+      gap: 12px;
+    }
+
+    .section-head h2 {
+      font-size: 1.28rem;
+    }
+
+    .section-head a {
+      text-decoration: none;
+      color: #99e8d5;
+      font-size: 0.9rem;
+    }
+
+    .video-row {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .video-card {
+      text-decoration: none;
+      color: inherit;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: 0.2s ease;
+      display: block;
+      min-width: 0;
+    }
+
+    .video-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(49, 208, 170, 0.55);
+    }
+
+    .thumb {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background:
+        linear-gradient(135deg, rgba(140, 125, 255, 0.28), rgba(49, 208, 170, 0.2)),
+        var(--panel);
+      display: grid;
+      place-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .play {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(0, 0, 0, 0.32);
+      display: grid;
+      place-items: center;
+      font-size: 0.86rem;
+    }
+
+    .duration {
+      position: absolute;
+      right: 7px;
+      bottom: 7px;
+      background: rgba(0, 0, 0, 0.72);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-size: 0.73rem;
+      color: #f3f6ff;
+    }
+
+    .info {
+      padding: 10px 10px 11px;
+    }
+
+    .title {
+      font-size: 0.9rem;
+      line-height: 1.35;
+      min-height: 2.45em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .desc {
+      margin-top: 5px;
+      font-size: 0.79rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     footer {
-      padding: 54px 0 32px;
-      color: #aeb5d0;
-      font-size: 0.9rem;
+      border-top: 1px solid var(--line);
+      color: #99a7d1;
+      font-size: 0.84rem;
       text-align: center;
+      padding: 22px 0 34px;
     }
 
-    @media (max-width: 920px) {
-      .grid {
+    @media (max-width: 1180px) {
+      .video-row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 840px) {
+      .topbar {
+        height: auto;
+        padding: 12px 0;
+        flex-wrap: wrap;
+      }
+
+      .search {
+        order: 3;
+        max-width: none;
+        width: 100%;
+      }
+
+      .video-row {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 640px) {
-      .nav {
-        height: auto;
-        padding: 14px 0;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .nav-links {
-        justify-content: flex-start;
+    @media (max-width: 520px) {
+      .video-row {
+        grid-template-columns: 1fr;
       }
 
       .hero {
-        min-height: 74vh;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
+        margin-top: 12px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="overlay"></div>
-
   <header>
-    <div class="container nav">
-      <div class="brand">珍藏<span class="sep">|</span>孙珍妮</div>
-      <nav class="nav-links">
-        <a href="#guide">入坑指南</a>
-        <a href="#roles">角色安利</a>
-        <a href="#shows">综艺安利</a>
-        <a href="#stages">舞台安利</a>
-        <a href="#replay">直播回放</a>
+    <div class="container topbar">
+      <div class="logo">珍藏<span>|</span>孙珍妮视频站</div>
+      <div class="search">
+        <input type="text" placeholder="搜索：舞台、综艺、角色片段...">
+      </div>
+      <nav class="channels">
+        <a href="#stage" class="active">舞台</a>
+        <a href="#show">综艺</a>
+        <a href="#role">角色</a>
+        <a href="#live">直播</a>
       </nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero" id="top">
+  <main class="container">
+    <section class="hero">
       <div class="hero-inner">
-        <h1>珍藏 <span>|</span> 孙珍妮安利站</h1>
-        <p>遇见珍妮，万事如意。这里整理了角色、综艺、舞台和入坑路线，欢迎一键收藏慢慢补。</p>
+        <div class="hero-badge">Featured Channel</div>
+        <h1>孙珍妮安利主页 · 像视频平台一样浏览</h1>
+        <p>按频道刷内容：舞台、综艺、角色、直播回放。每个分区都像首页推荐位，适合直接分享给朋友一键入坑。</p>
         <div class="hero-actions">
-          <a href="#guide">入坑指南</a>
-          <a href="#roles">角色安利</a>
-          <a href="#shows">综艺安利</a>
-          <a href="#stages">舞台安利</a>
+          <a href="#stage">先看舞台</a>
+          <a class="secondary" href="#show">再看综艺</a>
+          <a class="secondary" href="#role">补角色</a>
         </div>
       </div>
     </section>
 
-    <section id="guide">
-      <div class="container">
-        <div class="section-head">
-          <h2>入坑指南</h2>
-          <p>第一次认识孙珍妮可以按这个顺序看，信息量合适、不容易劝退。</p>
-        </div>
-        <div class="guide">
-          <ol>
-            <li>
-              先看舞台混剪，快速感受业务能力与舞台表现力。
-              <span>推荐先看高能舞台，再补练习室，能更直观理解她的风格。</span>
-            </li>
-            <li>
-              再看综艺切片，了解反差感和日常性格。
-              <span>综艺里她很有梗，互动感强，容易建立“路人缘”。</span>
-            </li>
-            <li>
-              最后补角色片段，完整认识她的表演成长线。
-              <span>可优先看讨论度高的角色，再按时间线回补其他作品。</span>
-            </li>
-          </ol>
-          <div class="cta">
-            <a class="btn" href="#stages">先看舞台</a>
-            <a class="btn secondary" href="#shows">再看综艺</a>
-            <a class="btn secondary" href="#roles">最后补角色</a>
-          </div>
-        </div>
+    <section class="section" id="stage">
+      <div class="section-head">
+        <h2>舞台安利</h2>
+        <a href="#">更多舞台 ></a>
+      </div>
+      <div class="video-row">
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">04:12</span></div>
+          <div class="info"><div class="title">舞台 1 · 高能开场直拍</div><div class="desc">卡点干净，镜头表现稳定</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">03:58</span></div>
+          <div class="info"><div class="title">舞台 2 · 热门唱跳合作舞台</div><div class="desc">互动自然，氛围拉满</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">05:01</span></div>
+          <div class="info"><div class="title">舞台 3 · 抒情慢歌完整版</div><div class="desc">情绪递进很稳，细节值得二刷</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">02:49</span></div>
+          <div class="info"><div class="title">舞台 4 · 练习室视角</div><div class="desc">动作细节和控制力很清楚</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">03:33</span></div>
+          <div class="info"><div class="title">舞台 5 · 名场面混剪</div><div class="desc">新粉友好，一条视频看重点</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">04:26</span></div>
+          <div class="info"><div class="title">舞台 6 · 年度特别舞台</div><div class="desc">舞台叙事完整，记忆点强</div></div>
+        </a>
       </div>
     </section>
 
-    <section id="roles">
-      <div class="container">
-        <div class="section-head">
-          <h2>角色安利</h2>
-          <p>这里放代表性角色，侧重“记忆点 + 情绪张力 + 角色完成度”。</p>
-        </div>
-        <div class="grid">
-          <article class="card">
-            <h3>高智感角色线</h3>
-            <div class="meta">关键词：冷静 / 克制 / 反转</div>
-            <p>在偏理性人物里，她的眼神戏和停顿处理很细，适合反复看细节。</p>
-            <div class="tag-list"><span class="tag">眼神戏</span><span class="tag">微表情</span><span class="tag">反转感</span></div>
-          </article>
-          <article class="card">
-            <h3>青春成长角色线</h3>
-            <div class="meta">关键词：真实 / 轻盈 / 共鸣</div>
-            <p>日常台词自然，生活化状态比较好代入，属于“越看越顺”的类型。</p>
-            <div class="tag-list"><span class="tag">青春感</span><span class="tag">代入感</span><span class="tag">情绪递进</span></div>
-          </article>
-          <article class="card">
-            <h3>情感爆发角色线</h3>
-            <div class="meta">关键词：层次 / 爆发 / 张力</div>
-            <p>情绪切换不突兀，前后铺垫完整，是非常适合“剪高光片段”的类型。</p>
-            <div class="tag-list"><span class="tag">情感戏</span><span class="tag">高光名场面</span><span class="tag">台词力度</span></div>
-          </article>
-        </div>
+    <section class="section" id="show">
+      <div class="section-head">
+        <h2>综艺安利</h2>
+        <a href="#">更多综艺 ></a>
+      </div>
+      <div class="video-row">
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">12:10</span></div>
+          <div class="info"><div class="title">综艺 1 · 团综高笑点合集</div><div class="desc">综艺感在线，路人缘拉满</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">08:42</span></div>
+          <div class="info"><div class="title">综艺 2 · 游戏环节高能片段</div><div class="desc">反应快，镜头感自然</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">09:36</span></div>
+          <div class="info"><div class="title">综艺 3 · 默契挑战名场面</div><div class="desc">和队友互动非常有梗</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">07:55</span></div>
+          <div class="info"><div class="title">综艺 4 · 访谈金句片段</div><div class="desc">表达清晰，观点真诚</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">10:02</span></div>
+          <div class="info"><div class="title">综艺 5 · 日常幕后花絮</div><div class="desc">轻松氛围，性格很圈粉</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">06:21</span></div>
+          <div class="info"><div class="title">综艺 6 · 新人入坑必看</div><div class="desc">一条看懂综艺魅力点</div></div>
+        </a>
       </div>
     </section>
 
-    <section id="shows">
-      <div class="container">
-        <div class="section-head">
-          <h2>综艺安利</h2>
-          <p>可爱、聪明、松弛感都在这里，最适合“安利新朋友”。</p>
-        </div>
-        <div class="grid">
-          <article class="card">
-            <h3>团综互动名场面</h3>
-            <div class="meta">推荐指数：★★★★★</div>
-            <p>气氛组能力强，梗密度高，和队友互动自然，观感很轻松。</p>
-            <div class="tag-list"><span class="tag">团魂</span><span class="tag">综艺感</span><span class="tag">笑点密集</span></div>
-          </article>
-          <article class="card">
-            <h3>访谈类节目</h3>
-            <div class="meta">推荐指数：★★★★☆</div>
-            <p>表达清晰，回答有个人观点，能看到对舞台和角色的认真态度。</p>
-            <div class="tag-list"><span class="tag">表达力</span><span class="tag">思路清晰</span><span class="tag">真诚</span></div>
-          </article>
-          <article class="card">
-            <h3>游戏挑战类</h3>
-            <div class="meta">推荐指数：★★★★☆</div>
-            <p>反应快、胜负欲适中，镜头前状态很稳定，整体观看节奏舒服。</p>
-            <div class="tag-list"><span class="tag">反应快</span><span class="tag">节奏好</span><span class="tag">路人友好</span></div>
-          </article>
-        </div>
+    <section class="section" id="role">
+      <div class="section-head">
+        <h2>角色安利</h2>
+        <a href="#">更多角色 ></a>
+      </div>
+      <div class="video-row">
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">05:47</span></div>
+          <div class="info"><div class="title">角色 1 · 高智感角色剪辑</div><div class="desc">眼神戏和情绪停顿很细腻</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">07:06</span></div>
+          <div class="info"><div class="title">角色 2 · 青春成长线</div><div class="desc">生活化台词，代入感强</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">04:50</span></div>
+          <div class="info"><div class="title">角色 3 · 情绪爆发名场面</div><div class="desc">层次完整，起伏自然</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">06:28</span></div>
+          <div class="info"><div class="title">角色 4 · 台词高光集锦</div><div class="desc">语气变化和节奏都在线</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">08:03</span></div>
+          <div class="info"><div class="title">角色 5 · 角色关系梳理</div><div class="desc">剧情友好向，新人可直补</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">03:29</span></div>
+          <div class="info"><div class="title">角色 6 · 一分钟快速安利</div><div class="desc">适合转发给朋友安利</div></div>
+        </a>
       </div>
     </section>
 
-    <section id="stages">
-      <div class="container">
-        <div class="section-head">
-          <h2>舞台安利</h2>
-          <p>如果你只想先看一个板块，优先从舞台开始最容易“入坑”。</p>
-        </div>
-        <div class="grid">
-          <article class="card">
-            <h3>强节奏唱跳舞台</h3>
-            <div class="meta">看点：力度、控制、走位</div>
-            <p>动作干净利落，卡点准确，镜头切换时状态保持得很完整。</p>
-            <div class="tag-list"><span class="tag">唱跳</span><span class="tag">卡点</span><span class="tag">舞台控制</span></div>
-          </article>
-          <article class="card">
-            <h3>抒情慢歌舞台</h3>
-            <div class="meta">看点：情绪、气息、镜头表达</div>
-            <p>细腻路线的舞台很能打，情绪递进清楚，适合静下来看完整表演。</p>
-            <div class="tag-list"><span class="tag">情绪输出</span><span class="tag">氛围感</span><span class="tag">镜头语言</span></div>
-          </article>
-          <article class="card">
-            <h3>特别合作舞台</h3>
-            <div class="meta">看点：化学反应、舞台新鲜感</div>
-            <p>合作舞台的适配能力不错，不同搭档也能保持自身特色。</p>
-            <div class="tag-list"><span class="tag">合作舞台</span><span class="tag">多风格</span><span class="tag">完成度</span></div>
-          </article>
-        </div>
+    <section class="section" id="live">
+      <div class="section-head">
+        <h2>直播回放</h2>
+        <a href="#">更多直播 ></a>
       </div>
-    </section>
-
-    <section id="replay">
-      <div class="container">
-        <div class="section-head">
-          <h2>直播回放</h2>
-          <p>用于收录直播精华、互动片段、粉丝问答合集（可持续更新）。</p>
-        </div>
-        <div class="grid">
-          <article class="card">
-            <h3>直播精华 Vol.1</h3>
-            <div class="meta">内容：轻松聊天 + 日常分享</div>
-            <p>建议剪成 8~12 分钟短合集，适合新粉快速了解她的真实状态。</p>
-            <div class="tag-list"><span class="tag">轻松聊天</span><span class="tag">日常向</span><span class="tag">入门友好</span></div>
-          </article>
-          <article class="card">
-            <h3>直播问答合集</h3>
-            <div class="meta">内容：舞台幕后与工作感受</div>
-            <p>把高价值回答按主题拆分，做成“常见问题索引”更方便查找。</p>
-            <div class="tag-list"><span class="tag">Q&A</span><span class="tag">幕后分享</span><span class="tag">索引化</span></div>
-          </article>
-          <article class="card">
-            <h3>名场面时间轴</h3>
-            <div class="meta">内容：高能瞬间集中补档</div>
-            <p>按时间戳整理，有利于后续二创剪辑，也方便群聊里直接安利。</p>
-            <div class="tag-list"><span class="tag">时间轴</span><span class="tag">高能片段</span><span class="tag">二创素材</span></div>
-          </article>
-        </div>
+      <div class="video-row">
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">15:32</span></div>
+          <div class="info"><div class="title">直播 1 · 日常聊天精华</div><div class="desc">松弛自然，入坑友好</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">13:47</span></div>
+          <div class="info"><div class="title">直播 2 · 粉丝问答合集</div><div class="desc">幕后和工作状态分享</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">09:59</span></div>
+          <div class="info"><div class="title">直播 3 · 高能反应瞬间</div><div class="desc">名场面时间轴剪辑版</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">11:18</span></div>
+          <div class="info"><div class="title">直播 4 · 舞台幕后聊天</div><div class="desc">内容密度高，适合收藏</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">14:05</span></div>
+          <div class="info"><div class="title">直播 5 · 轻松互动夜</div><div class="desc">氛围轻松，笑点很多</div></div>
+        </a>
+        <a class="video-card" href="#">
+          <div class="thumb"><div class="play">▶</div><span class="duration">07:44</span></div>
+          <div class="info"><div class="title">直播 6 · 新粉速看导览</div><div class="desc">把重点片段都整理好了</div></div>
+        </a>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      <p>Made for 孙珍妮安利｜可继续扩展为作品库、视频链接库、时间线档案站。</p>
-    </div>
+    <div class="container">孙珍妮视频安利首页 · 当前为演示数据，后续可替换成真实视频链接与封面。</div>
   </footer>
 
   <script>
-    const sections = document.querySelectorAll("section[id]");
-    const navLinks = document.querySelectorAll(".nav-links a");
+    const links = document.querySelectorAll(".channels a");
+    const sections = document.querySelectorAll(".section");
 
-    const activateNav = () => {
-      let current = "guide";
+    const updateActiveChannel = () => {
+      let current = "stage";
       sections.forEach((section) => {
-        const top = section.offsetTop - 120;
-        if (window.scrollY >= top) {
-          current = section.getAttribute("id");
+        if (window.scrollY >= section.offsetTop - 120) {
+          current = section.id;
         }
       });
-
-      navLinks.forEach((link) => {
+      links.forEach((link) => {
         link.classList.toggle("active", link.getAttribute("href") === "#" + current);
       });
     };
 
-    window.addEventListener("scroll", activateNav);
-    activateNav();
+    window.addEventListener("scroll", updateActiveChannel);
+    updateActiveChannel();
   </script>
 </body>
 </html>
