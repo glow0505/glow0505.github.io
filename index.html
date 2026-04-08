@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>珍珍日上TV</title>
-  <meta name="description" content="珍珍日上TV · 舞台、综艺、角色、直播回放分区视频站。">
+  <meta name="description" content="珍珍日上TV · 作品、舞台、综艺、直播回放分区视频站。">
   <style>
     :root {
       --bg: #070707;
@@ -67,10 +67,17 @@
       font-size: 1.06rem;
       letter-spacing: 0.6px;
       font-weight: 700;
+      text-decoration: none;
+      color: var(--text);
     }
 
     .brand b {
       color: var(--gold-soft);
+    }
+
+    .brand .sep {
+      color: #dbc292;
+      margin: 0 4px;
     }
 
     .search {
@@ -525,17 +532,17 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
   <header>
     <div class="container topbar">
-      <div class="brand"><b>珍珍日上TV</b></div>
+      <a class="brand" href="#top"><b>珍珍日上TV</b><span class="sep">｜</span>JENNYBOB</a>
       <label class="search">
         <input id="searchInput" type="text" placeholder="搜索视频标题/简介">
       </label>
       <nav class="nav">
-        <a href="#stage" class="active">舞台</a>
+        <a href="#works" class="active">作品</a>
+        <a href="#stage">舞台</a>
         <a href="#show">综艺</a>
-        <a href="#role">角色</a>
         <a href="#live">直播回放</a>
         <a href="#" id="adminEntry">管理</a>
         <a href="/daily-group.html">官群空降</a>
@@ -546,15 +553,23 @@
   <main class="container">
     <section id="heroBanner" class="hero">
       <div class="hero-inner">
-        <div class="hero-tag">ZZRS TV</div>
-        <h1>珍珍日上TV</h1>
-        <p>舞台 / 综艺 / 角色 / 直播回放</p>
+        <div class="hero-tag">JENNYBOB</div>
+        <h1>JENNYBOB TV</h1>
+        <p>遇见珍妮，万事如意。谢谢你走到这里，欢迎加入藕粉大家庭。</p>
       </div>
+    </section>
+
+    <section class="channel" id="works">
+      <div class="channel-head">
+        <h2>作品</h2>
+        <span class="label">Works</span>
+      </div>
+      <div class="video-grid" data-channel="role"></div>
     </section>
 
     <section class="channel" id="stage">
       <div class="channel-head">
-        <h2>舞台安利</h2>
+        <h2>舞台</h2>
         <span class="label">Stage</span>
       </div>
       <div class="video-grid" data-channel="stage"></div>
@@ -562,18 +577,10 @@
 
     <section class="channel" id="show">
       <div class="channel-head">
-        <h2>综艺安利</h2>
+        <h2>综艺</h2>
         <span class="label">Show</span>
       </div>
       <div class="video-grid" data-channel="show"></div>
-    </section>
-
-    <section class="channel" id="role">
-      <div class="channel-head">
-        <h2>角色安利</h2>
-        <span class="label">Role</span>
-      </div>
-      <div class="video-grid" data-channel="role"></div>
     </section>
 
     <section class="channel" id="live">
@@ -660,9 +667,9 @@
               <div class="field">
                 <label for="videoChannel">分区 *</label>
                 <select id="videoChannel" required>
-                  <option value="stage">舞台安利</option>
-                  <option value="show">综艺安利</option>
-                  <option value="role">角色安利</option>
+                  <option value="role">作品</option>
+                  <option value="stage">舞台</option>
+                  <option value="show">综艺</option>
                   <option value="live">直播回放</option>
                 </select>
               </div>
@@ -705,9 +712,9 @@
     };
 
     const channelLabels = {
-      stage: "舞台安利",
-      show: "综艺安利",
-      role: "角色安利",
+      stage: "舞台",
+      show: "综艺",
+      role: "作品",
       live: "直播回放"
     };
     const channelOrder = ["stage", "show", "role", "live"];
@@ -1078,7 +1085,7 @@
             <span>${escapeHTML(record.duration || "--:--")}</span>
           </div>
           <div class="admin-item-meta">
-            ${escapeHTML(channelLabels[record.channel] || "舞台安利")}
+            ${escapeHTML(channelLabels[record.channel] || "作品")}
           </div>
           <div class="admin-item-actions">
             <button class="btn" type="button" data-action="edit" data-id="${escapeHTML(record.id)}">编辑</button>
@@ -1261,7 +1268,7 @@
     const sections = document.querySelectorAll(".channel");
 
     function updateNavActive() {
-      let current = "stage";
+      let current = "works";
       sections.forEach((section) => {
         if (window.scrollY >= section.offsetTop - 130) current = section.id;
       });
