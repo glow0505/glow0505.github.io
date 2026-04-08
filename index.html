@@ -4,20 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>珍珍日上TV</title>
-  <meta name="description" content="珍珍日上TV：黑金质感视频安利站，支持后台录入视频与站内弹层播放。">
+  <meta name="description" content="珍珍日上TV · 作品、舞台、综艺、直播回放分区视频站。">
   <style>
     :root {
-      --bg: #060606;
+      --bg: #070707;
       --bg-soft: #111111;
-      --panel: #151515;
-      --panel-2: #1c1c1c;
-      --line: rgba(255, 217, 128, 0.2);
-      --gold: #d6a347;
-      --gold-2: #f2cd86;
-      --text: #f7f3ea;
-      --muted: #c9bc9f;
-      --danger: #d96c6c;
-      --shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      --panel: #121212;
+      --card: #191919;
+      --line: rgba(255, 215, 132, 0.22);
+      --text: #f5f5f5;
+      --muted: #b6b6b6;
+      --gold: #d8b269;
+      --gold-soft: #f0d49a;
+      --shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
     }
 
     * {
@@ -26,13 +25,17 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 85% 0%, rgba(214, 163, 71, 0.13), transparent 36%),
-        radial-gradient(circle at 10% 18%, rgba(214, 163, 71, 0.09), transparent 28%),
-        linear-gradient(180deg, #050505, #0d0d0d 45%, #050505);
+        radial-gradient(circle at 84% 0%, rgba(216, 178, 105, 0.18), transparent 34%),
+        radial-gradient(circle at 10% 10%, rgba(216, 178, 105, 0.1), transparent 30%),
+        linear-gradient(180deg, #050505, #0b0b0b 45%, #060606);
       min-height: 100vh;
     }
 
@@ -45,41 +48,48 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      backdrop-filter: blur(10px);
-      background: rgba(5, 5, 5, 0.88);
       border-bottom: 1px solid var(--line);
+      background: rgba(5, 5, 5, 0.92);
+      backdrop-filter: blur(8px);
     }
 
     .topbar {
-      height: 70px;
+      min-height: 70px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
+      padding: 12px 0;
     }
 
     .brand {
-      font-size: 1.12rem;
-      letter-spacing: 0.5px;
       white-space: nowrap;
+      font-size: 1.06rem;
+      letter-spacing: 0.6px;
       font-weight: 700;
+      text-decoration: none;
+      color: var(--text);
     }
 
     .brand b {
-      color: var(--gold-2);
-      margin-right: 4px;
+      color: var(--gold-soft);
+    }
+
+    .brand .sep {
+      color: #dbc292;
+      margin: 0 4px;
     }
 
     .search {
       flex: 1;
-      max-width: 520px;
-      border: 1px solid rgba(255, 224, 160, 0.24);
-      background: rgba(255, 227, 170, 0.06);
-      border-radius: 999px;
-      height: 40px;
-      padding: 0 14px;
+      max-width: 460px;
       display: flex;
       align-items: center;
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .search input {
@@ -92,7 +102,7 @@
     }
 
     .search input::placeholder {
-      color: #b9ac90;
+      color: #8f8f8f;
     }
 
     .nav {
@@ -100,7 +110,7 @@
       gap: 8px;
       overflow-x: auto;
       scrollbar-width: none;
-      padding-bottom: 10px;
+      padding-bottom: 2px;
     }
 
     .nav::-webkit-scrollbar {
@@ -109,11 +119,11 @@
 
     .nav a {
       text-decoration: none;
-      color: #f2e7cf;
-      border: 1px solid rgba(255, 219, 147, 0.25);
-      background: rgba(255, 219, 147, 0.06);
+      color: #ececec;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: 999px;
-      padding: 6px 13px;
+      padding: 7px 13px;
       font-size: 0.84rem;
       white-space: nowrap;
       transition: 0.2s ease;
@@ -121,101 +131,54 @@
 
     .nav a:hover,
     .nav a.active {
-      color: #2d220e;
-      background: linear-gradient(120deg, var(--gold), var(--gold-2));
-      border-color: transparent;
+      color: #1a1408;
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+      border-color: rgba(255, 255, 255, 0.25);
     }
 
     main {
-      padding-bottom: 34px;
+      padding-bottom: 40px;
     }
 
     .hero {
       margin-top: 16px;
       border-radius: 18px;
-      overflow: hidden;
       border: 1px solid var(--line);
+      overflow: hidden;
       box-shadow: var(--shadow);
       background:
-        linear-gradient(120deg, rgba(24, 20, 12, 0.96) 20%, rgba(16, 16, 16, 0.75)),
-        radial-gradient(circle at 68% 28%, rgba(214, 163, 71, 0.25), transparent 42%);
-      position: relative;
-      min-height: 300px;
-    }
-
-    .hero.with-image {
+        linear-gradient(128deg, rgba(8, 8, 8, 0.93), rgba(18, 18, 18, 0.78)),
+        radial-gradient(circle at 76% 40%, rgba(216, 178, 105, 0.2), transparent 40%);
       background-size: cover;
       background-position: center;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, rgba(5, 5, 5, 0.78), rgba(5, 5, 5, 0.28));
-      pointer-events: none;
+      min-height: 220px;
+      display: flex;
+      align-items: flex-end;
     }
 
     .hero-inner {
-      position: relative;
-      z-index: 1;
-      padding: clamp(24px, 5vw, 54px);
-      min-height: 300px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 12px;
+      width: 100%;
+      padding: clamp(20px, 5vw, 44px);
+      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.64));
     }
 
     .hero-tag {
-      color: #f7d9a2;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
+      font-size: 0.78rem;
       text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #ffe3b3;
+      margin-bottom: 4px;
     }
 
     .hero h1 {
-      font-size: clamp(1.8rem, 3.8vw, 3rem);
-      line-height: 1.25;
-      color: #fff3d8;
+      font-size: clamp(1.6rem, 3.6vw, 2.8rem);
+      margin-bottom: 5px;
     }
 
     .hero p {
-      max-width: 620px;
-      color: #e5d5b1;
-      font-size: 0.95rem;
-      line-height: 1.55;
-    }
-
-    .hero-actions {
-      margin-top: 4px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .hero-actions a {
-      text-decoration: none;
-      border-radius: 10px;
-      padding: 9px 14px;
-      font-size: 0.9rem;
-      transition: 0.2s ease;
-    }
-
-    .hero-actions .primary {
-      color: #22170a;
-      background: linear-gradient(120deg, var(--gold), var(--gold-2));
-      font-weight: 700;
-    }
-
-    .hero-actions .secondary {
-      color: #f4e8d1;
-      border: 1px solid rgba(255, 219, 147, 0.35);
-      background: rgba(255, 219, 147, 0.08);
-    }
-
-    .hero-actions a:hover {
-      transform: translateY(-1px);
+      color: #d0d0d0;
+      font-size: 0.92rem;
+      max-width: 760px;
     }
 
     .channel {
@@ -226,19 +189,18 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 12px;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 11px;
     }
 
     .channel-head h2 {
       font-size: 1.3rem;
-      color: #f8ead0;
+      color: #f7f2e8;
     }
 
-    .channel-head a {
-      font-size: 0.86rem;
-      text-decoration: none;
-      color: #e4c88f;
+    .channel-head .label {
+      font-size: 0.82rem;
+      color: #cda96d;
     }
 
     .video-grid {
@@ -248,27 +210,27 @@
     }
 
     .video-card {
-      border: 1px solid rgba(255, 219, 147, 0.19);
-      background: linear-gradient(180deg, #1a1a1a, #121212);
       border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--card);
       overflow: hidden;
       cursor: pointer;
-      transition: 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease;
       min-width: 0;
     }
 
     .video-card:hover {
       transform: translateY(-2px);
-      border-color: rgba(255, 219, 147, 0.52);
+      border-color: rgba(216, 178, 105, 0.65);
     }
 
     .thumb {
       aspect-ratio: 16 / 9;
       position: relative;
-      border-bottom: 1px solid rgba(255, 219, 147, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
       background:
-        linear-gradient(135deg, rgba(214, 163, 71, 0.22), rgba(82, 62, 31, 0.35)),
-        #161616;
+        linear-gradient(135deg, rgba(216, 178, 105, 0.2), rgba(255, 255, 255, 0.06)),
+        #151515;
       background-size: cover;
       background-position: center;
       display: grid;
@@ -276,26 +238,25 @@
     }
 
     .play {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 232, 186, 0.5);
-      background: rgba(0, 0, 0, 0.35);
-      color: #ffefcf;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      background: rgba(0, 0, 0, 0.45);
       display: grid;
       place-items: center;
-      font-size: 0.86rem;
+      font-size: 0.84rem;
     }
 
     .duration {
       position: absolute;
-      right: 8px;
-      bottom: 8px;
+      right: 7px;
+      bottom: 7px;
       border-radius: 6px;
       padding: 2px 6px;
-      background: rgba(0, 0, 0, 0.75);
-      color: #f8f1df;
       font-size: 0.72rem;
+      background: rgba(0, 0, 0, 0.72);
+      color: #fff;
     }
 
     .info {
@@ -304,13 +265,12 @@
 
     .title {
       font-size: 0.9rem;
-      line-height: 1.36;
+      line-height: 1.35;
       min-height: 2.45em;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      color: #f6ecd9;
     }
 
     .desc {
@@ -324,129 +284,23 @@
 
     .empty {
       grid-column: 1 / -1;
-      border: 1px dashed rgba(255, 219, 147, 0.35);
+      border: 1px dashed rgba(255, 255, 255, 0.25);
       border-radius: 10px;
-      padding: 18px;
+      padding: 16px;
       text-align: center;
-      color: #ccb98f;
-      background: rgba(255, 219, 147, 0.05);
+      color: #9c9c9c;
+      background: rgba(255, 255, 255, 0.02);
       font-size: 0.9rem;
     }
 
-    /* player modal */
-    .player-modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.78);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 90;
-      padding: 20px;
-    }
-
-    .player-modal.show {
-      display: flex;
-    }
-
-    .player-dialog {
-      width: min(1200px, 95vw);
-      background: #0f0f0f;
-      border: 1px solid rgba(255, 219, 147, 0.25);
-      border-radius: 14px;
-      overflow: hidden;
-      box-shadow: var(--shadow);
-    }
-
-    .player-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-bottom: 1px solid rgba(255, 219, 147, 0.2);
-      background: #141414;
-    }
-
-    .player-top b {
-      color: #ffe7bc;
-      font-size: 0.95rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .player-close {
-      border: 1px solid rgba(255, 219, 147, 0.35);
-      border-radius: 8px;
-      background: rgba(255, 219, 147, 0.08);
-      color: #f7e5c1;
-      padding: 6px 10px;
-      cursor: pointer;
-      font-size: 0.82rem;
-    }
-
-    .player-frame {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      position: relative;
-    }
-
-    .player-frame iframe,
-    .player-frame video {
-      width: 100%;
-      height: 100%;
-      border: none;
-      display: none;
-    }
-
-    .player-placeholder {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      padding: 20px;
-      color: #d8c59a;
-      background:
-        radial-gradient(circle at 60% 30%, rgba(214, 163, 71, 0.2), transparent 38%),
-        #080808;
-    }
-
-    .player-footer {
-      padding: 10px 14px 14px;
-      border-top: 1px solid rgba(255, 219, 147, 0.16);
-      background: #121212;
-    }
-
-    .player-footer p {
-      font-size: 0.88rem;
-      color: #d4c19a;
-      line-height: 1.5;
-    }
-
-    .player-origin {
-      margin-top: 8px;
-      display: none;
-      font-size: 0.82rem;
-      color: #f0d39a;
-      text-decoration: none;
-    }
-
-    .player-origin.show {
-      display: inline-block;
-    }
-
-    /* admin modal */
     .admin-modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.72);
+      z-index: 90;
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 100;
+      background: rgba(0, 0, 0, 0.7);
       padding: 20px;
     }
 
@@ -455,11 +309,11 @@
     }
 
     .admin-panel {
-      width: min(1120px, 95vw);
-      max-height: 90vh;
+      width: min(1080px, 95vw);
+      max-height: min(88vh, 860px);
       overflow: auto;
-      border: 1px solid rgba(255, 219, 147, 0.25);
       border-radius: 14px;
+      border: 1px solid var(--line);
       background: #101010;
       box-shadow: var(--shadow);
       padding: 14px;
@@ -469,66 +323,62 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 10px;
       margin-bottom: 10px;
     }
 
     .admin-head h2 {
-      font-size: 1rem;
-      color: #ffe6bd;
+      font-size: 1.08rem;
+      color: #f0d9a9;
     }
 
     .admin-close {
-      border: 1px solid rgba(255, 219, 147, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
       border-radius: 8px;
-      background: rgba(255, 219, 147, 0.08);
-      color: #f7e5c1;
-      padding: 6px 10px;
+      padding: 7px 12px;
       cursor: pointer;
     }
 
     .admin-alert {
-      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.04);
       border-radius: 10px;
-      border: 1px solid rgba(255, 219, 147, 0.28);
-      background: rgba(255, 219, 147, 0.08);
-      color: #ecd8b2;
+      padding: 9px 10px;
       font-size: 0.84rem;
-      padding: 10px 12px;
-      line-height: 1.5;
+      color: #e8eefb;
+      margin-bottom: 10px;
     }
 
     .admin-alert.error {
-      border-color: rgba(217, 108, 108, 0.6);
-      background: rgba(217, 108, 108, 0.12);
-      color: #ffd3d3;
+      border-color: rgba(255, 95, 95, 0.6);
+      color: #ffcfcf;
     }
 
     .admin-alert.ok {
-      border-color: rgba(119, 188, 128, 0.5);
-      background: rgba(119, 188, 128, 0.12);
-      color: #d2ffd8;
+      border-color: rgba(110, 225, 172, 0.6);
+      color: #d7ffe9;
     }
 
     .admin-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1fr 360px;
       gap: 10px;
     }
 
     .admin-form,
     .admin-list-wrap {
-      border: 1px solid rgba(255, 219, 147, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.14);
       border-radius: 10px;
-      background: #161616;
+      background: rgba(255, 255, 255, 0.03);
       padding: 10px;
     }
 
     .admin-form h3,
     .admin-list-wrap h3 {
-      font-size: 0.9rem;
-      color: #ffe1ac;
+      font-size: 0.95rem;
       margin-bottom: 8px;
+      color: #f4dfb4;
     }
 
     .field {
@@ -537,78 +387,78 @@
 
     .field label {
       display: block;
-      font-size: 0.75rem;
-      color: #d8c49b;
       margin-bottom: 4px;
+      font-size: 0.78rem;
+      color: #cecece;
     }
 
     .field input,
-    .field textarea,
-    .field select {
+    .field select,
+    .field textarea {
       width: 100%;
-      border: 1px solid rgba(255, 219, 147, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 8px;
-      background: #101010;
-      color: #f6eddc;
-      font-size: 0.84rem;
+      background: rgba(0, 0, 0, 0.28);
+      color: #fff;
       padding: 8px 9px;
+      font-size: 0.84rem;
       outline: none;
     }
 
     .field textarea {
-      min-height: 74px;
+      min-height: 64px;
       resize: vertical;
     }
 
     .split {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
     }
 
     .btn-row {
       display: flex;
+      gap: 7px;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .btn {
-      border: 1px solid rgba(255, 219, 147, 0.3);
       border-radius: 8px;
-      background: rgba(255, 219, 147, 0.07);
-      color: #f4e6c8;
-      font-size: 0.82rem;
-      padding: 7px 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      padding: 7px 11px;
+      font-size: 0.8rem;
       cursor: pointer;
     }
 
     .btn.primary {
-      color: #291c0d;
-      background: linear-gradient(120deg, var(--gold), var(--gold-2));
-      border-color: transparent;
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+      color: #23160a;
+      border-color: rgba(255, 255, 255, 0.3);
       font-weight: 700;
     }
 
     .btn.danger {
-      color: #ffd2d2;
-      border-color: rgba(217, 108, 108, 0.58);
-      background: rgba(217, 108, 108, 0.14);
+      background: rgba(255, 104, 104, 0.12);
+      border-color: rgba(255, 124, 124, 0.46);
+      color: #ffc6c6;
     }
 
     .admin-list {
       display: grid;
-      gap: 8px;
-      max-height: 55vh;
+      gap: 7px;
+      max-height: 56vh;
       overflow: auto;
-      padding-right: 2px;
+      padding-right: 1px;
     }
 
     .admin-item {
-      border: 1px solid rgba(255, 219, 147, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.16);
       border-radius: 9px;
-      background: #111111;
-      padding: 8px;
+      padding: 7px;
+      background: rgba(0, 0, 0, 0.2);
     }
 
     .admin-item-head {
@@ -619,41 +469,31 @@
     }
 
     .admin-item-head b {
-      color: #ffe7bd;
+      color: #f6e7c7;
     }
 
     .admin-item-meta {
       margin-top: 4px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 0.73rem;
-      color: #cbb98f;
-    }
-
-    .badge {
-      border: 1px solid rgba(255, 219, 147, 0.42);
-      border-radius: 999px;
-      padding: 1px 6px;
-      background: rgba(255, 219, 147, 0.12);
-      color: #ffeac3;
+      font-size: 0.74rem;
+      color: #b2b2b2;
     }
 
     .admin-item-actions {
-      margin-top: 8px;
+      margin-top: 7px;
       display: flex;
-      gap: 6px;
+      gap: 5px;
     }
 
     footer {
       border-top: 1px solid var(--line);
       text-align: center;
-      color: #a9966d;
+      color: #9b9b9b;
       font-size: 0.83rem;
-      padding: 20px 0 32px;
+      padding: 20px 0 30px;
+      margin-top: 26px;
     }
 
-    @media (max-width: 1200px) {
+    @media (max-width: 1180px) {
       .video-grid {
         grid-template-columns: repeat(4, minmax(0, 1fr));
       }
@@ -667,15 +507,15 @@
 
     @media (max-width: 900px) {
       .topbar {
-        height: auto;
-        padding: 12px 0;
         flex-wrap: wrap;
       }
+
       .search {
         order: 3;
-        max-width: none;
         width: 100%;
+        max-width: none;
       }
+
       .video-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -685,154 +525,121 @@
       .video-grid {
         grid-template-columns: 1fr;
       }
+
       .split {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-<body>
+<body id="top">
   <header>
     <div class="container topbar">
-      <div class="brand"><b>珍珍日上TV</b></div>
+      <a class="brand" href="#top"><b>珍珍日上TV</b><span class="sep">｜</span>JENNYBOB</a>
       <label class="search">
         <input id="searchInput" type="text" placeholder="搜索视频标题/简介">
       </label>
       <nav class="nav">
-        <a href="#stage" class="active">舞台</a>
+        <a href="#works" class="active">作品</a>
+        <a href="#stage">舞台</a>
         <a href="#show">综艺</a>
-        <a href="#role">角色</a>
         <a href="#live">直播回放</a>
-        <a href="#" id="adminEntry">管理入口</a>
-        <a href="/daily-group.html">官群空降</a>
+        <a href="#" id="adminEntry">管理</a>
+        <a href="./daily-group.html">官群空降</a>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero" id="heroBanner">
+    <section id="heroBanner" class="hero">
       <div class="hero-inner">
-        <div class="hero-tag">Zhenzhen Rising TV</div>
-        <h1>珍珍日上TV</h1>
-        <p>黑金质感安利首页，按频道浏览，一键打开弹层播放器观看。</p>
-        <div class="hero-actions">
-          <a class="primary" href="#stage">开始浏览</a>
-          <a class="secondary" href="/daily-group.html">官群空降图鉴</a>
-        </div>
+        <div class="hero-tag">JENNYBOB</div>
+        <h1>JENNYBOB TV</h1>
+        <p>遇见珍妮，万事如意。谢谢你走到这里，欢迎加入藕粉大家庭。</p>
       </div>
+    </section>
+
+    <section class="channel" id="works">
+      <div class="channel-head">
+        <h2>作品</h2>
+        <span class="label">Works</span>
+      </div>
+      <div class="video-grid" data-channel="role"></div>
     </section>
 
     <section class="channel" id="stage">
       <div class="channel-head">
-        <h2>舞台安利</h2>
-        <a href="#">更多 ></a>
+        <h2>舞台</h2>
+        <span class="label">Stage</span>
       </div>
       <div class="video-grid" data-channel="stage"></div>
     </section>
 
     <section class="channel" id="show">
       <div class="channel-head">
-        <h2>综艺安利</h2>
-        <a href="#">更多 ></a>
+        <h2>综艺</h2>
+        <span class="label">Show</span>
       </div>
       <div class="video-grid" data-channel="show"></div>
-    </section>
-
-    <section class="channel" id="role">
-      <div class="channel-head">
-        <h2>角色安利</h2>
-        <a href="#">更多 ></a>
-      </div>
-      <div class="video-grid" data-channel="role"></div>
     </section>
 
     <section class="channel" id="live">
       <div class="channel-head">
         <h2>直播回放</h2>
-        <a href="#">更多 ></a>
+        <span class="label">Live</span>
       </div>
       <div class="video-grid" data-channel="live"></div>
     </section>
   </main>
 
-  <div id="playerModal" class="player-modal" aria-hidden="true">
-    <div class="player-dialog">
-      <div class="player-top">
-        <b id="playerTitle">未选择视频</b>
-        <button id="playerClose" class="player-close" type="button">关闭播放器</button>
-      </div>
-      <div class="player-frame">
-        <iframe id="siteFrame" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
-        <video id="siteVideo" controls playsinline></video>
-        <div id="playerPlaceholder" class="player-placeholder">
-          <div>
-            <h3 style="margin-bottom:8px;">当前视频暂不支持站内播放</h3>
-            <p style="font-size:0.88rem;line-height:1.5;">可点击下方“打开原链接”在新窗口观看。</p>
-          </div>
-        </div>
-      </div>
-      <div class="player-footer">
-        <p id="playerDesc">-</p>
-        <a id="playerOrigin" class="player-origin" href="#" target="_blank" rel="noopener noreferrer">打开原链接</a>
-      </div>
-    </div>
-  </div>
-
   <div id="adminModal" class="admin-modal" aria-hidden="true">
     <div class="admin-panel">
       <div class="admin-head">
-        <h2>管理后台</h2>
+        <h2>内容管理</h2>
         <button id="adminClose" class="admin-close" type="button">关闭</button>
       </div>
-      <div id="adminAlert" class="admin-alert">后台已就绪。</div>
+      <div id="adminAlert" class="admin-alert">已进入管理模式。</div>
 
-      <div class="admin-alert" style="margin-top:8px;">
+      <div class="admin-alert">
         <div class="split">
           <div class="field">
-            <label for="heroImageUrl">首页横幅图片链接</label>
+            <label for="heroImageUrl">首页横幅图 URL</label>
             <input id="heroImageUrl" type="url" placeholder="https://...">
           </div>
-          <div class="field">
-            <label for="heroImageOn">横幅图片开关</label>
-            <select id="heroImageOn">
-              <option value="on">启用</option>
-              <option value="off">关闭</option>
-            </select>
+          <div class="field" style="align-self:end;">
+            <button id="saveHeroBtn" class="btn primary" type="button">保存横幅图</button>
           </div>
-        </div>
-        <div class="btn-row" style="margin-top:8px;">
-          <button id="saveHeroBtn" class="btn" type="button">保存横幅设置</button>
         </div>
       </div>
 
-      <div class="admin-alert" style="margin-top:8px;">
+      <div class="admin-alert">
         <div class="split">
           <div class="field">
-            <label for="ghOwner">GitHub Owner</label>
-            <input id="ghOwner" type="text" placeholder="例如：glow0505">
+            <label for="gtOwner">Gitee Owner</label>
+            <input id="gtOwner" type="text" placeholder="例如：yourname">
           </div>
           <div class="field">
-            <label for="ghRepo">GitHub Repo</label>
-            <input id="ghRepo" type="text" placeholder="例如：glow0505.github.io">
+            <label for="gtRepo">Gitee Repo</label>
+            <input id="gtRepo" type="text" placeholder="例如：your-repo">
           </div>
           <div class="field">
-            <label for="ghBranch">分支</label>
-            <input id="ghBranch" type="text" placeholder="main">
+            <label for="gtBranch">分支</label>
+            <input id="gtBranch" type="text" placeholder="master">
           </div>
           <div class="field">
-            <label for="ghPath">云端数据文件路径</label>
-            <input id="ghPath" type="text" placeholder="data/zzrs-videos.json">
+            <label for="gtPath">云端数据路径</label>
+            <input id="gtPath" type="text" placeholder="data/zzrs-videos.json">
           </div>
         </div>
-        <div class="field" style="margin-top:8px;">
-          <label for="ghToken">GitHub Token（contents 写权限）</label>
-          <input id="ghToken" type="password" placeholder="ghp_xxx">
+        <div class="field">
+          <label for="gtToken">Gitee Token</label>
+          <input id="gtToken" type="password" placeholder="gitee_pat_xxx">
         </div>
-        <div class="btn-row" style="margin-top:8px;">
+        <div class="btn-row">
           <button id="saveCloudConfigBtn" class="btn" type="button">保存云配置</button>
-          <button id="pullCloudBtn" class="btn" type="button">从云端拉取</button>
-          <button id="pushCloudBtn" class="btn" type="button">上传到云端</button>
-          <label style="margin-left:auto;font-size:.8rem;display:flex;align-items:center;gap:6px;color:#e3e9ff;">
+          <button id="pullCloudBtn" class="btn" type="button">拉取云端</button>
+          <button id="pushCloudBtn" class="btn" type="button">上传云端</button>
+          <label style="margin-left:auto;font-size:.78rem;display:flex;align-items:center;gap:6px;color:#d8d8d8;">
             <input id="autoSyncCloud" type="checkbox">
             自动云同步
           </label>
@@ -845,11 +652,11 @@
           <form id="adminForm">
             <input type="hidden" id="editId">
             <div class="field">
-              <label for="videoTitle">视频标题 *</label>
+              <label for="videoTitle">标题 *</label>
               <input id="videoTitle" type="text" required>
             </div>
             <div class="field">
-              <label for="videoDesc">视频简介</label>
+              <label for="videoDesc">简介</label>
               <textarea id="videoDesc"></textarea>
             </div>
             <div class="split">
@@ -858,48 +665,34 @@
                 <input id="videoDuration" type="text" placeholder="例如：04:12">
               </div>
               <div class="field">
-                <label for="videoChannel">所属分区 *</label>
+                <label for="videoChannel">分区 *</label>
                 <select id="videoChannel" required>
-                  <option value="stage">舞台安利</option>
-                  <option value="show">综艺安利</option>
-                  <option value="role">角色安利</option>
+                  <option value="role">作品</option>
+                  <option value="stage">舞台</option>
+                  <option value="show">综艺</option>
                   <option value="live">直播回放</option>
                 </select>
               </div>
             </div>
             <div class="field">
-              <label for="videoSourceUrl">原链接（B站链接）</label>
-              <input id="videoSourceUrl" type="url" placeholder="https://b23.tv/... 或 https://www.bilibili.com/video/BV...">
-            </div>
-            <div class="split">
-              <div class="field">
-                <label for="videoPlayUrl">playUrl（可选）</label>
-                <input id="videoPlayUrl" type="url" placeholder="https://player.bilibili.com/player.html?...">
-              </div>
-              <div class="field">
-                <label for="videoPlayType">播放类型（可选）</label>
-                <select id="videoPlayType">
-                  <option value="">自动识别</option>
-                  <option value="iframe">iframe</option>
-                  <option value="video">video</option>
-                </select>
-              </div>
+              <label for="videoSourceUrl">原链接（点击后新窗口打开）*</label>
+              <input id="videoSourceUrl" type="url" placeholder="https://...">
             </div>
             <div class="field">
-              <label for="coverUrl">封面链接（可选）</label>
+              <label for="coverUrl">封面图 URL（可选）</label>
               <input id="coverUrl" type="url" placeholder="https://...">
             </div>
             <div class="btn-row">
-              <button class="btn primary" type="submit">保存视频</button>
-              <button class="btn" id="resetFormBtn" type="button">清空表单</button>
+              <button class="btn primary" type="submit">保存</button>
+              <button class="btn" id="resetFormBtn" type="button">清空</button>
             </div>
           </form>
         </section>
 
         <section class="admin-list-wrap">
-          <h3>已上传内容</h3>
+          <h3>已添加内容</h3>
           <div id="adminList" class="admin-list">
-            <div class="empty">暂无内容。</div>
+            <div class="empty">暂无内容</div>
           </div>
         </section>
       </div>
@@ -919,9 +712,9 @@
     };
 
     const channelLabels = {
-      stage: "舞台安利",
-      show: "综艺安利",
-      role: "角色安利",
+      stage: "舞台",
+      show: "综艺",
+      role: "作品",
       live: "直播回放"
     };
     const channelOrder = ["stage", "show", "role", "live"];
@@ -945,15 +738,6 @@
     const searchInput = document.getElementById("searchInput");
     const heroBanner = document.getElementById("heroBanner");
 
-    const playerModal = document.getElementById("playerModal");
-    const playerClose = document.getElementById("playerClose");
-    const playerTitle = document.getElementById("playerTitle");
-    const playerDesc = document.getElementById("playerDesc");
-    const playerOrigin = document.getElementById("playerOrigin");
-    const siteFrame = document.getElementById("siteFrame");
-    const siteVideo = document.getElementById("siteVideo");
-    const playerPlaceholder = document.getElementById("playerPlaceholder");
-
     const adminModal = document.getElementById("adminModal");
     const adminEntry = document.getElementById("adminEntry");
     const adminClose = document.getElementById("adminClose");
@@ -969,23 +753,24 @@
     const videoDuration = document.getElementById("videoDuration");
     const videoChannel = document.getElementById("videoChannel");
     const videoSourceUrl = document.getElementById("videoSourceUrl");
-    const videoPlayUrl = document.getElementById("videoPlayUrl");
-    const videoPlayType = document.getElementById("videoPlayType");
     const coverUrl = document.getElementById("coverUrl");
 
     const heroImageUrl = document.getElementById("heroImageUrl");
-    const heroImageOn = document.getElementById("heroImageOn");
     const saveHeroBtn = document.getElementById("saveHeroBtn");
 
-    const ghOwner = document.getElementById("ghOwner");
-    const ghRepo = document.getElementById("ghRepo");
-    const ghBranch = document.getElementById("ghBranch");
-    const ghPath = document.getElementById("ghPath");
-    const ghToken = document.getElementById("ghToken");
+    const gtOwner = document.getElementById("gtOwner");
+    const gtRepo = document.getElementById("gtRepo");
+    const gtBranch = document.getElementById("gtBranch");
+    const gtPath = document.getElementById("gtPath");
+    const gtToken = document.getElementById("gtToken");
     const autoSyncCloud = document.getElementById("autoSyncCloud");
     const saveCloudConfigBtn = document.getElementById("saveCloudConfigBtn");
     const pullCloudBtn = document.getElementById("pullCloudBtn");
     const pushCloudBtn = document.getElementById("pushCloudBtn");
+
+    function safeText(v, fallback = "") {
+      return v && String(v).trim() ? String(v).trim() : fallback;
+    }
 
     function escapeHTML(value) {
       return String(value || "")
@@ -996,10 +781,6 @@
         .replaceAll("'", "&#39;");
     }
 
-    function safeText(v, fallback) {
-      return v && String(v).trim() ? String(v).trim() : fallback;
-    }
-
     function showAlert(message, type) {
       adminAlert.textContent = message;
       adminAlert.classList.remove("error", "ok");
@@ -1007,17 +788,176 @@
       if (type === "ok") adminAlert.classList.add("ok");
     }
 
+    function normalizeRepoPath(path) {
+      return (path || "data/zzrs-videos.json").trim().replace(/^\/+/, "");
+    }
+
+    function encodeRepoPath(path) {
+      return normalizeRepoPath(path).split("/").map(encodeURIComponent).join("/");
+    }
+
+    function utf8ToBase64(input) {
+      return btoa(unescape(encodeURIComponent(input)));
+    }
+
+    function base64ToUtf8(input) {
+      return decodeURIComponent(escape(atob(input)));
+    }
+
+    function sanitizeCloudRecord(record) {
+      return {
+        id: safeText(record.id, "video_" + Date.now().toString(36)),
+        title: safeText(record.title, "未命名视频"),
+        desc: safeText(record.desc, ""),
+        duration: safeText(record.duration, ""),
+        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
+        url: safeText(record.url, "#"),
+        cover: safeText(record.cover, ""),
+        createdAt: Number(record.createdAt) || Date.now(),
+        updatedAt: Number(record.updatedAt) || Date.now()
+      };
+    }
+
+    function getHeroConfig() {
+      try {
+        const raw = localStorage.getItem(HERO_CONFIG_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function applyHeroConfig() {
+      const cfg = getHeroConfig();
+      const image = safeText(cfg.image, "");
+      if (image) {
+        heroBanner.style.backgroundImage =
+          `linear-gradient(128deg, rgba(8,8,8,0.65), rgba(18,18,18,0.55)), url('${image}')`;
+      } else {
+        heroBanner.style.backgroundImage =
+          "linear-gradient(128deg, rgba(8,8,8,0.93), rgba(18,18,18,0.78)), radial-gradient(circle at 76% 40%, rgba(216, 178, 105, 0.2), transparent 40%)";
+      }
+      heroImageUrl.value = image;
+    }
+
+    function saveHeroConfig() {
+      const image = heroImageUrl.value.trim();
+      localStorage.setItem(HERO_CONFIG_KEY, JSON.stringify({ image }));
+      applyHeroConfig();
+      showAlert("横幅图已保存。", "ok");
+    }
+
+    function loadCloudConfigToForm() {
+      let saved = {};
+      try {
+        const raw = localStorage.getItem(CLOUD_CONFIG_KEY);
+        saved = raw ? JSON.parse(raw) : {};
+      } catch {
+        saved = {};
+      }
+      gtOwner.value = safeText(saved.owner, "");
+      gtRepo.value = safeText(saved.repo, "");
+      gtBranch.value = safeText(saved.branch, "master");
+      gtPath.value = safeText(saved.path, "data/zzrs-videos.json");
+      autoSyncCloud.checked = Boolean(saved.autoSync);
+      gtToken.value = localStorage.getItem(CLOUD_TOKEN_KEY) || "";
+    }
+
+    function getCloudConfigFromForm() {
+      return {
+        owner: gtOwner.value.trim(),
+        repo: gtRepo.value.trim(),
+        branch: gtBranch.value.trim() || "master",
+        path: normalizeRepoPath(gtPath.value),
+        token: gtToken.value.trim(),
+        autoSync: autoSyncCloud.checked
+      };
+    }
+
+    function saveCloudConfigFromForm() {
+      const cfg = getCloudConfigFromForm();
+      localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify({
+        owner: cfg.owner,
+        repo: cfg.repo,
+        branch: cfg.branch,
+        path: cfg.path,
+        autoSync: cfg.autoSync
+      }));
+      if (cfg.token) localStorage.setItem(CLOUD_TOKEN_KEY, cfg.token);
+      showAlert("云配置已保存。", "ok");
+    }
+
+    function buildGiteeContentEndpoint(config, includeRef) {
+      const query = new URLSearchParams();
+      query.set("access_token", config.token);
+      if (includeRef && config.branch) query.set("ref", config.branch);
+      return `https://gitee.com/api/v5/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${encodeRepoPath(config.path)}?${query.toString()}`;
+    }
+
+    async function fetchCloudFileMeta(config) {
+      const endpoint = buildGiteeContentEndpoint(config, true);
+      const response = await fetch(endpoint, {
+        headers: {
+          "Accept": "application/json"
+        }
+      });
+      if (response.status === 404) return { exists: false, sha: "" };
+      if (!response.ok) throw new Error(`读取云端失败：HTTP ${response.status}`);
+      const data = await response.json();
+      return { exists: true, sha: data.sha || "", data };
+    }
+
+    async function pullFromCloud() {
+      const cfg = getCloudConfigFromForm();
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
+      const meta = await fetchCloudFileMeta(cfg);
+      if (!meta.exists) throw new Error("云端文件不存在");
+      const contentBase64 = String(meta.data.content || "").replace(/\n/g, "");
+      const text = base64ToUtf8(contentBase64 || "");
+      const parsed = JSON.parse(text);
+      if (!Array.isArray(parsed)) throw new Error("云端数据格式错误");
+      const sanitized = parsed.map(sanitizeCloudRecord);
+      await dbReplaceAll(sanitized);
+      await refreshUploadedLibrary();
+      return sanitized.length;
+    }
+
+    async function pushToCloud() {
+      const cfg = getCloudConfigFromForm();
+      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
+      const meta = await fetchCloudFileMeta(cfg);
+      const endpoint = `https://gitee.com/api/v5/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
+      const payload = new URLSearchParams();
+      payload.set("access_token", cfg.token);
+      payload.set("message", `update zzrs videos ${new Date().toISOString()}`);
+      payload.set("content", utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)));
+      payload.set("branch", cfg.branch);
+      if (meta.exists && meta.sha) payload.set("sha", meta.sha);
+
+      const response = await fetch(endpoint, {
+        method: meta.exists ? "PUT" : "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        },
+        body: payload.toString()
+      });
+      if (!response.ok) {
+        const txt = await response.text();
+        throw new Error(`上传云端失败：HTTP ${response.status} ${txt ? "- " + txt.slice(0, 120) : ""}`);
+      }
+      return true;
+    }
+
     function openDB() {
-      if (!("indexedDB" in window)) return Promise.reject(new Error("浏览器不支持 IndexedDB"));
+      if (!("indexedDB" in window)) return Promise.reject(new Error("当前浏览器不支持 IndexedDB"));
       if (dbPromise) return dbPromise;
       dbPromise = new Promise((resolve, reject) => {
         const req = indexedDB.open(DB_NAME, DB_VERSION);
         req.onerror = () => reject(req.error);
         req.onupgradeneeded = () => {
           const db = req.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) {
-            db.createObjectStore(STORE_NAME, { keyPath: "id" });
-          }
+          if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: "id" });
         };
         req.onsuccess = () => resolve(req.result);
       });
@@ -1061,207 +1001,21 @@
         const store = tx.objectStore(STORE_NAME);
         const clearReq = store.clear();
         clearReq.onerror = () => reject(clearReq.error);
-        clearReq.onsuccess = () => {
-          records.forEach((r) => store.put(r));
-        };
+        clearReq.onsuccess = () => records.forEach((record) => store.put(record));
         tx.oncomplete = () => resolve(true);
         tx.onerror = () => reject(tx.error || new Error("写入失败"));
       });
     }
 
-    function utf8ToBase64(input) {
-      return btoa(unescape(encodeURIComponent(input)));
-    }
-
-    function base64ToUtf8(input) {
-      return decodeURIComponent(escape(atob(input)));
-    }
-
-    function normalizeRepoPath(path) {
-      return (path || "data/zzrs-videos.json").trim().replace(/^\/+/, "");
-    }
-
-    function encodeRepoPath(path) {
-      return normalizeRepoPath(path).split("/").map(encodeURIComponent).join("/");
-    }
-
-    function sanitizeCloudRecord(record) {
-      return {
-        id: safeText(record.id, "video_" + Date.now().toString(36)),
-        title: safeText(record.title, "未命名视频"),
-        desc: safeText(record.desc, ""),
-        duration: safeText(record.duration, ""),
-        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
-        url: safeText(record.url, "#"),
-        playUrl: safeText(record.playUrl, ""),
-        playType: safeText(record.playType, ""),
-        cover: safeText(record.cover, ""),
-        createdAt: Number(record.createdAt) || Date.now(),
-        updatedAt: Number(record.updatedAt) || Date.now()
-      };
-    }
-
-    function loadCloudConfigToForm() {
-      const raw = localStorage.getItem(CLOUD_CONFIG_KEY);
-      let saved = {};
-      try { saved = raw ? JSON.parse(raw) : {}; } catch { saved = {}; }
-      ghOwner.value = safeText(saved.owner, "glow0505");
-      ghRepo.value = safeText(saved.repo, "glow0505.github.io");
-      ghBranch.value = safeText(saved.branch, "main");
-      ghPath.value = safeText(saved.path, "data/zzrs-videos.json");
-      autoSyncCloud.checked = Boolean(saved.autoSync);
-      ghToken.value = localStorage.getItem(CLOUD_TOKEN_KEY) || "";
-    }
-
-    function getCloudConfigFromForm() {
-      return {
-        owner: ghOwner.value.trim(),
-        repo: ghRepo.value.trim(),
-        branch: ghBranch.value.trim() || "main",
-        path: normalizeRepoPath(ghPath.value),
-        token: ghToken.value.trim(),
-        autoSync: autoSyncCloud.checked
-      };
-    }
-
-    function saveCloudConfigFromForm() {
-      const cfg = getCloudConfigFromForm();
-      localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify({
-        owner: cfg.owner, repo: cfg.repo, branch: cfg.branch, path: cfg.path, autoSync: cfg.autoSync
-      }));
-      if (cfg.token) localStorage.setItem(CLOUD_TOKEN_KEY, cfg.token);
-      showAlert("云配置已保存。", "ok");
-    }
-
-    async function fetchCloudFileMeta(config) {
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${encodeRepoPath(config.path)}?ref=${encodeURIComponent(config.branch)}`;
-      const response = await fetch(endpoint, {
-        headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${config.token}`
-        }
-      });
-      if (response.status === 404) return { exists: false, sha: "" };
-      if (!response.ok) throw new Error(`读取云端失败：HTTP ${response.status}`);
-      const data = await response.json();
-      return { exists: true, sha: data.sha || "", data };
-    }
-
-    async function pullFromCloud() {
-      const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 GitHub owner/repo/token");
-      const meta = await fetchCloudFileMeta(cfg);
-      if (!meta.exists) throw new Error("云端数据文件不存在");
-      const b64 = meta.data && meta.data.content ? String(meta.data.content).replace(/\n/g, "") : "";
-      const text = base64ToUtf8(b64 || "");
-      const parsed = JSON.parse(text);
-      if (!Array.isArray(parsed)) throw new Error("云端数据格式错误");
-      const list = parsed.map(sanitizeCloudRecord);
-      await dbReplaceAll(list);
-      await refreshUploadedLibrary();
-      return list.length;
-    }
-
-    async function pushToCloud() {
-      const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 GitHub owner/repo/token");
-      const meta = await fetchCloudFileMeta(cfg);
-      const endpoint = `https://api.github.com/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
-      const payload = {
-        message: `update zzrs videos ${new Date().toISOString()}`,
-        content: utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)),
-        branch: cfg.branch
-      };
-      if (meta.exists && meta.sha) payload.sha = meta.sha;
-      const response = await fetch(endpoint, {
-        method: "PUT",
-        headers: {
-          "Accept": "application/vnd.github+json",
-          "Authorization": `Bearer ${cfg.token}`,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      });
-      if (!response.ok) throw new Error(`上传云端失败：HTTP ${response.status}`);
-      return true;
-    }
-
-    function extractBvidFromText(text) {
-      const match = String(text || "").match(/BV[0-9A-Za-z]{10}/i);
-      if (!match) return "";
-      return match[0].replace(/^bv/, "BV");
-    }
-
-    async function resolveB23ToBvid(shortUrl) {
-      const direct = extractBvidFromText(shortUrl);
-      if (direct) return direct;
-      const normalized = String(shortUrl || "").trim().replace(/^https?:\/\//, "");
-      if (!normalized) return "";
-      const proxyUrl = `https://r.jina.ai/http://${normalized}`;
-      const response = await fetch(proxyUrl);
-      if (!response.ok) return "";
-      const text = await response.text();
-      const full = text.match(/https?:\/\/www\.bilibili\.com\/video\/(BV[0-9A-Za-z]{10})/i);
-      if (full && full[1]) return full[1];
-      return extractBvidFromText(text);
-    }
-
-    function detectSourceFromUrl(rawUrl) {
-      const url = (rawUrl || "").trim();
-      if (!url || url === "#") return null;
-      const lower = url.toLowerCase();
-
-      if (url.includes("b23.tv/")) {
-        const bvid = extractBvidFromText(url);
-        if (bvid) return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + bvid + "&page=1" };
-      }
-
-      if (lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg")) {
-        return { type: "video", src: url };
-      }
-
-      if (url.includes("bilibili.com/video/")) {
-        const match = url.match(/\/video\/(BV[0-9A-Za-z]+)/);
-        if (match && match[1]) return { type: "iframe", src: "https://player.bilibili.com/player.html?bvid=" + match[1] + "&page=1" };
-      }
-
-      if (url.includes("youtube.com/watch?v=")) {
-        try {
-          const v = new URL(url).searchParams.get("v");
-          if (v) return { type: "iframe", src: "https://www.youtube.com/embed/" + v };
-        } catch {}
-      }
-      if (url.includes("youtu.be/")) {
-        const id = url.split("youtu.be/")[1].split("?")[0];
-        if (id) return { type: "iframe", src: "https://www.youtube.com/embed/" + id };
-      }
-
-      if (url.includes("player.bilibili.com") || url.includes("player.youku.com") || url.includes("youtube.com/embed/") || url.includes("v.qq.com/txp/iframe/player.html")) {
-        return { type: "iframe", src: url };
-      }
-
-      return null;
-    }
-
-    function getPlayableSource(item) {
-      const type = (item.playType || "").trim();
-      const playUrl = (item.playUrl || "").trim();
-      if (playUrl) {
-        if (type === "video" || type === "iframe") return { type, src: playUrl };
-        return detectSourceFromUrl(playUrl);
-      }
-      return detectSourceFromUrl(item.url || "");
-    }
-
-    function buildCard(channel, item, idx) {
+    function buildCard(channel, item, index) {
       const bg = item.cover && item.cover.trim()
-        ? ` style="background-image: linear-gradient(135deg, rgba(214,163,71,0.22), rgba(82,62,31,0.35)), url('${escapeHTML(item.cover)}');"`
+        ? ` style="background-image: linear-gradient(135deg, rgba(216,178,105,0.2), rgba(255,255,255,0.06)), url('${escapeHTML(item.cover)}');"`
         : "";
       return `
-        <article class="video-card" data-channel="${channel}" data-index="${idx}">
+        <article class="video-card" data-channel="${channel}" data-index="${index}">
           <div class="thumb"${bg}>
             <div class="play">▶</div>
-            <span class="duration">${escapeHTML(item.duration || "00:00")}</span>
+            <span class="duration">${escapeHTML(item.duration || "--:--")}</span>
           </div>
           <div class="info">
             <div class="title">${escapeHTML(item.title || "未命名视频")}</div>
@@ -1285,62 +1039,15 @@
         const source = getChannelItems(channel);
         const filtered = source.filter((item) => {
           if (!keyword) return true;
-          const text = `${item.title || ""} ${item.desc || ""}`.toLowerCase();
-          return text.includes(keyword);
+          return `${item.title || ""} ${item.desc || ""}`.toLowerCase().includes(keyword);
         });
         renderedMap[channel] = filtered;
         if (!filtered.length) {
-          mount.innerHTML = '<div class="empty">暂无内容，请先在后台上传。</div>';
+          mount.innerHTML = '<div class="empty">该分区暂无内容</div>';
           return;
         }
-        mount.innerHTML = filtered.map((item, i) => buildCard(channel, item, i)).join("");
+        mount.innerHTML = filtered.map((item, idx) => buildCard(channel, item, idx)).join("");
       });
-    }
-
-    function stopPlayer() {
-      siteFrame.src = "";
-      siteFrame.style.display = "none";
-      siteVideo.pause();
-      siteVideo.removeAttribute("src");
-      siteVideo.load();
-      siteVideo.style.display = "none";
-    }
-
-    function openPlayer(item) {
-      const playable = getPlayableSource(item);
-      playerTitle.textContent = safeText(item.title, "未命名视频");
-      playerDesc.textContent = safeText(item.desc, "暂无简介");
-      const rawUrl = safeText(item.url, "");
-      if (rawUrl && rawUrl !== "#") {
-        playerOrigin.href = rawUrl;
-        playerOrigin.classList.add("show");
-      } else {
-        playerOrigin.classList.remove("show");
-      }
-      stopPlayer();
-      if (!playable) {
-        playerPlaceholder.style.display = "grid";
-      } else {
-        playerPlaceholder.style.display = "none";
-        if (playable.type === "video") {
-          siteVideo.src = playable.src;
-          siteVideo.style.display = "block";
-          siteVideo.play().catch(() => {});
-        } else {
-          siteFrame.src = playable.src;
-          siteFrame.style.display = "block";
-        }
-      }
-      playerModal.classList.add("show");
-      playerModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closePlayer() {
-      playerModal.classList.remove("show");
-      playerModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      stopPlayer();
     }
 
     function makeUploadedItem(record) {
@@ -1348,14 +1055,12 @@
         id: record.id,
         title: safeText(record.title, "未命名视频"),
         desc: safeText(record.desc, ""),
-        duration: safeText(record.duration, "00:00"),
+        duration: safeText(record.duration, ""),
         channel: channelOrder.includes(record.channel) ? record.channel : "stage",
         url: safeText(record.url, "#"),
-        playUrl: safeText(record.playUrl, ""),
-        playType: safeText(record.playType, ""),
         cover: safeText(record.cover, ""),
-        updatedAt: Number(record.updatedAt) || Date.now(),
         createdAt: Number(record.createdAt) || Date.now(),
+        updatedAt: Number(record.updatedAt) || Date.now(),
         fromAdmin: true
       };
     }
@@ -1370,7 +1075,7 @@
           uploadedByChannel[channel].push(makeUploadedItem(record));
         });
       } catch (error) {
-        showAlert("读取后台数据失败：" + error.message, "error");
+        showAlert("读取失败：" + error.message, "error");
       }
       renderAll();
       renderAdminList();
@@ -1378,31 +1083,24 @@
 
     function renderAdminList() {
       if (!uploadedRecords.length) {
-        adminList.innerHTML = '<div class="empty">暂无内容。</div>';
+        adminList.innerHTML = '<div class="empty">暂无内容</div>';
         return;
       }
-      adminList.innerHTML = uploadedRecords.map((record) => {
-        const ch = channelLabels[record.channel] || "舞台安利";
-        const playInfo = safeText(record.playUrl, "") ? "站内可播" : "仅跳转";
-        const time = record.updatedAt ? new Date(record.updatedAt).toLocaleString() : "-";
-        return `
-          <article class="admin-item">
-            <div class="admin-item-head">
-              <b>${escapeHTML(record.title || "未命名视频")}</b>
-              <span>${escapeHTML(record.duration || "--:--")}</span>
-            </div>
-            <div class="admin-item-meta">
-              <span class="badge">${escapeHTML(ch)}</span>
-              <span>${escapeHTML(playInfo)}</span>
-              <span>${escapeHTML(time)}</span>
-            </div>
-            <div class="admin-item-actions">
-              <button class="btn" type="button" data-action="edit" data-id="${escapeHTML(record.id)}">编辑</button>
-              <button class="btn danger" type="button" data-action="delete" data-id="${escapeHTML(record.id)}">删除</button>
-            </div>
-          </article>
-        `;
-      }).join("");
+      adminList.innerHTML = uploadedRecords.map((record) => `
+        <article class="admin-item">
+          <div class="admin-item-head">
+            <b>${escapeHTML(record.title || "未命名视频")}</b>
+            <span>${escapeHTML(record.duration || "--:--")}</span>
+          </div>
+          <div class="admin-item-meta">
+            ${escapeHTML(channelLabels[record.channel] || "作品")}
+          </div>
+          <div class="admin-item-actions">
+            <button class="btn" type="button" data-action="edit" data-id="${escapeHTML(record.id)}">编辑</button>
+            <button class="btn danger" type="button" data-action="delete" data-id="${escapeHTML(record.id)}">删除</button>
+          </div>
+        </article>
+      `).join("");
     }
 
     function resetAdminForm() {
@@ -1418,48 +1116,9 @@
       videoDuration.value = record.duration || "";
       videoChannel.value = channelOrder.includes(record.channel) ? record.channel : "stage";
       videoSourceUrl.value = record.url && record.url !== "#" ? record.url : "";
-      videoPlayUrl.value = record.playUrl || "";
-      videoPlayType.value = record.playType || "";
       coverUrl.value = record.cover || "";
       formTitle.textContent = "编辑视频";
-      showAlert("正在编辑。", "ok");
-    }
-
-    function loadHeroConfig() {
-      let cfg = {};
-      try {
-        cfg = JSON.parse(localStorage.getItem(HERO_CONFIG_KEY) || "{}");
-      } catch {
-        cfg = {};
-      }
-      heroImageUrl.value = cfg.url || "";
-      heroImageOn.value = cfg.enabled === false ? "off" : "on";
-      applyHeroConfig(cfg);
-    }
-
-    function applyHeroConfig(cfg) {
-      const enabled = cfg && cfg.enabled !== false;
-      const url = safeText(cfg && cfg.url, "");
-      if (enabled && url) {
-        heroBanner.classList.add("with-image");
-        heroBanner.style.backgroundImage = `linear-gradient(120deg, rgba(24,20,12,0.92) 20%, rgba(16,16,16,0.52)), url('${url}')`;
-      } else {
-        heroBanner.classList.remove("with-image");
-        heroBanner.style.backgroundImage = "";
-      }
-    }
-
-    async function saveHeroConfig() {
-      const cfg = {
-        enabled: heroImageOn.value !== "off",
-        url: heroImageUrl.value.trim()
-      };
-      localStorage.setItem(HERO_CONFIG_KEY, JSON.stringify(cfg));
-      applyHeroConfig(cfg);
-      if (autoSyncCloud.checked) {
-        try { await pushToCloud(); } catch {}
-      }
-      showAlert("横幅设置已保存。", "ok");
+      showAlert("编辑模式", "ok");
     }
 
     function getAdminPassword() {
@@ -1476,12 +1135,13 @@
         }
         adminAuthed = true;
       }
+      loadCloudConfigToForm();
+      applyHeroConfig();
       adminModal.classList.add("show");
       adminModal.setAttribute("aria-hidden", "false");
       document.body.style.overflow = "hidden";
-      loadCloudConfigToForm();
-      showAlert("管理后台已打开。");
       renderAdminList();
+      showAlert("管理模式", "ok");
     }
 
     function closeAdmin() {
@@ -1491,26 +1151,22 @@
       resetAdminForm();
     }
 
-    function bindMainEvents() {
+    function bindCardEvents() {
       document.addEventListener("click", (event) => {
         const card = event.target.closest(".video-card");
         if (!card) return;
         const channel = card.dataset.channel;
-        const idx = Number(card.dataset.index);
-        if (!channel || Number.isNaN(idx)) return;
-        const item = (renderedMap[channel] || [])[idx];
+        const index = Number(card.dataset.index);
+        if (!channel || Number.isNaN(index)) return;
+        const item = (renderedMap[channel] || [])[index];
         if (!item) return;
-        openPlayer(item);
+        const link = safeText(item.url, "");
+        if (!link || link === "#") return;
+        window.open(link, "_blank", "noopener,noreferrer");
       });
+    }
 
-      playerClose.addEventListener("click", closePlayer);
-      playerModal.addEventListener("click", (e) => {
-        if (e.target === playerModal) closePlayer();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && playerModal.classList.contains("show")) closePlayer();
-      });
-
+    function bindAdminEvents() {
       adminEntry.addEventListener("click", (e) => {
         e.preventDefault();
         openAdmin();
@@ -1519,67 +1175,53 @@
       adminModal.addEventListener("click", (e) => {
         if (e.target === adminModal) closeAdmin();
       });
-
-      resetFormBtn.addEventListener("click", () => {
-        resetAdminForm();
-        showAlert("表单已清空。");
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && adminModal.classList.contains("show")) closeAdmin();
       });
+
       saveHeroBtn.addEventListener("click", saveHeroConfig);
 
-      saveCloudConfigBtn.addEventListener("click", () => {
-        saveCloudConfigFromForm();
-      });
-
+      saveCloudConfigBtn.addEventListener("click", saveCloudConfigFromForm);
       pullCloudBtn.addEventListener("click", async () => {
         try {
           const count = await pullFromCloud();
-          showAlert(`已从云端拉取 ${count} 条。`, "ok");
+          showAlert(`拉取成功：${count} 条`, "ok");
+        } catch (error) {
+          showAlert(error.message, "error");
+        }
+      });
+      pushCloudBtn.addEventListener("click", async () => {
+        try {
+          await pushToCloud();
+          showAlert("上传成功", "ok");
         } catch (error) {
           showAlert(error.message, "error");
         }
       });
 
-      pushCloudBtn.addEventListener("click", async () => {
-        try {
-          await pushToCloud();
-          showAlert("已上传到云端。", "ok");
-        } catch (error) {
-          showAlert(error.message, "error");
-        }
+      resetFormBtn.addEventListener("click", () => {
+        resetAdminForm();
+        showAlert("已清空", "ok");
       });
 
       adminForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const id = editId.value || "video_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-        const existing = uploadedRecords.find((x) => x.id === id);
+        const existing = uploadedRecords.find((record) => record.id === id);
         const channel = videoChannel.value;
         const title = videoTitle.value.trim();
-        if (!title) return showAlert("请填写视频标题。", "error");
-        if (!channelOrder.includes(channel)) return showAlert("分区无效。", "error");
-
         const sourceUrl = videoSourceUrl.value.trim();
-        let playUrl = videoPlayUrl.value.trim();
-
-        if (!playUrl && sourceUrl) {
-          const autoPlayable = detectSourceFromUrl(sourceUrl);
-          if (autoPlayable && autoPlayable.type === "iframe") {
-            playUrl = autoPlayable.src;
-          }
+        if (!title) {
+          showAlert("请填写标题", "error");
+          return;
         }
-
-        if (!playUrl && sourceUrl && sourceUrl.includes("b23.tv/")) {
-          showAlert("正在解析 b23 短链...", "ok");
-          try {
-            const bvid = await resolveB23ToBvid(sourceUrl);
-            if (bvid) {
-              playUrl = `https://player.bilibili.com/player.html?bvid=${bvid}&page=1`;
-              videoPlayUrl.value = playUrl;
-            }
-          } catch {}
+        if (!sourceUrl) {
+          showAlert("请填写原链接", "error");
+          return;
         }
-
-        if (!playUrl && !sourceUrl) {
-          return showAlert("请至少填写一种链接。", "error");
+        if (!channelOrder.includes(channel)) {
+          showAlert("请选择分区", "error");
+          return;
         }
 
         const record = {
@@ -1588,9 +1230,7 @@
           desc: videoDesc.value.trim(),
           duration: videoDuration.value.trim(),
           channel,
-          url: sourceUrl || "#",
-          playUrl,
-          playType: videoPlayType.value.trim(),
+          url: sourceUrl,
           cover: coverUrl.value.trim(),
           createdAt: existing ? existing.createdAt : Date.now(),
           updatedAt: Date.now()
@@ -1599,34 +1239,32 @@
         try {
           await dbPut(record);
           await refreshUploadedLibrary();
-          if (autoSyncCloud.checked) {
-            await pushToCloud();
-          }
+          if (autoSyncCloud.checked) await pushToCloud();
           resetAdminForm();
-          showAlert("保存成功。", "ok");
+          showAlert("保存成功", "ok");
         } catch (error) {
           showAlert("保存失败：" + error.message, "error");
         }
       });
 
       adminList.addEventListener("click", async (e) => {
-        const btn = e.target.closest("button[data-action]");
-        if (!btn) return;
-        const id = btn.getAttribute("data-id");
-        const action = btn.getAttribute("data-action");
-        const record = uploadedRecords.find((x) => x.id === id);
+        const target = e.target.closest("button[data-action]");
+        if (!target) return;
+        const id = target.getAttribute("data-id");
+        const action = target.getAttribute("data-action");
+        const record = uploadedRecords.find((item) => item.id === id);
         if (!record) return;
         if (action === "edit") {
           fillAdminForm(record);
           return;
         }
         if (action === "delete") {
-          if (!window.confirm("确定删除该视频？")) return;
+          if (!window.confirm("确定删除？")) return;
           try {
             await dbDelete(id);
             await refreshUploadedLibrary();
             if (autoSyncCloud.checked) await pushToCloud();
-            showAlert("删除成功。", "ok");
+            showAlert("删除成功", "ok");
           } catch (error) {
             showAlert("删除失败：" + error.message, "error");
           }
@@ -1636,8 +1274,9 @@
 
     const navLinks = document.querySelectorAll(".nav a[href^='#']");
     const sections = document.querySelectorAll(".channel");
+
     function updateNavActive() {
-      let current = "stage";
+      let current = "works";
       sections.forEach((section) => {
         if (window.scrollY >= section.offsetTop - 130) current = section.id;
       });
@@ -1649,10 +1288,11 @@
     searchInput.addEventListener("input", renderAll);
     window.addEventListener("scroll", updateNavActive);
 
-    loadHeroConfig();
     loadCloudConfigToForm();
+    applyHeroConfig();
     renderAll();
-    bindMainEvents();
+    bindCardEvents();
+    bindAdminEvents();
     updateNavActive();
     refreshUploadedLibrary();
   </script>
