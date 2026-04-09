@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>珍珍日上TV</title>
-  <meta name="description" content="珍珍日上TV · 作品、舞台、综艺、直播回放分区视频站。">
+  <meta name="description" content="珍藏｜孙珍妮安利站，含入坑指南、角色、舞台、综艺、采访、直播回顾与影视作品整理。">
   <style>
     :root {
-      --bg: #070707;
+      --bg: #050505;
       --bg-soft: #111111;
-      --panel: #121212;
-      --card: #191919;
-      --line: rgba(255, 215, 132, 0.22);
-      --text: #f5f5f5;
-      --muted: #b6b6b6;
-      --gold: #d8b269;
-      --gold-soft: #f0d49a;
-      --shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+      --panel: #151515;
+      --card: #1b1b1b;
+      --line: rgba(245, 202, 122, 0.28);
+      --text: #f7f7f7;
+      --muted: #c6c6c6;
+      --gold: #d8ad62;
+      --gold-soft: #f2d6a0;
+      --shadow: 0 18px 34px rgba(0, 0, 0, 0.42);
     }
 
     * {
@@ -25,18 +25,14 @@
       padding: 0;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(circle at 84% 0%, rgba(216, 178, 105, 0.18), transparent 34%),
-        radial-gradient(circle at 10% 10%, rgba(216, 178, 105, 0.1), transparent 30%),
-        linear-gradient(180deg, #050505, #0b0b0b 45%, #060606);
       min-height: 100vh;
+      background:
+        radial-gradient(circle at 86% 4%, rgba(216, 173, 98, 0.17), transparent 36%),
+        radial-gradient(circle at 8% 16%, rgba(216, 173, 98, 0.09), transparent 30%),
+        linear-gradient(180deg, #040404, #0a0a0a 44%, #060606);
     }
 
     .container {
@@ -47,28 +43,28 @@
     header {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 40;
       border-bottom: 1px solid var(--line);
-      background: rgba(5, 5, 5, 0.92);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
+      background: rgba(6, 6, 6, 0.9);
     }
 
     .topbar {
-      min-height: 70px;
+      min-height: 72px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
       padding: 12px 0;
     }
 
     .brand {
-      white-space: nowrap;
-      font-size: 1.06rem;
-      letter-spacing: 0.6px;
-      font-weight: 700;
       text-decoration: none;
       color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
     }
 
     .brand b {
@@ -76,36 +72,11 @@
     }
 
     .brand .sep {
-      color: #dbc292;
       margin: 0 4px;
+      color: #e4c58a;
     }
 
-    .search {
-      flex: 1;
-      max-width: 460px;
-      display: flex;
-      align-items: center;
-      height: 40px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .search input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: var(--text);
-      font-size: 0.92rem;
-    }
-
-    .search input::placeholder {
-      color: #8f8f8f;
-    }
-
-    .nav {
+    .tab-nav {
       display: flex;
       gap: 8px;
       overflow-x: auto;
@@ -113,91 +84,46 @@
       padding-bottom: 2px;
     }
 
-    .nav::-webkit-scrollbar {
+    .tab-nav::-webkit-scrollbar {
       display: none;
     }
 
-    .nav a {
-      text-decoration: none;
-      color: #ececec;
+    .tab-btn {
       border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(255, 255, 255, 0.04);
+      color: #efefef;
       border-radius: 999px;
-      padding: 7px 13px;
+      padding: 8px 14px;
       font-size: 0.84rem;
       white-space: nowrap;
+      cursor: pointer;
       transition: 0.2s ease;
     }
 
-    .nav a:hover,
-    .nav a.active {
-      color: #1a1408;
-      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+    .tab-btn:hover,
+    .tab-btn.active {
+      color: #211508;
       border-color: rgba(255, 255, 255, 0.25);
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
     }
 
     main {
-      padding-bottom: 40px;
+      padding: 18px 0 42px;
     }
 
-    .hero {
-      margin-top: 16px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      background:
-        linear-gradient(128deg, rgba(8, 8, 8, 0.93), rgba(18, 18, 18, 0.78)),
-        radial-gradient(circle at 76% 40%, rgba(216, 178, 105, 0.2), transparent 40%);
-      background-size: cover;
-      background-position: center;
-      min-height: 220px;
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .hero-inner {
-      width: 100%;
-      padding: clamp(20px, 5vw, 44px);
-      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.64));
-    }
-
-    .hero-tag {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #ffe3b3;
-      margin-bottom: 4px;
-    }
-
-    .hero h1 {
-      font-size: clamp(1.6rem, 3.6vw, 2.8rem);
-      margin-bottom: 5px;
-    }
-
-    .hero p {
-      color: #d0d0d0;
-      font-size: 0.92rem;
-      max-width: 760px;
-    }
-
-    .channel {
-      margin-top: 28px;
-    }
-
-    .channel-page {
+    .tab-page {
       display: none;
     }
 
-    .channel-page.active {
+    .tab-page.active {
       display: block;
-      animation: pageFade 0.24s ease;
+      animation: fadeSlide 0.26s ease;
     }
 
-    @keyframes pageFade {
+    @keyframes fadeSlide {
       from {
         opacity: 0;
-        transform: translateY(6px);
+        transform: translateY(8px);
       }
       to {
         opacity: 1;
@@ -205,1122 +131,798 @@
       }
     }
 
-    .channel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 11px;
-    }
-
-    .channel-head h2 {
-      font-size: 1.3rem;
-      color: #f7f2e8;
-    }
-
-    .channel-head .label {
-      font-size: 0.82rem;
-      color: #cda96d;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .video-card {
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: var(--card);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-      min-width: 0;
-    }
-
-    .video-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(216, 178, 105, 0.65);
-    }
-
-    .thumb {
-      aspect-ratio: 16 / 9;
-      position: relative;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      background:
-        linear-gradient(135deg, rgba(216, 178, 105, 0.2), rgba(255, 255, 255, 0.06)),
-        #151515;
-      background-size: cover;
-      background-position: center;
-      display: grid;
-      place-items: center;
-    }
-
-    .play {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.34);
-      background: rgba(0, 0, 0, 0.45);
-      display: grid;
-      place-items: center;
-      font-size: 0.84rem;
-    }
-
-    .duration {
-      position: absolute;
-      right: 7px;
-      bottom: 7px;
-      border-radius: 6px;
-      padding: 2px 6px;
-      font-size: 0.72rem;
-      background: rgba(0, 0, 0, 0.72);
-      color: #fff;
-    }
-
-    .info {
-      padding: 10px 10px 12px;
-    }
-
-    .title {
-      font-size: 0.9rem;
-      line-height: 1.35;
-      min-height: 2.45em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .desc {
-      margin-top: 5px;
-      font-size: 0.79rem;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .empty {
-      grid-column: 1 / -1;
-      border: 1px dashed rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-      color: #9c9c9c;
-      background: rgba(255, 255, 255, 0.02);
-      font-size: 0.9rem;
-    }
-
-    .admin-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 90;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-    }
-
-    .admin-modal.show {
-      display: flex;
-    }
-
-    .admin-panel {
-      width: min(1080px, 95vw);
-      max-height: min(88vh, 860px);
-      overflow: auto;
-      border-radius: 14px;
+    .hero-banner {
+      width: 100%;
+      aspect-ratio: 16 / 5;
+      object-fit: cover;
+      border-radius: 16px;
       border: 1px solid var(--line);
-      background: #101010;
+      box-shadow: var(--shadow);
+      display: block;
+      background: #121212;
+    }
+
+    .hero-copy {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(1.8rem, 4.4vw, 3rem);
+      letter-spacing: 1px;
+      color: #f7ecd8;
+      text-shadow: 0 6px 20px rgba(216, 173, 98, 0.2);
+      margin-bottom: 8px;
+    }
+
+    .hero-copy p {
+      color: #d4d4d4;
+      font-size: 0.96rem;
+      max-width: 860px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .guide-layout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(20, 20, 20, 0.9);
       box-shadow: var(--shadow);
       padding: 14px;
     }
 
-    .admin-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .admin-head h2 {
+    .panel h2 {
       font-size: 1.08rem;
-      color: #f0d9a9;
-    }
-
-    .admin-close {
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      border-radius: 8px;
-      padding: 7px 12px;
-      cursor: pointer;
-    }
-
-    .admin-alert {
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 10px;
-      padding: 9px 10px;
-      font-size: 0.84rem;
-      color: #e8eefb;
+      color: #f3ddba;
       margin-bottom: 10px;
     }
 
-    .admin-alert.error {
-      border-color: rgba(255, 95, 95, 0.6);
-      color: #ffcfcf;
-    }
-
-    .admin-alert.ok {
-      border-color: rgba(110, 225, 172, 0.6);
-      color: #d7ffe9;
-    }
-
-    .admin-grid {
+    .info-grid {
       display: grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
     }
 
-    .admin-form,
-    .admin-list-wrap {
-      border: 1px solid rgba(255, 255, 255, 0.14);
+    .info-item {
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.03);
       padding: 10px;
     }
 
-    .admin-form h3,
-    .admin-list-wrap h3 {
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-      color: #f4dfb4;
+    .info-item .k {
+      font-size: 0.76rem;
+      color: #e6c98f;
+      margin-bottom: 5px;
     }
 
-    .field {
-      margin-bottom: 8px;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 0.78rem;
-      color: #cecece;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.28);
-      color: #fff;
-      padding: 8px 9px;
+    .info-item .v {
       font-size: 0.84rem;
-      outline: none;
+      line-height: 1.5;
+      color: #efefef;
     }
 
-    .field textarea {
-      min-height: 64px;
-      resize: vertical;
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #131313;
+      aspect-ratio: 4 / 5;
     }
 
-    .split {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .btn-row {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-
-    .btn {
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.05);
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(0, 0, 0, 0.5);
       color: #fff;
-      padding: 7px 11px;
-      font-size: 0.8rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+
+    .dots {
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.42);
       cursor: pointer;
     }
 
-    .btn.primary {
-      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
-      color: #23160a;
-      border-color: rgba(255, 255, 255, 0.3);
+    .dot.active {
+      background: var(--gold-soft);
+    }
+
+    .social-wrap {
+      margin-top: 16px;
+    }
+
+    .social-wrap h2 {
+      font-size: 1.08rem;
+      color: #f3ddba;
+      margin-bottom: 10px;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .social-card {
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(216, 173, 98, 0.12), rgba(30, 30, 30, 0.95));
+      padding: 14px 10px;
+      min-height: 106px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s ease;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .social-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(242, 214, 160, 0.68);
+    }
+
+    .social-card .name {
+      font-size: 1rem;
+      color: #f8ebd2;
       font-weight: 700;
     }
 
-    .btn.danger {
-      background: rgba(255, 104, 104, 0.12);
-      border-color: rgba(255, 124, 124, 0.46);
-      color: #ffc6c6;
+    .social-card .account {
+      font-size: 0.8rem;
+      color: #ececec;
+      line-height: 1.45;
     }
 
-    .admin-list {
-      display: grid;
-      gap: 7px;
-      max-height: 56vh;
-      overflow: auto;
-      padding-right: 1px;
-    }
-
-    .admin-item {
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 9px;
-      padding: 7px;
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .admin-item-head {
+    .section-head {
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
-      gap: 8px;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .section-head h2 {
+      font-size: 1.34rem;
+      color: #f7eddc;
+    }
+
+    .section-head .en {
+      font-size: 0.82rem;
+      color: #d6b778;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .media-card {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transition: 0.2s ease;
+    }
+
+    .media-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(216, 173, 98, 0.68);
+    }
+
+    .media-thumb {
+      display: block;
+      position: relative;
+      aspect-ratio: 16 / 9;
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      background: #121212;
+    }
+
+    .media-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .play-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: rgba(0, 0, 0, 0.42);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    .media-body {
+      padding: 10px;
+    }
+
+    .media-body h3 {
+      font-size: 0.94rem;
+      line-height: 1.45;
+      margin-bottom: 6px;
+      color: #f6ecd8;
+      min-height: 2.75em;
+    }
+
+    .meta-line {
       font-size: 0.8rem;
+      color: #cfcfcf;
+      line-height: 1.55;
+      margin-bottom: 6px;
     }
 
-    .admin-item-head b {
-      color: #f6e7c7;
+    .episode-line {
+      font-size: 0.78rem;
+      color: #f0d6a3;
+      line-height: 1.5;
     }
 
-    .admin-item-meta {
-      margin-top: 4px;
-      font-size: 0.74rem;
-      color: #b2b2b2;
+    .film-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
     }
 
-    .admin-item-actions {
-      margin-top: 7px;
-      display: flex;
-      gap: 5px;
+    .film-card {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: var(--card);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .film-card .poster {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: #121212;
+    }
+
+    .film-card .body {
+      padding: 10px;
+    }
+
+    .film-card .body h3 {
+      font-size: 0.96rem;
+      color: #f7ecd8;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .film-card .role {
+      font-size: 0.82rem;
+      color: #f1d9aa;
+      margin-bottom: 5px;
+    }
+
+    .film-card .intro {
+      font-size: 0.8rem;
+      color: #c8c8c8;
+      line-height: 1.55;
+    }
+
+    .empty-note {
+      border: 1px dashed rgba(255, 255, 255, 0.24);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      color: #9d9d9d;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.02);
+      grid-column: 1 / -1;
     }
 
     footer {
+      margin-top: 28px;
       border-top: 1px solid var(--line);
-      text-align: center;
-      color: #9b9b9b;
-      font-size: 0.83rem;
       padding: 20px 0 30px;
-      margin-top: 26px;
+      color: #9b9b9b;
+      text-align: center;
+      font-size: 0.84rem;
     }
 
     @media (max-width: 1180px) {
-      .video-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+      .card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .film-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 980px) {
-      .admin-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 900px) {
+    @media (max-width: 920px) {
       .topbar {
         flex-wrap: wrap;
       }
-
-      .search {
+      .tab-nav {
         order: 3;
         width: 100%;
-        max-width: none;
       }
-
-      .video-grid {
+      .guide-layout {
+        grid-template-columns: 1fr;
+      }
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .card-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
     @media (max-width: 560px) {
-      .video-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .split {
+      .social-grid,
+      .card-grid,
+      .film-grid,
+      .info-grid {
         grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-<body id="top">
+<body>
   <header>
     <div class="container topbar">
-      <a class="brand" href="#top"><b>珍珍日上TV</b><span class="sep">｜</span>JENNYBOB</a>
-      <label class="search">
-        <input id="searchInput" type="text" placeholder="搜索视频标题/简介">
-      </label>
-      <nav class="nav">
-        <a href="#" class="nav-tab active" data-tab="works">作品</a>
-        <a href="#" class="nav-tab" data-tab="stage">舞台</a>
-        <a href="#" class="nav-tab" data-tab="show">综艺</a>
-        <a href="#" class="nav-tab" data-tab="live">直播回放</a>
-        <a href="#" id="adminEntry">管理</a>
-        <a href="./daily-group.html">官群空降</a>
+      <a class="brand" href="#" id="brandTop"><b>珍珍日上TV</b><span class="sep">｜</span>JENNYBOB</a>
+      <nav class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-page="guide">入坑指南</button>
+        <button class="tab-btn" data-page="role">角色安利</button>
+        <button class="tab-btn" data-page="stage">舞台安利</button>
+        <button class="tab-btn" data-page="show">综艺安利</button>
+        <button class="tab-btn" data-page="interview">采访安利</button>
+        <button class="tab-btn" data-page="live">直播回顾</button>
+        <button class="tab-btn" data-page="film">影视作品</button>
       </nav>
     </div>
   </header>
 
   <main class="container">
-    <section id="heroBanner" class="hero">
-      <div class="hero-inner">
-        <div class="hero-tag">JENNYBOB</div>
-        <h1>JENNYBOB TV</h1>
-        <p>遇见珍妮，万事如意。谢谢你走到这里，欢迎加入藕粉大家庭。</p>
+    <section class="tab-page active" id="page-guide">
+      <img
+        class="hero-banner"
+        src="https://picsum.photos/seed/jenny-banner-main/1600/520"
+        alt="首页横幅"
+      >
+      <div class="hero-copy">
+        <h1>珍藏 ｜ 孙珍妮安利站</h1>
+        <p>遇见珍妮，万事如意。这里整理了角色、综艺、舞台和入坑路线，欢迎一键收藏慢慢补。</p>
       </div>
+
+      <div class="guide-layout">
+        <section class="panel">
+          <h2>基本介绍</h2>
+          <div class="info-grid">
+            <article class="info-item">
+              <div class="k">关键词</div>
+              <div class="v">演员 / 舞台表演 / 综艺反差感</div>
+            </article>
+            <article class="info-item">
+              <div class="k">入坑顺序</div>
+              <div class="v">舞台高光 → 综艺切片 → 角色正片</div>
+            </article>
+            <article class="info-item">
+              <div class="k">角色看点</div>
+              <div class="v">一人多面、情绪层次、人物完成度</div>
+            </article>
+            <article class="info-item">
+              <div class="k">舞台看点</div>
+              <div class="v">镜头表现、节奏控制、舞台稳定度</div>
+            </article>
+            <article class="info-item">
+              <div class="k">综艺看点</div>
+              <div class="v">轻松自然、梗密度高、互动感强</div>
+            </article>
+            <article class="info-item">
+              <div class="k">推荐方式</div>
+              <div class="v">先发一条高能混剪，再补长视频合集</div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>图集浏览</h2>
+          <div class="carousel">
+            <img id="guideImage" alt="孙珍妮图集">
+            <button class="carousel-btn prev" id="prevGuide" type="button">‹</button>
+            <button class="carousel-btn next" id="nextGuide" type="button">›</button>
+            <div class="dots" id="guideDots"></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="social-wrap">
+        <h2>实时更新</h2>
+        <div class="social-grid">
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://s.weibo.com/user?q=%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">微博</div>
+            <div class="account">账号：SNH48-孙珍妮</div>
+          </a>
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://www.xiaohongshu.com/search_result?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">小红书</div>
+            <div class="account">账号：孙珍妮相关更新</div>
+          </a>
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://www.douyin.com/search/%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">抖音</div>
+            <div class="account">账号：孙珍妮相关更新</div>
+          </a>
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">哔哩哔哩</div>
+            <div class="account">账号：孙珍妮视频专区</div>
+          </a>
+        </div>
+      </section>
     </section>
 
-    <section class="channel channel-page active" id="works">
-      <div class="channel-head">
-        <h2>作品</h2>
-        <span class="label">Works</span>
-      </div>
-      <div class="video-grid" data-channel="role"></div>
+    <section class="tab-page" id="page-role">
+      <div class="section-head"><h2>角色安利</h2><span class="en">Roles</span></div>
+      <div class="card-grid" id="grid-role"></div>
     </section>
 
-    <section class="channel channel-page" id="stage">
-      <div class="channel-head">
-        <h2>舞台</h2>
-        <span class="label">Stage</span>
-      </div>
-      <div class="video-grid" data-channel="stage"></div>
+    <section class="tab-page" id="page-stage">
+      <div class="section-head"><h2>舞台安利</h2><span class="en">Stage</span></div>
+      <div class="card-grid" id="grid-stage"></div>
     </section>
 
-    <section class="channel channel-page" id="show">
-      <div class="channel-head">
-        <h2>综艺</h2>
-        <span class="label">Show</span>
-      </div>
-      <div class="video-grid" data-channel="show"></div>
+    <section class="tab-page" id="page-show">
+      <div class="section-head"><h2>综艺安利</h2><span class="en">Show</span></div>
+      <div class="card-grid" id="grid-show"></div>
     </section>
 
-    <section class="channel channel-page" id="live">
-      <div class="channel-head">
-        <h2>直播回放</h2>
-        <span class="label">Live</span>
-      </div>
-      <div class="video-grid" data-channel="live"></div>
+    <section class="tab-page" id="page-interview">
+      <div class="section-head"><h2>采访安利</h2><span class="en">Interview</span></div>
+      <div class="card-grid" id="grid-interview"></div>
+    </section>
+
+    <section class="tab-page" id="page-live">
+      <div class="section-head"><h2>直播回顾</h2><span class="en">Live Replay</span></div>
+      <div class="card-grid" id="grid-live"></div>
+    </section>
+
+    <section class="tab-page" id="page-film">
+      <div class="section-head"><h2>影视作品</h2><span class="en">Filmography</span></div>
+      <div class="film-grid" id="grid-film"></div>
     </section>
   </main>
 
-  <div id="adminModal" class="admin-modal" aria-hidden="true">
-    <div class="admin-panel">
-      <div class="admin-head">
-        <h2>内容管理</h2>
-        <button id="adminClose" class="admin-close" type="button">关闭</button>
-      </div>
-      <div id="adminAlert" class="admin-alert">已进入管理模式。</div>
-
-      <div class="admin-alert">
-        <div class="split">
-          <div class="field">
-            <label for="heroImageUrl">首页横幅图 URL</label>
-            <input id="heroImageUrl" type="url" placeholder="https://...">
-          </div>
-          <div class="field" style="align-self:end;">
-            <button id="saveHeroBtn" class="btn primary" type="button">保存横幅图</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="admin-alert">
-        <div class="split">
-          <div class="field">
-            <label for="gtOwner">Gitee Owner</label>
-            <input id="gtOwner" type="text" placeholder="例如：yourname">
-          </div>
-          <div class="field">
-            <label for="gtRepo">Gitee Repo</label>
-            <input id="gtRepo" type="text" placeholder="例如：your-repo">
-          </div>
-          <div class="field">
-            <label for="gtBranch">分支</label>
-            <input id="gtBranch" type="text" placeholder="master">
-          </div>
-          <div class="field">
-            <label for="gtPath">云端数据路径</label>
-            <input id="gtPath" type="text" placeholder="data/zzrs-videos.json">
-          </div>
-        </div>
-        <div class="field">
-          <label for="gtToken">Gitee Token</label>
-          <input id="gtToken" type="password" placeholder="gitee_pat_xxx">
-        </div>
-        <div class="btn-row">
-          <button id="saveCloudConfigBtn" class="btn" type="button">保存云配置</button>
-          <button id="pullCloudBtn" class="btn" type="button">拉取云端</button>
-          <button id="pushCloudBtn" class="btn" type="button">上传云端</button>
-          <label style="margin-left:auto;font-size:.78rem;display:flex;align-items:center;gap:6px;color:#d8d8d8;">
-            <input id="autoSyncCloud" type="checkbox">
-            自动云同步
-          </label>
-        </div>
-      </div>
-
-      <div class="admin-grid">
-        <section class="admin-form">
-          <h3 id="formTitle">新增视频</h3>
-          <form id="adminForm">
-            <input type="hidden" id="editId">
-            <div class="field">
-              <label for="videoTitle">标题 *</label>
-              <input id="videoTitle" type="text" required>
-            </div>
-            <div class="field">
-              <label for="videoDesc">简介</label>
-              <textarea id="videoDesc"></textarea>
-            </div>
-            <div class="split">
-              <div class="field">
-                <label for="videoDuration">时长</label>
-                <input id="videoDuration" type="text" placeholder="例如：04:12">
-              </div>
-              <div class="field">
-                <label for="videoChannel">分区 *</label>
-                <select id="videoChannel" required>
-                  <option value="role">作品</option>
-                  <option value="stage">舞台</option>
-                  <option value="show">综艺</option>
-                  <option value="live">直播回放</option>
-                </select>
-              </div>
-            </div>
-            <div class="field">
-              <label for="videoSourceUrl">原链接（点击后新窗口打开）*</label>
-              <input id="videoSourceUrl" type="url" placeholder="https://...">
-            </div>
-            <div class="field">
-              <label for="coverUrl">封面图 URL（可选）</label>
-              <input id="coverUrl" type="url" placeholder="https://...">
-            </div>
-            <div class="btn-row">
-              <button class="btn primary" type="submit">保存</button>
-              <button class="btn" id="resetFormBtn" type="button">清空</button>
-            </div>
-          </form>
-        </section>
-
-        <section class="admin-list-wrap">
-          <h3>已添加内容</h3>
-          <div id="adminList" class="admin-list">
-            <div class="empty">暂无内容</div>
-          </div>
-        </section>
-      </div>
-    </div>
-  </div>
-
   <footer>
-    <div class="container">珍珍日上TV</div>
+    <div class="container">珍珍日上TV ｜ JENNYBOB TV</div>
   </footer>
 
   <script>
-    const VIDEO_LIBRARY = {
-      stage: [],
-      show: [],
-      role: [],
-      live: []
-    };
-
-    const channelLabels = {
-      stage: "舞台",
-      show: "综艺",
-      role: "作品",
-      live: "直播回放"
-    };
-    const channelOrder = ["stage", "show", "role", "live"];
-
-    const ADMIN_PASSWORD_KEY = "zzrs-admin-password";
-    const DEFAULT_ADMIN_PASSWORD = "zzrs2026";
-    const CLOUD_CONFIG_KEY = "zzrs-cloud-config";
-    const CLOUD_TOKEN_KEY = "zzrs-cloud-token";
-    const HERO_CONFIG_KEY = "zzrs-hero-config";
-
-    const DB_NAME = "zzrs-media-db";
-    const DB_VERSION = 1;
-    const STORE_NAME = "videos";
-    let dbPromise = null;
-
-    let adminAuthed = false;
-    let uploadedRecords = [];
-    let uploadedByChannel = { stage: [], show: [], role: [], live: [] };
-    let renderedMap = { stage: [], show: [], role: [], live: [] };
-
-    const searchInput = document.getElementById("searchInput");
-    const heroBanner = document.getElementById("heroBanner");
-
-    const adminModal = document.getElementById("adminModal");
-    const adminEntry = document.getElementById("adminEntry");
-    const adminClose = document.getElementById("adminClose");
-    const adminAlert = document.getElementById("adminAlert");
-    const adminForm = document.getElementById("adminForm");
-    const adminList = document.getElementById("adminList");
-    const formTitle = document.getElementById("formTitle");
-    const resetFormBtn = document.getElementById("resetFormBtn");
-
-    const editId = document.getElementById("editId");
-    const videoTitle = document.getElementById("videoTitle");
-    const videoDesc = document.getElementById("videoDesc");
-    const videoDuration = document.getElementById("videoDuration");
-    const videoChannel = document.getElementById("videoChannel");
-    const videoSourceUrl = document.getElementById("videoSourceUrl");
-    const coverUrl = document.getElementById("coverUrl");
-
-    const heroImageUrl = document.getElementById("heroImageUrl");
-    const saveHeroBtn = document.getElementById("saveHeroBtn");
-
-    const gtOwner = document.getElementById("gtOwner");
-    const gtRepo = document.getElementById("gtRepo");
-    const gtBranch = document.getElementById("gtBranch");
-    const gtPath = document.getElementById("gtPath");
-    const gtToken = document.getElementById("gtToken");
-    const autoSyncCloud = document.getElementById("autoSyncCloud");
-    const saveCloudConfigBtn = document.getElementById("saveCloudConfigBtn");
-    const pullCloudBtn = document.getElementById("pullCloudBtn");
-    const pushCloudBtn = document.getElementById("pushCloudBtn");
-
-    function safeText(v, fallback = "") {
-      return v && String(v).trim() ? String(v).trim() : fallback;
-    }
-
-    function escapeHTML(value) {
-      return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
-    function showAlert(message, type) {
-      adminAlert.textContent = message;
-      adminAlert.classList.remove("error", "ok");
-      if (type === "error") adminAlert.classList.add("error");
-      if (type === "ok") adminAlert.classList.add("ok");
-    }
-
-    function normalizeRepoPath(path) {
-      return (path || "data/zzrs-videos.json").trim().replace(/^\/+/, "");
-    }
-
-    function encodeRepoPath(path) {
-      return normalizeRepoPath(path).split("/").map(encodeURIComponent).join("/");
-    }
-
-    function utf8ToBase64(input) {
-      return btoa(unescape(encodeURIComponent(input)));
-    }
-
-    function base64ToUtf8(input) {
-      return decodeURIComponent(escape(atob(input)));
-    }
-
-    function sanitizeCloudRecord(record) {
-      return {
-        id: safeText(record.id, "video_" + Date.now().toString(36)),
-        title: safeText(record.title, "未命名视频"),
-        desc: safeText(record.desc, ""),
-        duration: safeText(record.duration, ""),
-        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
-        url: safeText(record.url, "#"),
-        cover: safeText(record.cover, ""),
-        createdAt: Number(record.createdAt) || Date.now(),
-        updatedAt: Number(record.updatedAt) || Date.now()
-      };
-    }
-
-    function getHeroConfig() {
-      try {
-        const raw = localStorage.getItem(HERO_CONFIG_KEY);
-        return raw ? JSON.parse(raw) : {};
-      } catch {
-        return {};
-      }
-    }
-
-    function applyHeroConfig() {
-      const cfg = getHeroConfig();
-      const image = safeText(cfg.image, "");
-      if (image) {
-        heroBanner.style.backgroundImage =
-          `linear-gradient(128deg, rgba(8,8,8,0.65), rgba(18,18,18,0.55)), url('${image}')`;
-      } else {
-        heroBanner.style.backgroundImage =
-          "linear-gradient(128deg, rgba(8,8,8,0.93), rgba(18,18,18,0.78)), radial-gradient(circle at 76% 40%, rgba(216, 178, 105, 0.2), transparent 40%)";
-      }
-      heroImageUrl.value = image;
-    }
-
-    function saveHeroConfig() {
-      const image = heroImageUrl.value.trim();
-      localStorage.setItem(HERO_CONFIG_KEY, JSON.stringify({ image }));
-      applyHeroConfig();
-      showAlert("横幅图已保存。", "ok");
-    }
-
-    function loadCloudConfigToForm() {
-      let saved = {};
-      try {
-        const raw = localStorage.getItem(CLOUD_CONFIG_KEY);
-        saved = raw ? JSON.parse(raw) : {};
-      } catch {
-        saved = {};
-      }
-      gtOwner.value = safeText(saved.owner, "");
-      gtRepo.value = safeText(saved.repo, "");
-      gtBranch.value = safeText(saved.branch, "master");
-      gtPath.value = safeText(saved.path, "data/zzrs-videos.json");
-      autoSyncCloud.checked = Boolean(saved.autoSync);
-      gtToken.value = localStorage.getItem(CLOUD_TOKEN_KEY) || "";
-    }
-
-    function getCloudConfigFromForm() {
-      return {
-        owner: gtOwner.value.trim(),
-        repo: gtRepo.value.trim(),
-        branch: gtBranch.value.trim() || "master",
-        path: normalizeRepoPath(gtPath.value),
-        token: gtToken.value.trim(),
-        autoSync: autoSyncCloud.checked
-      };
-    }
-
-    function saveCloudConfigFromForm() {
-      const cfg = getCloudConfigFromForm();
-      localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify({
-        owner: cfg.owner,
-        repo: cfg.repo,
-        branch: cfg.branch,
-        path: cfg.path,
-        autoSync: cfg.autoSync
-      }));
-      if (cfg.token) localStorage.setItem(CLOUD_TOKEN_KEY, cfg.token);
-      showAlert("云配置已保存。", "ok");
-    }
-
-    function buildGiteeContentEndpoint(config, includeRef) {
-      const query = new URLSearchParams();
-      query.set("access_token", config.token);
-      if (includeRef && config.branch) query.set("ref", config.branch);
-      return `https://gitee.com/api/v5/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${encodeRepoPath(config.path)}?${query.toString()}`;
-    }
-
-    async function fetchCloudFileMeta(config) {
-      const endpoint = buildGiteeContentEndpoint(config, true);
-      const response = await fetch(endpoint, {
-        headers: {
-          "Accept": "application/json"
-        }
-      });
-      if (response.status === 404) return { exists: false, sha: "" };
-      if (!response.ok) throw new Error(`读取云端失败：HTTP ${response.status}`);
-      const data = await response.json();
-      return { exists: true, sha: data.sha || "", data };
-    }
-
-    async function pullFromCloud() {
-      const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
-      const meta = await fetchCloudFileMeta(cfg);
-      if (!meta.exists) throw new Error("云端文件不存在");
-      const contentBase64 = String(meta.data.content || "").replace(/\n/g, "");
-      const text = base64ToUtf8(contentBase64 || "");
-      const parsed = JSON.parse(text);
-      if (!Array.isArray(parsed)) throw new Error("云端数据格式错误");
-      const sanitized = parsed.map(sanitizeCloudRecord);
-      await dbReplaceAll(sanitized);
-      await refreshUploadedLibrary();
-      return sanitized.length;
-    }
-
-    async function pushToCloud() {
-      const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
-      const meta = await fetchCloudFileMeta(cfg);
-      const endpoint = `https://gitee.com/api/v5/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
-      const payload = new URLSearchParams();
-      payload.set("access_token", cfg.token);
-      payload.set("message", `update zzrs videos ${new Date().toISOString()}`);
-      payload.set("content", utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)));
-      payload.set("branch", cfg.branch);
-      if (meta.exists && meta.sha) payload.set("sha", meta.sha);
-
-      const response = await fetch(endpoint, {
-        method: meta.exists ? "PUT" : "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+    const categoryData = {
+      role: [
+        {
+          title: "千朵桃花一世开 · 暮悬铃/阿珠/神女",
+          desc: "领衔主演 | 一人分饰三角 | 暗域圣女×灵动少女×清冷神女",
+          episodes: ["正片", "CUT", "原著小说"],
+          link: "https://search.bilibili.com/all?keyword=%E5%8D%83%E6%9C%B5%E6%A1%83%E8%8A%B1%E4%B8%80%E4%B8%96%E5%BC%80%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-1/640/360"
         },
-        body: payload.toString()
-      });
-      if (!response.ok) {
-        const txt = await response.text();
-        throw new Error(`上传云端失败：HTTP ${response.status} ${txt ? "- " + txt.slice(0, 120) : ""}`);
-      }
-      return true;
-    }
-
-    function openDB() {
-      if (!("indexedDB" in window)) return Promise.reject(new Error("当前浏览器不支持 IndexedDB"));
-      if (dbPromise) return dbPromise;
-      dbPromise = new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, DB_VERSION);
-        req.onerror = () => reject(req.error);
-        req.onupgradeneeded = () => {
-          const db = req.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: "id" });
-        };
-        req.onsuccess = () => resolve(req.result);
-      });
-      return dbPromise;
-    }
-
-    async function dbGetAll() {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readonly");
-        const req = tx.objectStore(STORE_NAME).getAll();
-        req.onerror = () => reject(req.error);
-        req.onsuccess = () => resolve(req.result || []);
-      });
-    }
-
-    async function dbPut(record) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
-        const req = tx.objectStore(STORE_NAME).put(record);
-        req.onerror = () => reject(req.error);
-        req.onsuccess = () => resolve(record);
-      });
-    }
-
-    async function dbDelete(id) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
-        const req = tx.objectStore(STORE_NAME).delete(id);
-        req.onerror = () => reject(req.error);
-        req.onsuccess = () => resolve(true);
-      });
-    }
-
-    async function dbReplaceAll(records) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
-        const store = tx.objectStore(STORE_NAME);
-        const clearReq = store.clear();
-        clearReq.onerror = () => reject(clearReq.error);
-        clearReq.onsuccess = () => records.forEach((record) => store.put(record));
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error || new Error("写入失败"));
-      });
-    }
-
-    function buildCard(channel, item, index) {
-      const bg = item.cover && item.cover.trim()
-        ? ` style="background-image: linear-gradient(135deg, rgba(216,178,105,0.2), rgba(255,255,255,0.06)), url('${escapeHTML(item.cover)}');"`
-        : "";
-      return `
-        <article class="video-card" data-channel="${channel}" data-index="${index}">
-          <div class="thumb"${bg}>
-            <div class="play">▶</div>
-            <span class="duration">${escapeHTML(item.duration || "--:--")}</span>
-          </div>
-          <div class="info">
-            <div class="title">${escapeHTML(item.title || "未命名视频")}</div>
-            <div class="desc">${escapeHTML(item.desc || "暂无简介")}</div>
-          </div>
-        </article>
-      `;
-    }
-
-    function getChannelItems(channel) {
-      const uploaded = uploadedByChannel[channel] || [];
-      const defaults = VIDEO_LIBRARY[channel] || [];
-      return [...uploaded, ...defaults];
-    }
-
-    function renderAll() {
-      const keyword = (searchInput.value || "").trim().toLowerCase();
-      channelOrder.forEach((channel) => {
-        const mount = document.querySelector(`.video-grid[data-channel="${channel}"]`);
-        if (!mount) return;
-        const source = getChannelItems(channel);
-        const filtered = source.filter((item) => {
-          if (!keyword) return true;
-          return `${item.title || ""} ${item.desc || ""}`.toLowerCase().includes(keyword);
-        });
-        renderedMap[channel] = filtered;
-        if (!filtered.length) {
-          mount.innerHTML = '<div class="empty">该分区暂无内容</div>';
-          return;
+        {
+          title: "长月烬明 · 翩然",
+          desc: "高人气角色线 | 明艳灵动 | 名场面密集",
+          episodes: ["角色合集", "CUT", "剧情向混剪"],
+          link: "https://search.bilibili.com/all?keyword=%E9%95%BF%E6%9C%88%E7%83%AC%E6%98%8E%20%E7%BF%A9%E7%84%B6%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-2/640/360"
+        },
+        {
+          title: "亲爱的天狐大人 · 苏浅浅",
+          desc: "古偶甜感角色 | 情绪过渡自然 | 角色成长线清晰",
+          episodes: ["正片", "CUT", "花絮"],
+          link: "https://search.bilibili.com/all?keyword=%E4%BA%B2%E7%88%B1%E7%9A%84%E5%A4%A9%E7%8B%90%E5%A4%A7%E4%BA%BA%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-3/640/360"
+        },
+        {
+          title: "我在顶峰等你 · 顾雪茭",
+          desc: "新作关注角色 | 话题持续升温 | 值得追更",
+          episodes: ["预告", "路透", "CUT"],
+          link: "https://search.bilibili.com/all?keyword=%E6%88%91%E5%9C%A8%E9%A1%B6%E5%B3%B0%E7%AD%89%E4%BD%A0%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-4/640/360"
         }
-        mount.innerHTML = filtered.map((item, idx) => buildCard(channel, item, idx)).join("");
-      });
-    }
+      ],
+      stage: [
+        {
+          title: "高能舞台直拍合集",
+          desc: "节奏控制稳 | 镜头表现强 | 氛围感拉满",
+          episodes: ["直拍", "机位版", "练习室"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%88%9E%E5%8F%B0%20%E7%9B%B4%E6%8B%8D",
+          cover: "https://picsum.photos/seed/stage-1/640/360"
+        },
+        {
+          title: "合作舞台名场面",
+          desc: "合作适配度高 | 镜头调度流畅 | 记忆点强",
+          episodes: ["完整版", "高光CUT", "二创混剪"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E5%90%88%E4%BD%9C%E8%88%9E%E5%8F%B0",
+          cover: "https://picsum.photos/seed/stage-2/640/360"
+        },
+        {
+          title: "抒情舞台精选",
+          desc: "细腻表达 | 情绪层层递进 | 适合入坑补档",
+          episodes: ["正片", "现场版", "清唱片段"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%8A%92%E6%83%85%20%E8%88%9E%E5%8F%B0",
+          cover: "https://picsum.photos/seed/stage-3/640/360"
+        },
+        {
+          title: "年度舞台总览",
+          desc: "一条视频补完核心舞台，适合分享安利",
+          episodes: ["年度盘点", "高光片段", "推荐清单"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%88%9E%E5%8F%B0%E7%9B%98%E7%82%B9",
+          cover: "https://picsum.photos/seed/stage-4/640/360"
+        }
+      ],
+      show: [
+        {
+          title: "团综高能反应合集",
+          desc: "反应快、梗密度高、轻松下饭向",
+          episodes: ["正片", "CUT", "名场面"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%BB%BC%E8%89%BA",
+          cover: "https://picsum.photos/seed/show-1/640/360"
+        },
+        {
+          title: "游戏挑战名场面",
+          desc: "综艺节奏感好 | 镜头友好 | 入坑友好",
+          episodes: ["完整版", "高能CUT", "reaction"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%B8%B8%E6%88%8F%E6%8C%91%E6%88%98",
+          cover: "https://picsum.photos/seed/show-2/640/360"
+        },
+        {
+          title: "访谈综艺片段",
+          desc: "表达清晰自然 | 观点真诚 | 观感舒服",
+          episodes: ["访谈正片", "CUT", "金句合集"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%AE%BF%E8%B0%88",
+          cover: "https://picsum.photos/seed/show-3/640/360"
+        },
+        {
+          title: "综艺入坑速看",
+          desc: "一条视频快速了解综艺魅力点",
+          episodes: ["导览", "笑点合集", "剪辑版"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%BB%BC%E8%89%BA%20%E5%85%A5%E5%9D%91",
+          cover: "https://picsum.photos/seed/show-4/640/360"
+        }
+      ],
+      interview: [
+        {
+          title: "人物专访精选",
+          desc: "从角色理解到创作表达，信息量高",
+          episodes: ["完整版", "重点CUT", "文字摘录"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E4%B8%93%E8%AE%BF",
+          cover: "https://picsum.photos/seed/interview-1/640/360"
+        },
+        {
+          title: "活动采访回顾",
+          desc: "现场状态好，回答节奏松弛自然",
+          episodes: ["活动采访", "CUT", "快问快答"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%B4%BB%E5%8A%A8%20%E9%87%87%E8%AE%BF",
+          cover: "https://picsum.photos/seed/interview-2/640/360"
+        },
+        {
+          title: "幕后访谈合集",
+          desc: "聊表演、聊舞台、聊角色的成长线",
+          episodes: ["幕后", "CUT", "重点问答"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E5%B9%95%E5%90%8E%20%E8%AE%BF%E8%B0%88",
+          cover: "https://picsum.photos/seed/interview-3/640/360"
+        },
+        {
+          title: "采访高光合集",
+          desc: "适合新人快速认识她的表达风格",
+          episodes: ["高光", "CUT", "二创混剪"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E9%87%87%E8%AE%BF%20%E9%AB%98%E5%85%89",
+          cover: "https://picsum.photos/seed/interview-4/640/360"
+        }
+      ],
+      live: [
+        {
+          title: "直播回顾 · 日常场",
+          desc: "轻松聊天氛围好，适合睡前补档",
+          episodes: ["正片", "精华CUT", "文字时间轴"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E5%9B%9E%E9%A1%BE",
+          cover: "https://picsum.photos/seed/live-1/640/360"
+        },
+        {
+          title: "直播问答合辑",
+          desc: "幕后问题集中答复，信息密度高",
+          episodes: ["问答正片", "CUT", "要点汇总"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E9%97%AE%E7%AD%94",
+          cover: "https://picsum.photos/seed/live-2/640/360"
+        },
+        {
+          title: "直播名场面时间轴",
+          desc: "高能段落标记清晰，方便二刷",
+          episodes: ["时间轴", "高光CUT", "合集"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E5%90%8D%E5%9C%BA%E9%9D%A2",
+          cover: "https://picsum.photos/seed/live-3/640/360"
+        },
+        {
+          title: "直播返场回放",
+          desc: "返场互动内容集中补档",
+          episodes: ["返场", "精华", "二创剪辑"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%BF%94%E5%9C%BA",
+          cover: "https://picsum.photos/seed/live-4/640/360"
+        }
+      ]
+    };
 
-    function makeUploadedItem(record) {
-      return {
-        id: record.id,
-        title: safeText(record.title, "未命名视频"),
-        desc: safeText(record.desc, ""),
-        duration: safeText(record.duration, ""),
-        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
-        url: safeText(record.url, "#"),
-        cover: safeText(record.cover, ""),
-        createdAt: Number(record.createdAt) || Date.now(),
-        updatedAt: Number(record.updatedAt) || Date.now(),
-        fromAdmin: true
-      };
-    }
+    const filmographyData = [
+      { title: "《见习爱神》", role: "饰 漫漫", intro: "青春题材角色，灵动感与轻松感并存。", link: "https://search.bilibili.com/all?keyword=%E8%A7%81%E4%B9%A0%E7%88%B1%E7%A5%9E%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-1/640/360" },
+      { title: "《天意》", role: "饰 天依", intro: "早期荧幕角色，成长线清晰。", link: "https://search.bilibili.com/all?keyword=%E5%A4%A9%E6%84%8F%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-2/640/360" },
+      { title: "《日不落酒店》", role: "饰 红", intro: "电影角色，风格辨识度高。", link: "https://search.bilibili.com/all?keyword=%E6%97%A5%E4%B8%8D%E8%90%BD%E9%85%92%E5%BA%97%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-3/640/360" },
+      { title: "《梦见狮子》", role: "饰 绫酒", intro: "角色气质突出，剧情线有记忆点。", link: "https://search.bilibili.com/all?keyword=%E6%A2%A6%E8%A7%81%E7%8B%AE%E5%AD%90%20%E7%BB%AB%E9%85%92", cover: "https://picsum.photos/seed/film-4/640/360" },
+      { title: "《替嫁小才女》", role: "饰 唐小山", intro: "轻喜线角色，节奏明快。", link: "https://search.bilibili.com/all?keyword=%E6%9B%BF%E5%AB%81%E5%B0%8F%E6%89%8D%E5%A5%B3%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-5/640/360" },
+      { title: "《亲爱的天狐大人》", role: "饰 苏浅浅", intro: "古偶甜感路线，角色成长完整。", link: "https://search.bilibili.com/all?keyword=%E4%BA%B2%E7%88%B1%E7%9A%84%E5%A4%A9%E7%8B%90%E5%A4%A7%E4%BA%BA%20%E8%8B%8F%E6%B5%85%E6%B5%85", cover: "https://picsum.photos/seed/film-6/640/360" },
+      { title: "《长月烬明》", role: "饰 翩然", intro: "高讨论度角色，出圈名场面密集。", link: "https://search.bilibili.com/all?keyword=%E9%95%BF%E6%9C%88%E7%83%AC%E6%98%8E%20%E7%BF%A9%E7%84%B6", cover: "https://picsum.photos/seed/film-7/640/360" },
+      { title: "《千朵桃花一世开》", role: "饰 暮悬铃/阿珠/神女", intro: "一人分饰三角，角色切换层次感强。", link: "https://search.bilibili.com/all?keyword=%E5%8D%83%E6%9C%B5%E6%A1%83%E8%8A%B1%E4%B8%80%E4%B8%96%E5%BC%80%20%E6%9A%AE%E6%82%AC%E9%93%83", cover: "https://picsum.photos/seed/film-8/640/360" },
+      { title: "《我在顶峰等你》", role: "饰 顾雪茭", intro: "新作品持续关注中。", link: "https://search.bilibili.com/all?keyword=%E6%88%91%E5%9C%A8%E9%A1%B6%E5%B3%B0%E7%AD%89%E4%BD%A0%20%E9%A1%BE%E9%9B%AA%E8%8C%AD", cover: "https://picsum.photos/seed/film-9/640/360" },
+      { title: "《十万狂花入梦来》", role: "饰 鸭毛", intro: "角色设定新鲜，期待正片上线。", link: "https://search.bilibili.com/all?keyword=%E5%8D%81%E4%B8%87%E7%8B%82%E8%8A%B1%E5%85%A5%E6%A2%A6%E6%9D%A5%20%E9%B8%AD%E6%AF%9B", cover: "https://picsum.photos/seed/film-10/640/360" },
+      { title: "《师兄太稳健》", role: "饰 云霄仙子", intro: "古装仙侠风角色，氛围感强。", link: "https://search.bilibili.com/all?keyword=%E5%B8%88%E5%85%84%E5%A4%AA%E7%A8%B3%E5%81%A5%20%E4%BA%91%E9%9C%84%E4%BB%99%E5%AD%90", cover: "https://picsum.photos/seed/film-11/640/360" },
+      { title: "《凤舞九天》", role: "饰 上官飞燕", intro: "古风角色向，动作与气场兼具。", link: "https://search.bilibili.com/all?keyword=%E5%87%A4%E8%88%9E%E4%B9%9D%E5%A4%A9%20%E4%B8%8A%E5%AE%98%E9%A3%9E%E7%87%95", cover: "https://picsum.photos/seed/film-12/640/360" }
+    ];
 
-    async function refreshUploadedLibrary() {
-      try {
-        const records = await dbGetAll();
-        uploadedRecords = records.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-        uploadedByChannel = { stage: [], show: [], role: [], live: [] };
-        uploadedRecords.forEach((record) => {
-          const channel = channelOrder.includes(record.channel) ? record.channel : "stage";
-          uploadedByChannel[channel].push(makeUploadedItem(record));
-        });
-      } catch (error) {
-        showAlert("读取失败：" + error.message, "error");
-      }
-      renderAll();
-      renderAdminList();
-    }
+    const guideImages = [
+      "https://picsum.photos/seed/guide-1/900/1200",
+      "https://picsum.photos/seed/guide-2/900/1200",
+      "https://picsum.photos/seed/guide-3/900/1200",
+      "https://picsum.photos/seed/guide-4/900/1200",
+      "https://picsum.photos/seed/guide-5/900/1200"
+    ];
 
-    function renderAdminList() {
-      if (!uploadedRecords.length) {
-        adminList.innerHTML = '<div class="empty">暂无内容</div>';
+    function renderMediaCards(targetId, items) {
+      const mount = document.getElementById(targetId);
+      if (!mount) return;
+      if (!items || !items.length) {
+        mount.innerHTML = '<div class="empty-note">该分区暂无内容</div>';
         return;
       }
-      adminList.innerHTML = uploadedRecords.map((record) => `
-        <article class="admin-item">
-          <div class="admin-item-head">
-            <b>${escapeHTML(record.title || "未命名视频")}</b>
-            <span>${escapeHTML(record.duration || "--:--")}</span>
-          </div>
-          <div class="admin-item-meta">
-            ${escapeHTML(channelLabels[record.channel] || "作品")}
-          </div>
-          <div class="admin-item-actions">
-            <button class="btn" type="button" data-action="edit" data-id="${escapeHTML(record.id)}">编辑</button>
-            <button class="btn danger" type="button" data-action="delete" data-id="${escapeHTML(record.id)}">删除</button>
+      mount.innerHTML = items.map((item) => `
+        <article class="media-card">
+          <a class="media-thumb" href="${item.link}" target="_blank" rel="noopener noreferrer">
+            <img src="${item.cover}" alt="${item.title}" loading="lazy">
+            <span class="play-icon">▶</span>
+          </a>
+          <div class="media-body">
+            <h3>${item.title}</h3>
+            <p class="meta-line">简介：${item.desc}</p>
+            <p class="episode-line">续集：${(item.episodes || []).join("，")}</p>
           </div>
         </article>
       `).join("");
     }
 
-    function resetAdminForm() {
-      adminForm.reset();
-      editId.value = "";
-      formTitle.textContent = "新增视频";
+    function renderFilmCards() {
+      const mount = document.getElementById("grid-film");
+      if (!mount) return;
+      mount.innerHTML = filmographyData.map((item) => `
+        <article class="film-card">
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer">
+            <img class="poster" src="${item.cover}" alt="${item.title}" loading="lazy">
+          </a>
+          <div class="body">
+            <h3>${item.title}</h3>
+            <div class="role">${item.role}</div>
+            <div class="intro">${item.intro}</div>
+          </div>
+        </article>
+      `).join("");
     }
 
-    function fillAdminForm(record) {
-      editId.value = record.id;
-      videoTitle.value = record.title || "";
-      videoDesc.value = record.desc || "";
-      videoDuration.value = record.duration || "";
-      videoChannel.value = channelOrder.includes(record.channel) ? record.channel : "stage";
-      videoSourceUrl.value = record.url && record.url !== "#" ? record.url : "";
-      coverUrl.value = record.cover || "";
-      formTitle.textContent = "编辑视频";
-      showAlert("编辑模式", "ok");
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabPages = document.querySelectorAll(".tab-page");
+
+    function activatePage(pageKey) {
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.page === pageKey);
+      });
+      tabPages.forEach((page) => {
+        page.classList.toggle("active", page.id === `page-${pageKey}`);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function getAdminPassword() {
-      return localStorage.getItem(ADMIN_PASSWORD_KEY) || DEFAULT_ADMIN_PASSWORD;
-    }
-
-    function openAdmin() {
-      if (!adminAuthed) {
-        const input = window.prompt("请输入管理后台密码");
-        if (input === null) return;
-        if (input !== getAdminPassword()) {
-          window.alert("密码错误");
-          return;
-        }
-        adminAuthed = true;
-      }
-      loadCloudConfigToForm();
-      applyHeroConfig();
-      adminModal.classList.add("show");
-      adminModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-      renderAdminList();
-      showAlert("管理模式", "ok");
-    }
-
-    function closeAdmin() {
-      adminModal.classList.remove("show");
-      adminModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      resetAdminForm();
-    }
-
-    function bindCardEvents() {
-      document.addEventListener("click", (event) => {
-        const card = event.target.closest(".video-card");
-        if (!card) return;
-        const channel = card.dataset.channel;
-        const index = Number(card.dataset.index);
-        if (!channel || Number.isNaN(index)) return;
-        const item = (renderedMap[channel] || [])[index];
-        if (!item) return;
-        const link = safeText(item.url, "");
-        if (!link || link === "#") return;
-        window.open(link, "_blank", "noopener,noreferrer");
-      });
-    }
-
-    function bindAdminEvents() {
-      adminEntry.addEventListener("click", (e) => {
-        e.preventDefault();
-        openAdmin();
-      });
-      adminClose.addEventListener("click", closeAdmin);
-      adminModal.addEventListener("click", (e) => {
-        if (e.target === adminModal) closeAdmin();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && adminModal.classList.contains("show")) closeAdmin();
-      });
-
-      saveHeroBtn.addEventListener("click", saveHeroConfig);
-
-      saveCloudConfigBtn.addEventListener("click", saveCloudConfigFromForm);
-      pullCloudBtn.addEventListener("click", async () => {
-        try {
-          const count = await pullFromCloud();
-          showAlert(`拉取成功：${count} 条`, "ok");
-        } catch (error) {
-          showAlert(error.message, "error");
-        }
-      });
-      pushCloudBtn.addEventListener("click", async () => {
-        try {
-          await pushToCloud();
-          showAlert("上传成功", "ok");
-        } catch (error) {
-          showAlert(error.message, "error");
-        }
-      });
-
-      resetFormBtn.addEventListener("click", () => {
-        resetAdminForm();
-        showAlert("已清空", "ok");
-      });
-
-      adminForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const id = editId.value || "video_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-        const existing = uploadedRecords.find((record) => record.id === id);
-        const channel = videoChannel.value;
-        const title = videoTitle.value.trim();
-        const sourceUrl = videoSourceUrl.value.trim();
-        if (!title) {
-          showAlert("请填写标题", "error");
-          return;
-        }
-        if (!sourceUrl) {
-          showAlert("请填写原链接", "error");
-          return;
-        }
-        if (!channelOrder.includes(channel)) {
-          showAlert("请选择分区", "error");
-          return;
-        }
-
-        const record = {
-          id,
-          title,
-          desc: videoDesc.value.trim(),
-          duration: videoDuration.value.trim(),
-          channel,
-          url: sourceUrl,
-          cover: coverUrl.value.trim(),
-          createdAt: existing ? existing.createdAt : Date.now(),
-          updatedAt: Date.now()
-        };
-
-        try {
-          await dbPut(record);
-          await refreshUploadedLibrary();
-          if (autoSyncCloud.checked) await pushToCloud();
-          resetAdminForm();
-          showAlert("保存成功", "ok");
-        } catch (error) {
-          showAlert("保存失败：" + error.message, "error");
-        }
-      });
-
-      adminList.addEventListener("click", async (e) => {
-        const target = e.target.closest("button[data-action]");
-        if (!target) return;
-        const id = target.getAttribute("data-id");
-        const action = target.getAttribute("data-action");
-        const record = uploadedRecords.find((item) => item.id === id);
-        if (!record) return;
-        if (action === "edit") {
-          fillAdminForm(record);
-          return;
-        }
-        if (action === "delete") {
-          if (!window.confirm("确定删除？")) return;
-          try {
-            await dbDelete(id);
-            await refreshUploadedLibrary();
-            if (autoSyncCloud.checked) await pushToCloud();
-            showAlert("删除成功", "ok");
-          } catch (error) {
-            showAlert("删除失败：" + error.message, "error");
-          }
-        }
-      });
-    }
-
-    searchInput.addEventListener("input", renderAll);
-    const navTabs = document.querySelectorAll(".nav .nav-tab");
-    const pageSections = document.querySelectorAll(".channel-page");
-    let currentTab = "works";
-
-    function switchTab(tabId) {
-      currentTab = tabId;
-      navTabs.forEach((tab) => {
-        tab.classList.toggle("active", tab.dataset.tab === tabId);
-      });
-      pageSections.forEach((section) => {
-        section.classList.toggle("active", section.id === tabId);
-      });
-    }
-
-    navTabs.forEach((tab) => {
-      tab.addEventListener("click", (e) => {
-        e.preventDefault();
-        switchTab(tab.dataset.tab);
-      });
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => activatePage(btn.dataset.page));
     });
 
-    loadCloudConfigToForm();
-    applyHeroConfig();
-    renderAll();
-    bindCardEvents();
-    bindAdminEvents();
-    switchTab(currentTab);
-    refreshUploadedLibrary();
+    document.getElementById("brandTop").addEventListener("click", (event) => {
+      event.preventDefault();
+      activatePage("guide");
+    });
+
+    const guideImage = document.getElementById("guideImage");
+    const guideDots = document.getElementById("guideDots");
+    const prevGuide = document.getElementById("prevGuide");
+    const nextGuide = document.getElementById("nextGuide");
+    let guideIndex = 0;
+
+    function updateGuideImage() {
+      guideImage.src = guideImages[guideIndex];
+      guideDots.querySelectorAll(".dot").forEach((dot, idx) => {
+        dot.classList.toggle("active", idx === guideIndex);
+      });
+    }
+
+    guideImages.forEach((_, idx) => {
+      const dot = document.createElement("button");
+      dot.className = "dot";
+      dot.type = "button";
+      dot.addEventListener("click", () => {
+        guideIndex = idx;
+        updateGuideImage();
+      });
+      guideDots.appendChild(dot);
+    });
+
+    prevGuide.addEventListener("click", () => {
+      guideIndex = (guideIndex - 1 + guideImages.length) % guideImages.length;
+      updateGuideImage();
+    });
+    nextGuide.addEventListener("click", () => {
+      guideIndex = (guideIndex + 1) % guideImages.length;
+      updateGuideImage();
+    });
+
+    renderMediaCards("grid-role", categoryData.role);
+    renderMediaCards("grid-stage", categoryData.stage);
+    renderMediaCards("grid-show", categoryData.show);
+    renderMediaCards("grid-interview", categoryData.interview);
+    renderMediaCards("grid-live", categoryData.live);
+    renderFilmCards();
+    updateGuideImage();
   </script>
 </body>
 </html>
