@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>珍珍日上TV</title>
-  <meta name="description" content="珍藏｜孙珍妮安利站，含入坑指南、角色、舞台、综艺、采访、直播回顾与影视作品整理。">
+  <meta name="description" content="珍藏｜孙珍妮安利站，含入坑指南、角色安利、综艺安利、舞台安利、采访与直播回放。">
   <style>
     :root {
       --bg: #050505;
@@ -76,6 +76,15 @@
       color: #e4c58a;
     }
 
+    .tab-nav-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 0;
+      justify-content: flex-end;
+    }
+
     .tab-nav {
       display: flex;
       gap: 8px;
@@ -88,7 +97,8 @@
       display: none;
     }
 
-    .tab-btn {
+    .tab-btn,
+    .admin-mini-btn {
       border: 1px solid rgba(255, 255, 255, 0.14);
       background: rgba(255, 255, 255, 0.04);
       color: #efefef;
@@ -101,10 +111,16 @@
     }
 
     .tab-btn:hover,
-    .tab-btn.active {
+    .tab-btn.active,
+    .admin-mini-btn:hover {
       color: #211508;
       border-color: rgba(255, 255, 255, 0.25);
       background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+    }
+
+    .admin-mini-btn {
+      padding-inline: 12px;
+      flex-shrink: 0;
     }
 
     main {
@@ -163,19 +179,13 @@
       line-height: 1.7;
     }
 
-    .guide-layout {
-      margin-top: 22px;
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 14px;
-    }
-
     .panel {
       border: 1px solid var(--line);
       border-radius: 14px;
       background: rgba(20, 20, 20, 0.9);
       box-shadow: var(--shadow);
       padding: 14px;
+      margin-top: 16px;
     }
 
     .panel h2 {
@@ -184,136 +194,25 @@
       margin-bottom: 10px;
     }
 
-    .info-grid {
+    .intro-list {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
+      list-style: none;
     }
 
-    .info-item {
+    .intro-list li {
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.03);
       padding: 10px;
-    }
-
-    .info-item .k {
-      font-size: 0.76rem;
-      color: #e6c98f;
-      margin-bottom: 5px;
-    }
-
-    .info-item .v {
-      font-size: 0.84rem;
-      line-height: 1.5;
+      font-size: 0.86rem;
+      line-height: 1.55;
       color: #efefef;
     }
 
-    .carousel {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: #131313;
-      aspect-ratio: 4 / 5;
-    }
-
-    .carousel img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.35);
-      background: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      font-size: 1rem;
-    }
-
-    .carousel-btn.prev { left: 10px; }
-    .carousel-btn.next { right: 10px; }
-
-    .dots {
-      position: absolute;
-      left: 50%;
-      bottom: 10px;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 6px;
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.42);
-      cursor: pointer;
-    }
-
-    .dot.active {
-      background: var(--gold-soft);
-    }
-
-    .social-wrap {
-      margin-top: 16px;
-    }
-
-    .social-wrap h2 {
-      font-size: 1.08rem;
-      color: #f3ddba;
-      margin-bottom: 10px;
-    }
-
-    .social-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .social-card {
-      text-decoration: none;
-      color: inherit;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(216, 173, 98, 0.12), rgba(30, 30, 30, 0.95));
-      padding: 14px 10px;
-      min-height: 106px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      transition: 0.2s ease;
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
-
-    .social-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(242, 214, 160, 0.68);
-    }
-
-    .social-card .name {
-      font-size: 1rem;
-      color: #f8ebd2;
-      font-weight: 700;
-    }
-
-    .social-card .account {
-      font-size: 0.8rem;
-      color: #ececec;
-      line-height: 1.45;
+    .section-block {
+      margin-top: 18px;
     }
 
     .section-head {
@@ -332,6 +231,12 @@
     .section-head .en {
       font-size: 0.82rem;
       color: #d6b778;
+    }
+
+    .sub-section-title {
+      margin: 10px 0 10px;
+      font-size: 1rem;
+      color: #f1d9aa;
     }
 
     .card-grid {
@@ -400,63 +305,56 @@
       min-height: 2.75em;
     }
 
+    .media-sub {
+      font-size: 0.8rem;
+      color: #f1d9aa;
+      margin-bottom: 6px;
+      line-height: 1.5;
+    }
+
     .meta-line {
       font-size: 0.8rem;
       color: #cfcfcf;
       line-height: 1.55;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      min-height: 3.1em;
     }
 
-    .episode-line {
-      font-size: 0.78rem;
-      color: #f0d6a3;
-      line-height: 1.5;
+    .links-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
-    .film-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
+    .chip-link {
+      text-decoration: none;
+      font-size: 0.75rem;
+      color: #f7e3be;
+      border: 1px solid rgba(242, 214, 160, 0.45);
+      border-radius: 999px;
+      padding: 4px 8px;
+      transition: 0.15s ease;
     }
 
-    .film-card {
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px;
-      background: var(--card);
-      overflow: hidden;
-      box-shadow: var(--shadow);
+    .chip-link:hover {
+      color: #221507;
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
     }
 
-    .film-card .poster {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      background: #121212;
+    .other-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: #e8e8e8;
+      font-size: 0.9rem;
     }
 
-    .film-card .body {
-      padding: 10px;
-    }
-
-    .film-card .body h3 {
-      font-size: 0.96rem;
-      color: #f7ecd8;
-      margin-bottom: 6px;
-      line-height: 1.4;
-    }
-
-    .film-card .role {
-      font-size: 0.82rem;
-      color: #f1d9aa;
-      margin-bottom: 5px;
-    }
-
-    .film-card .intro {
-      font-size: 0.8rem;
-      color: #c8c8c8;
-      line-height: 1.55;
+    .other-list li {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      padding: 7px 12px;
+      background: rgba(255, 255, 255, 0.04);
     }
 
     .empty-note {
@@ -467,7 +365,6 @@
       color: #9d9d9d;
       font-size: 0.9rem;
       background: rgba(255, 255, 255, 0.02);
-      grid-column: 1 / -1;
     }
 
     footer {
@@ -479,12 +376,199 @@
       font-size: 0.84rem;
     }
 
+    .admin-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.66);
+      padding: 20px;
+    }
+
+    .admin-modal.show {
+      display: flex;
+    }
+
+    .admin-panel {
+      width: min(1080px, 94vw);
+      max-height: 88vh;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #0d0d0d;
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .admin-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .admin-top h3 {
+      color: #f7e5c5;
+      font-size: 1.05rem;
+    }
+
+    .admin-close {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #f3f3f3;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .admin-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .admin-tab {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.03);
+      color: #f1f1f1;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.78rem;
+    }
+
+    .admin-tab.active {
+      color: #251707;
+      border-color: rgba(255, 255, 255, 0.24);
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+    }
+
+    .admin-list {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+
+    .admin-section {
+      margin-bottom: 10px;
+    }
+
+    .admin-section h4 {
+      color: #f1d7a5;
+      margin-bottom: 6px;
+      font-size: 0.88rem;
+    }
+
+    .admin-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 6px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .admin-item .title {
+      font-size: 0.84rem;
+      color: #efefef;
+      line-height: 1.4;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .admin-actions button {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #f2f2f2;
+      font-size: 0.74rem;
+      padding: 4px 7px;
+      cursor: pointer;
+    }
+
+    .admin-form {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .admin-form .row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .admin-form label {
+      font-size: 0.76rem;
+      color: #d8d8d8;
+      display: grid;
+      gap: 4px;
+    }
+
+    .admin-form input,
+    .admin-form select,
+    .admin-form textarea {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: #141414;
+      color: #f4f4f4;
+      padding: 8px;
+      font-size: 0.8rem;
+      font-family: inherit;
+    }
+
+    .admin-form textarea {
+      min-height: 95px;
+      resize: vertical;
+    }
+
+    .admin-form .tips {
+      font-size: 0.72rem;
+      color: #b7b7b7;
+      line-height: 1.4;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .form-actions button {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: #f8f8f8;
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .form-actions .primary {
+      color: #221506;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+    }
+
     @media (max-width: 1180px) {
       .card-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      .film-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -492,26 +576,25 @@
       .topbar {
         flex-wrap: wrap;
       }
-      .tab-nav {
+      .tab-nav-wrap {
         order: 3;
         width: 100%;
+        justify-content: space-between;
       }
-      .guide-layout {
-        grid-template-columns: 1fr;
-      }
-      .social-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .tab-nav {
+        width: calc(100% - 82px);
       }
       .card-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+      .intro-list,
+      .admin-form .row {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 560px) {
-      .social-grid,
-      .card-grid,
-      .film-grid,
-      .info-grid {
+      .card-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -521,123 +604,78 @@
   <header>
     <div class="container topbar">
       <a class="brand" href="#" id="brandTop"><b>珍珍日上TV</b><span class="sep">｜</span>JENNYBOB</a>
-      <nav class="tab-nav" id="tabNav">
-        <button class="tab-btn active" data-page="guide">入坑指南</button>
-        <button class="tab-btn" data-page="role">角色安利</button>
-        <button class="tab-btn" data-page="stage">舞台安利</button>
-        <button class="tab-btn" data-page="show">综艺安利</button>
-        <button class="tab-btn" data-page="interview">采访安利</button>
-        <button class="tab-btn" data-page="live">直播回顾</button>
-        <button class="tab-btn" data-page="film">影视作品</button>
-      </nav>
+      <div class="tab-nav-wrap">
+        <nav class="tab-nav" id="tabNav">
+          <button class="tab-btn active" data-page="guide">入坑指南</button>
+          <button class="tab-btn" data-page="role">角色安利</button>
+          <button class="tab-btn" data-page="show">综艺安利</button>
+          <button class="tab-btn" data-page="stage">舞台安利</button>
+          <button class="tab-btn" data-page="interview">采访</button>
+          <button class="tab-btn" data-page="live">直播回放</button>
+        </nav>
+        <button class="admin-mini-btn" id="openAdminBtn" type="button">后台</button>
+      </div>
     </div>
   </header>
 
   <main class="container">
     <section class="tab-page active" id="page-guide">
-      <img
-        class="hero-banner"
-        src="https://picsum.photos/seed/jenny-banner-main/1600/520"
-        alt="首页横幅"
-      >
+      <img class="hero-banner" src="https://picsum.photos/seed/jenny-banner-main/1600/520" alt="首页横幅">
       <div class="hero-copy">
         <h1>珍藏 ｜ 孙珍妮安利站</h1>
-        <p>遇见珍妮，万事如意。这里整理了角色、综艺、舞台和入坑路线，欢迎一键收藏慢慢补。</p>
+        <p>遇见珍妮，万事如意。谢谢你走到这里，欢迎加入藕粉大家庭。</p>
       </div>
 
-      <div class="guide-layout">
-        <section class="panel">
-          <h2>基本介绍</h2>
-          <div class="info-grid">
-            <article class="info-item">
-              <div class="k">关键词</div>
-              <div class="v">演员 / 舞台表演 / 综艺反差感</div>
-            </article>
-            <article class="info-item">
-              <div class="k">入坑顺序</div>
-              <div class="v">舞台高光 → 综艺切片 → 角色正片</div>
-            </article>
-            <article class="info-item">
-              <div class="k">角色看点</div>
-              <div class="v">一人多面、情绪层次、人物完成度</div>
-            </article>
-            <article class="info-item">
-              <div class="k">舞台看点</div>
-              <div class="v">镜头表现、节奏控制、舞台稳定度</div>
-            </article>
-            <article class="info-item">
-              <div class="k">综艺看点</div>
-              <div class="v">轻松自然、梗密度高、互动感强</div>
-            </article>
-            <article class="info-item">
-              <div class="k">推荐方式</div>
-              <div class="v">先发一条高能混剪，再补长视频合集</div>
-            </article>
-          </div>
-        </section>
-
-        <section class="panel">
-          <h2>图集浏览</h2>
-          <div class="carousel">
-            <img id="guideImage" alt="孙珍妮图集">
-            <button class="carousel-btn prev" id="prevGuide" type="button">‹</button>
-            <button class="carousel-btn next" id="nextGuide" type="button">›</button>
-            <div class="dots" id="guideDots"></div>
-          </div>
-        </section>
-      </div>
-
-      <section class="social-wrap">
-        <h2>实时更新</h2>
-        <div class="social-grid">
-          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://s.weibo.com/user?q=%E5%AD%99%E7%8F%8D%E5%A6%AE">
-            <div class="name">微博</div>
-            <div class="account">账号：SNH48-孙珍妮</div>
-          </a>
-          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://www.xiaohongshu.com/search_result?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE">
-            <div class="name">小红书</div>
-            <div class="account">账号：孙珍妮相关更新</div>
-          </a>
-          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://www.douyin.com/search/%E5%AD%99%E7%8F%8D%E5%A6%AE">
-            <div class="name">抖音</div>
-            <div class="account">账号：孙珍妮相关更新</div>
-          </a>
-          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE">
-            <div class="name">哔哩哔哩</div>
-            <div class="account">账号：孙珍妮视频专区</div>
-          </a>
-        </div>
+      <section class="panel">
+        <h2>基本介绍</h2>
+        <ul class="intro-list">
+          <li>姓名：孙珍妮（Jenny Bob）</li>
+          <li>性别：女</li>
+          <li>生日：2000.05.05</li>
+          <li>出生地：中国上海</li>
+          <li>身高：165cm</li>
+          <li>MBTI：ESFP</li>
+          <li>学校：上海戏剧学院表演系（在读）</li>
+          <li>出道日期：2016年3月26日</li>
+          <li>粉丝名：藕粉</li>
+          <li>应援色：熙和金（色标：#FED71A）</li>
+        </ul>
       </section>
+
+      <section class="panel">
+        <h2>其他日常</h2>
+        <ul class="other-list">
+          <li>INS：_sunzhenni_</li>
+          <li>全民K歌：孙珍妮</li>
+        </ul>
+      </section>
+
+      <div class="section-block" id="guideDynamic"></div>
     </section>
 
     <section class="tab-page" id="page-role">
       <div class="section-head"><h2>角色安利</h2><span class="en">Roles</span></div>
-      <div class="card-grid" id="grid-role"></div>
+      <div id="roleDynamic"></div>
+    </section>
+
+    <section class="tab-page" id="page-show">
+      <div class="section-head"><h2>综艺安利</h2><span class="en">Variety</span></div>
+      <div id="showDynamic"></div>
     </section>
 
     <section class="tab-page" id="page-stage">
       <div class="section-head"><h2>舞台安利</h2><span class="en">Stage</span></div>
-      <div class="card-grid" id="grid-stage"></div>
-    </section>
-
-    <section class="tab-page" id="page-show">
-      <div class="section-head"><h2>综艺安利</h2><span class="en">Show</span></div>
-      <div class="card-grid" id="grid-show"></div>
+      <div id="stageDynamic"></div>
     </section>
 
     <section class="tab-page" id="page-interview">
-      <div class="section-head"><h2>采访安利</h2><span class="en">Interview</span></div>
-      <div class="card-grid" id="grid-interview"></div>
+      <div class="section-head"><h2>采访</h2><span class="en">Interview</span></div>
+      <div id="interviewDynamic"></div>
     </section>
 
     <section class="tab-page" id="page-live">
-      <div class="section-head"><h2>直播回顾</h2><span class="en">Live Replay</span></div>
-      <div class="card-grid" id="grid-live"></div>
-    </section>
-
-    <section class="tab-page" id="page-film">
-      <div class="section-head"><h2>影视作品</h2><span class="en">Filmography</span></div>
-      <div class="film-grid" id="grid-film"></div>
+      <div class="section-head"><h2>直播回放</h2><span class="en">Live Replay</span></div>
+      <div id="liveDynamic"></div>
     </section>
   </main>
 
@@ -645,222 +683,425 @@
     <div class="container">珍珍日上TV ｜ JENNYBOB TV</div>
   </footer>
 
+  <div class="admin-modal" id="adminModal">
+    <div class="admin-panel">
+      <div class="admin-top">
+        <h3>后台管理（按页面分标签）</h3>
+        <button class="admin-close" id="closeAdminBtn" type="button">关闭</button>
+      </div>
+
+      <div class="admin-tabs" id="adminTabs"></div>
+      <div class="admin-list" id="adminList"></div>
+
+      <form class="admin-form" id="adminForm">
+        <input type="hidden" id="formEditingId">
+        <div class="row">
+          <label>
+            页面标签
+            <select id="formPage"></select>
+          </label>
+          <label>
+            选择现有区域
+            <select id="formSectionSelect"></select>
+          </label>
+        </div>
+
+        <label id="newSectionWrap" style="display:none;">
+          新建区域名
+          <input id="formNewSection" type="text" placeholder="例如：舞台区域17">
+        </label>
+
+        <div class="row">
+          <label>
+            标题 *
+            <input id="formTitle" type="text" required>
+          </label>
+          <label>
+            副标题
+            <input id="formSubtitle" type="text" placeholder="例如：孙珍妮饰 翩然">
+          </label>
+        </div>
+
+        <label>
+          简介 *
+          <textarea id="formDesc" required></textarea>
+        </label>
+
+        <div class="row">
+          <label>
+            封面链接
+            <input id="formCover" type="url" placeholder="https://...">
+          </label>
+          <label>
+            跳转链接（每行一个：按钮名|URL） *
+            <textarea id="formLinks" placeholder="正片|https://example.com&#10;CUT|https://example.com"></textarea>
+          </label>
+        </div>
+
+        <p class="tips">点击卡片封面会默认打开第一条链接；所有按钮都会新窗口跳转。</p>
+        <div class="form-actions">
+          <button class="primary" type="submit" id="saveBtn">保存条目</button>
+          <button type="button" id="resetBtn">清空表单</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
-    const categoryData = {
-      role: [
+    const PAGE_ORDER = ["guide", "role", "show", "stage", "interview", "live"];
+    const PAGE_LABELS = {
+      guide: "入坑指南",
+      role: "角色安利",
+      show: "综艺安利",
+      stage: "舞台安利",
+      interview: "采访",
+      live: "直播回放"
+    };
+    const STORAGE_KEY = "zzrs_tv_library_v3";
+    const ADMIN_PASSWORD = "szn0214";
+    const FALLBACK_LINK = "https://www.bilibili.com";
+
+    function searchLink(keyword) {
+      return `https://search.bilibili.com/all?keyword=${encodeURIComponent(keyword)}`;
+    }
+
+    function mkLinks(keyword, labels) {
+      return labels.map((label) => ({ label, url: searchLink(`${keyword} ${label}`) }));
+    }
+
+    function makeId() {
+      return `v_${Math.random().toString(36).slice(2, 10)}${Date.now().toString(36).slice(-4)}`;
+    }
+
+    function defaultCover(seed) {
+      return `https://picsum.photos/seed/${encodeURIComponent(seed)}/640/360`;
+    }
+
+    const DEFAULT_LIBRARY = {
+      guide: [
         {
-          title: "千朵桃花一世开 · 暮悬铃/阿珠/神女",
-          desc: "领衔主演 | 一人分饰三角 | 暗域圣女×灵动少女×清冷神女",
-          episodes: ["正片", "CUT", "原著小说"],
-          link: "https://search.bilibili.com/all?keyword=%E5%8D%83%E6%9C%B5%E6%A1%83%E8%8A%B1%E4%B8%80%E4%B8%96%E5%BC%80%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
-          cover: "https://picsum.photos/seed/role-1/640/360"
+          id: makeId(),
+          section: "日常平台",
+          title: "📱 微博 @孙珍妮的微博",
+          subtitle: "",
+          desc: "日常动态、剧组营业、活动官宣、高清美图",
+          cover: defaultCover("guide-weibo"),
+          links: [
+            { label: "微博主页", url: "https://weibo.com" },
+            { label: "动态汇总", url: searchLink("孙珍妮 微博 动态") }
+          ]
         },
         {
-          title: "长月烬明 · 翩然",
-          desc: "高人气角色线 | 明艳灵动 | 名场面密集",
-          episodes: ["角色合集", "CUT", "剧情向混剪"],
-          link: "https://search.bilibili.com/all?keyword=%E9%95%BF%E6%9C%88%E7%83%AC%E6%98%8E%20%E7%BF%A9%E7%84%B6%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
-          cover: "https://picsum.photos/seed/role-2/640/360"
+          id: makeId(),
+          section: "日常平台",
+          title: "📕 小红书 @是孙珍妮",
+          subtitle: "",
+          desc: "生活碎片、妆容分享、剧组日常、自拍合集",
+          cover: defaultCover("guide-xhs"),
+          links: [
+            { label: "小红书主页", url: "https://www.xiaohongshu.com" },
+            { label: "笔记汇总", url: searchLink("孙珍妮 小红书 笔记") }
+          ]
         },
         {
-          title: "亲爱的天狐大人 · 苏浅浅",
-          desc: "古偶甜感角色 | 情绪过渡自然 | 角色成长线清晰",
-          episodes: ["正片", "CUT", "花絮"],
-          link: "https://search.bilibili.com/all?keyword=%E4%BA%B2%E7%88%B1%E7%9A%84%E5%A4%A9%E7%8B%90%E5%A4%A7%E4%BA%BA%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
-          cover: "https://picsum.photos/seed/role-3/640/360"
+          id: makeId(),
+          section: "日常平台",
+          title: "🎵 抖音 @是孙珍妮",
+          subtitle: "",
+          desc: "短视频营业、搞笑日常、角色宣传、幕后花絮",
+          cover: defaultCover("guide-douyin"),
+          links: [
+            { label: "抖音主页", url: "https://www.douyin.com" },
+            { label: "视频合集", url: searchLink("孙珍妮 抖音 视频") }
+          ]
         },
         {
-          title: "我在顶峰等你 · 顾雪茭",
-          desc: "新作关注角色 | 话题持续升温 | 值得追更",
-          episodes: ["预告", "路透", "CUT"],
-          link: "https://search.bilibili.com/all?keyword=%E6%88%91%E5%9C%A8%E9%A1%B6%E5%B3%B0%E7%AD%89%E4%BD%A0%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
-          cover: "https://picsum.photos/seed/role-4/640/360"
+          id: makeId(),
+          section: "日常平台",
+          title: "📺 哔哩哔哩 @是孙珍妮",
+          subtitle: "",
+          desc: "vlog日常、幕后花絮、问题QA、好物分享",
+          cover: defaultCover("guide-bili"),
+          links: [
+            { label: "B站主页", url: "https://www.bilibili.com" },
+            { label: "视频合集", url: searchLink("孙珍妮 B站 合集") }
+          ]
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《见习爱神》",
+          subtitle: "孙珍妮饰 漫漫",
+          desc: "影视作品收录",
+          cover: defaultCover("film-1"),
+          links: mkLinks("见习爱神 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《天意》",
+          subtitle: "孙珍妮饰 天依",
+          desc: "影视作品收录",
+          cover: defaultCover("film-2"),
+          links: mkLinks("天意 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《日不落酒店》",
+          subtitle: "孙珍妮饰 红",
+          desc: "影视作品收录",
+          cover: defaultCover("film-3"),
+          links: mkLinks("日不落酒店 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《梦见狮子》",
+          subtitle: "孙珍妮饰 绫酒",
+          desc: "影视作品收录",
+          cover: defaultCover("film-4"),
+          links: mkLinks("梦见狮子 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《替嫁小才女》",
+          subtitle: "孙珍妮饰 唐小山",
+          desc: "影视作品收录",
+          cover: defaultCover("film-5"),
+          links: mkLinks("替嫁小才女 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《亲爱的天狐大人》",
+          subtitle: "孙珍妮饰 苏浅浅",
+          desc: "影视作品收录",
+          cover: defaultCover("film-6"),
+          links: mkLinks("亲爱的天狐大人 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《长月烬明》",
+          subtitle: "孙珍妮饰 翩然",
+          desc: "影视作品收录",
+          cover: defaultCover("film-7"),
+          links: mkLinks("长月烬明 翩然 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《千朵桃花一世开》",
+          subtitle: "孙珍妮饰 暮悬铃/阿珠/神女",
+          desc: "影视作品收录",
+          cover: defaultCover("film-8"),
+          links: mkLinks("千朵桃花一世开 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《我在顶峰等你》",
+          subtitle: "孙珍妮饰 顾雪茭",
+          desc: "影视作品收录",
+          cover: defaultCover("film-9"),
+          links: mkLinks("我在顶峰等你 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《十万狂花入梦来》",
+          subtitle: "孙珍妮饰 鸭毛",
+          desc: "影视作品收录",
+          cover: defaultCover("film-10"),
+          links: mkLinks("十万狂花入梦来 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《师兄太稳健》",
+          subtitle: "孙珍妮饰 云霄仙子",
+          desc: "影视作品收录",
+          cover: defaultCover("film-11"),
+          links: mkLinks("师兄太稳健 孙珍妮", ["作品链接"])
+        },
+        {
+          id: makeId(),
+          section: "影视作品",
+          title: "《凤舞九天》",
+          subtitle: "孙珍妮饰 上官飞燕",
+          desc: "影视作品收录",
+          cover: defaultCover("film-12"),
+          links: mkLinks("凤舞九天 孙珍妮", ["作品链接"])
         }
       ],
-      stage: [
-        {
-          title: "高能舞台直拍合集",
-          desc: "节奏控制稳 | 镜头表现强 | 氛围感拉满",
-          episodes: ["直拍", "机位版", "练习室"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%88%9E%E5%8F%B0%20%E7%9B%B4%E6%8B%8D",
-          cover: "https://picsum.photos/seed/stage-1/640/360"
-        },
-        {
-          title: "合作舞台名场面",
-          desc: "合作适配度高 | 镜头调度流畅 | 记忆点强",
-          episodes: ["完整版", "高光CUT", "二创混剪"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E5%90%88%E4%BD%9C%E8%88%9E%E5%8F%B0",
-          cover: "https://picsum.photos/seed/stage-2/640/360"
-        },
-        {
-          title: "抒情舞台精选",
-          desc: "细腻表达 | 情绪层层递进 | 适合入坑补档",
-          episodes: ["正片", "现场版", "清唱片段"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%8A%92%E6%83%85%20%E8%88%9E%E5%8F%B0",
-          cover: "https://picsum.photos/seed/stage-3/640/360"
-        },
-        {
-          title: "年度舞台总览",
-          desc: "一条视频补完核心舞台，适合分享安利",
-          episodes: ["年度盘点", "高光片段", "推荐清单"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%88%9E%E5%8F%B0%E7%9B%98%E7%82%B9",
-          cover: "https://picsum.photos/seed/stage-4/640/360"
-        }
+      role: [
+        { id: makeId(), section: "角色安利", title: "千朵桃花一世开", subtitle: "孙珍妮饰 暮悬铃/阿珠/神女", desc: "领衔主演 | 一人分饰三角 | 暗域圣女×灵动少女×清冷神女", cover: defaultCover("role-1"), links: mkLinks("千朵桃花一世开 孙珍妮", ["正片", "CUT", "原著小说"]) },
+        { id: makeId(), section: "角色安利", title: "长月烬明", subtitle: "孙珍妮饰 翩然", desc: "九尾狐妖 | 经典出圈 | 魅惑又痴情的意难平", cover: defaultCover("role-2"), links: mkLinks("长月烬明 翩然 孙珍妮", ["正片", "CUT", "原著小说"]) },
+        { id: makeId(), section: "角色安利", title: "我在顶峰等你", subtitle: "孙珍妮饰 顾雪茭", desc: "励志大女主 | 重生追梦 | 清醒独立搞事业", cover: defaultCover("role-3"), links: mkLinks("我在顶峰等你 孙珍妮", ["正片", "CUT", "原著小说"]) },
+        { id: makeId(), section: "角色安利", title: "亲爱的天狐大人", subtitle: "孙珍妮饰 苏浅浅", desc: "灵动娇俏 | 狐系甜妹 | 古装轻喜剧可爱担当", cover: defaultCover("role-4"), links: mkLinks("亲爱的天狐大人 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "角色安利", title: "十万狂花入梦来", subtitle: "孙珍妮饰 鸭毛", desc: "灵动讨喜 | 古装喜剧 | 鲜活可爱小角色", cover: defaultCover("role-5"), links: mkLinks("十万狂花入梦来 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "角色安利", title: "凤舞九天", subtitle: "孙珍妮饰 上官飞燕", desc: "江湖侠女 | 打戏利落 | 飒爽英气", cover: defaultCover("role-6"), links: mkLinks("凤舞九天 孙珍妮", ["正片", "CUT", "原著小说"]) },
+        { id: makeId(), section: "角色安利", title: "师兄太稳健", subtitle: "孙珍妮饰 云霄仙子", desc: "清冷仙气 | 三霄仙子 | 古风造型绝美", cover: defaultCover("role-7"), links: mkLinks("师兄太稳健 孙珍妮", ["正片", "CUT", "原著小说"]) },
+        { id: makeId(), section: "角色安利", title: "其他角色合集", subtitle: "孙珍妮饰 天依、绫酒、漫漫、红、唐小山", desc: "多角色合集补档", cover: defaultCover("role-8"), links: mkLinks("孙珍妮 其他角色合集", ["正片", "CUT"]) },
+        { id: makeId(), section: "角色安利", title: "二创合集", subtitle: "", desc: "饭制剪辑 | 图文 | 同人 | 水仙剧 | 空瓶图（单个链接）", cover: defaultCover("role-9"), links: mkLinks("孙珍妮 二创 合集", ["合集", "水仙剧", "空瓶图"]) }
       ],
       show: [
-        {
-          title: "团综高能反应合集",
-          desc: "反应快、梗密度高、轻松下饭向",
-          episodes: ["正片", "CUT", "名场面"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%BB%BC%E8%89%BA",
-          cover: "https://picsum.photos/seed/show-1/640/360"
-        },
-        {
-          title: "游戏挑战名场面",
-          desc: "综艺节奏感好 | 镜头友好 | 入坑友好",
-          episodes: ["完整版", "高能CUT", "reaction"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%B8%B8%E6%88%8F%E6%8C%91%E6%88%98",
-          cover: "https://picsum.photos/seed/show-2/640/360"
-        },
-        {
-          title: "访谈综艺片段",
-          desc: "表达清晰自然 | 观点真诚 | 观感舒服",
-          episodes: ["访谈正片", "CUT", "金句合集"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%AE%BF%E8%B0%88",
-          cover: "https://picsum.photos/seed/show-3/640/360"
-        },
-        {
-          title: "综艺入坑速看",
-          desc: "一条视频快速了解综艺魅力点",
-          episodes: ["导览", "笑点合集", "剪辑版"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%BB%BC%E8%89%BA%20%E5%85%A5%E5%9D%91",
-          cover: "https://picsum.photos/seed/show-4/640/360"
-        }
+        { id: makeId(), section: "综艺安利", title: "快乐大本营", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-1"), links: mkLinks("快乐大本营 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "星APP风云榜", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-2"), links: mkLinks("星APP风云榜 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "这!就是世界波", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-3"), links: mkLinks("这就是世界波 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "晚安朋友圈", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-4"), links: mkLinks("晚安朋友圈 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "中华文明之美", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-5"), links: mkLinks("中华文明之美 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "花样妹妹", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-6"), links: mkLinks("花样妹妹 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "梦想演播厅", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-7"), links: mkLinks("梦想演播厅 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "星星美人鱼2", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-8"), links: mkLinks("星星美人鱼2 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "塞纳河开学啦", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-9"), links: mkLinks("塞纳河开学啦 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "创造营2020", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-10"), links: mkLinks("创造营2020 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "创可少女屋", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-11"), links: mkLinks("创可少女屋 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "神奇的汉字", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-12"), links: mkLinks("神奇的汉字 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "我是大美人", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-13"), links: mkLinks("我是大美人 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "萌探探探案3", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-14"), links: mkLinks("萌探探探案3 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "奔跑吧第7季", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-15"), links: mkLinks("奔跑吧第7季 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "开工！喜剧之夜", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-16"), links: mkLinks("开工喜剧之夜 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "你好，星期六", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-17"), links: mkLinks("你好星期六 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "盒子里的猫第二季", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-18"), links: mkLinks("盒子里的猫第二季 孙珍妮", ["正片", "CUT"]) },
+        { id: makeId(), section: "综艺安利", title: "我被有趣的工作包围了2", subtitle: "", desc: "综艺内容收录", cover: defaultCover("show-19"), links: mkLinks("我被有趣的工作包围了2 孙珍妮", ["正片", "CUT", "抖音"]) }
+      ],
+      stage: [
+        { id: makeId(), section: "舞台区域", title: "偶像的黎明", subtitle: "区域1", desc: "舞台区域回顾", cover: defaultCover("stage-1"), links: mkLinks("偶像的黎明 孙珍妮", ["2016", "全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "十八个闪耀瞬间", subtitle: "区域2", desc: "舞台区域回顾", cover: defaultCover("stage-2"), links: mkLinks("十八个闪耀瞬间 孙珍妮", ["2016", "2017", "全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "美丽世界", subtitle: "区域3", desc: "舞台区域回顾", cover: defaultCover("stage-3"), links: mkLinks("美丽世界 孙珍妮", ["2017", "2018", "全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "风尚大赏", subtitle: "区域4", desc: "舞台区域回顾", cover: defaultCover("stage-4"), links: mkLinks("风尚大赏 孙珍妮", ["2016.11.05 走秀", "2017.11.18 走秀", "舞台", "采访"]) },
+        { id: makeId(), section: "舞台区域", title: "橘色奇迹", subtitle: "区域5", desc: "舞台区域回顾", cover: defaultCover("stage-5"), links: mkLinks("橘色奇迹 孙珍妮", ["2019", "全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "头号新闻", subtitle: "区域6", desc: "舞台区域回顾", cover: defaultCover("stage-6"), links: mkLinks("头号新闻 孙珍妮", ["2018", "2019", "2020", "全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "终极任务", subtitle: "区域7", desc: "舞台区域回顾", cover: defaultCover("stage-7"), links: mkLinks("终极任务 孙珍妮", ["2021", "2022", "全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "特殊公演", subtitle: "区域8", desc: "舞台区域回顾", cover: defaultCover("stage-8"), links: mkLinks("特殊公演 孙珍妮", ["全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "联合公演", subtitle: "区域9", desc: "舞台区域回顾", cover: defaultCover("stage-9"), links: mkLinks("联合公演 孙珍妮", ["全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "助演舞台", subtitle: "区域10", desc: "舞台区域回顾", cover: defaultCover("stage-10"), links: mkLinks("助演舞台 孙珍妮", ["全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "MV 合集", subtitle: "区域11", desc: "Color Girls Colorful Days HONOR Twinkle Twinkle 都选C 梦想岛 绚丽时代 浪漫关系 少女终末战争 流动的希望 夏日柠檬船 未来的乐章 好运来 新年这一刻 生日快乐 森林法则 那年夏天的梦 未来会来 甜蜜盛典 虚构者", cover: defaultCover("stage-11"), links: mkLinks("孙珍妮 MV 合集", ["Color Girls", "Colorful Days", "HONOR", "Twinkle Twinkle", "都选C", "梦想岛", "绚丽时代", "浪漫关系", "少女终末战争", "流动的希望", "夏日柠檬船", "未来的乐章", "好运来", "新年这一刻", "生日快乐", "森林法则", "那年夏天的梦", "未来会来", "甜蜜盛典", "虚构者"]) },
+        { id: makeId(), section: "舞台区域", title: "VLOG", subtitle: "区域12", desc: "舞台区域回顾", cover: defaultCover("stage-12"), links: mkLinks("孙珍妮 VLOG", ["全集", "幕后花絮"]) },
+        { id: makeId(), section: "舞台区域", title: "金曲大赏", subtitle: "区域13", desc: "舞台区域回顾", cover: defaultCover("stage-13"), links: mkLinks("金曲大赏 孙珍妮", ["全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "创造炙热的青春", subtitle: "区域14", desc: "舞台区域回顾", cover: defaultCover("stage-14"), links: mkLinks("创造炙热的青春 孙珍妮", ["全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "偶像年度人气总决选", subtitle: "区域15", desc: "舞台区域回顾", cover: defaultCover("stage-15"), links: mkLinks("偶像年度人气总决选 孙珍妮", ["全集", "直拍"]) },
+        { id: makeId(), section: "舞台区域", title: "生日冷餐会", subtitle: "区域16", desc: "舞台区域回顾", cover: defaultCover("stage-16"), links: mkLinks("生日冷餐会 孙珍妮", ["合集", "直拍"]) }
       ],
       interview: [
-        {
-          title: "人物专访精选",
-          desc: "从角色理解到创作表达，信息量高",
-          episodes: ["完整版", "重点CUT", "文字摘录"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E4%B8%93%E8%AE%BF",
-          cover: "https://picsum.photos/seed/interview-1/640/360"
-        },
-        {
-          title: "活动采访回顾",
-          desc: "现场状态好，回答节奏松弛自然",
-          episodes: ["活动采访", "CUT", "快问快答"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%B4%BB%E5%8A%A8%20%E9%87%87%E8%AE%BF",
-          cover: "https://picsum.photos/seed/interview-2/640/360"
-        },
-        {
-          title: "幕后访谈合集",
-          desc: "聊表演、聊舞台、聊角色的成长线",
-          episodes: ["幕后", "CUT", "重点问答"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E5%B9%95%E5%90%8E%20%E8%AE%BF%E8%B0%88",
-          cover: "https://picsum.photos/seed/interview-3/640/360"
-        },
-        {
-          title: "采访高光合集",
-          desc: "适合新人快速认识她的表达风格",
-          episodes: ["高光", "CUT", "二创混剪"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E9%87%87%E8%AE%BF%20%E9%AB%98%E5%85%89",
-          cover: "https://picsum.photos/seed/interview-4/640/360"
-        }
+        { id: makeId(), section: "采访区域", title: "剧集宣传采访", subtitle: "", desc: "作品主创专访、角色解读、幕后故事", cover: defaultCover("interview-1"), links: mkLinks("剧集宣传采访 孙珍妮", ["第一集", "精彩片段"]) },
+        { id: makeId(), section: "采访区域", title: "综艺专访", subtitle: "", desc: "综艺录制后台、节目宣传互动、现场快问快答", cover: defaultCover("interview-2"), links: mkLinks("综艺专访 孙珍妮", ["完整合集", "精彩片段"]) },
+        { id: makeId(), section: "采访区域", title: "CCTV相关采访", subtitle: "", desc: "央视节目录制、文艺活动专访、官方主题采访", cover: defaultCover("interview-3"), links: mkLinks("CCTV 采访 孙珍妮", ["完整合集", "精彩片段"]) },
+        { id: makeId(), section: "采访区域", title: "粉丝问答&互动采访", subtitle: "", desc: "快问快答、粉丝提问回应、趣味挑战", cover: defaultCover("interview-4"), links: mkLinks("粉丝问答互动采访 孙珍妮", ["完整合集", "精彩片段"]) }
       ],
       live: [
-        {
-          title: "直播回顾 · 日常场",
-          desc: "轻松聊天氛围好，适合睡前补档",
-          episodes: ["正片", "精华CUT", "文字时间轴"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E5%9B%9E%E9%A1%BE",
-          cover: "https://picsum.photos/seed/live-1/640/360"
-        },
-        {
-          title: "直播问答合辑",
-          desc: "幕后问题集中答复，信息密度高",
-          episodes: ["问答正片", "CUT", "要点汇总"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E9%97%AE%E7%AD%94",
-          cover: "https://picsum.photos/seed/live-2/640/360"
-        },
-        {
-          title: "直播名场面时间轴",
-          desc: "高能段落标记清晰，方便二刷",
-          episodes: ["时间轴", "高光CUT", "合集"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E5%90%8D%E5%9C%BA%E9%9D%A2",
-          cover: "https://picsum.photos/seed/live-3/640/360"
-        },
-        {
-          title: "直播返场回放",
-          desc: "返场互动内容集中补档",
-          episodes: ["返场", "精华", "二创剪辑"],
-          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%BF%94%E5%9C%BA",
-          cover: "https://picsum.photos/seed/live-4/640/360"
-        }
+        { id: makeId(), section: "直播区域", title: "口袋直播", subtitle: "", desc: "口袋48专属直播、翻牌互动、深夜电台、日常唠嗑", cover: defaultCover("live-1"), links: mkLinks("口袋直播 孙珍妮", ["1", "2", "3", "4", "5"]) },
+        { id: makeId(), section: "直播区域", title: "微博直播", subtitle: "", desc: "微博个人直播、生日直播、节日互动、日常分享", cover: defaultCover("live-2"), links: mkLinks("微博直播 孙珍妮", ["1", "2", "3", "4", "5"]) },
+        { id: makeId(), section: "直播区域", title: "剧宣直播", subtitle: "", desc: "所有剧宣直播：《千朵桃花一世开》剧集宣传直播，《长月烬明》剧集宣传直播", cover: defaultCover("live-3"), links: mkLinks("剧宣直播 孙珍妮", ["千朵桃花一世开", "长月烬明"]) },
+        { id: makeId(), section: "直播区域", title: "商务直播", subtitle: "", desc: "品牌合作直播、产品推广、粉丝见面会直播", cover: defaultCover("live-4"), links: mkLinks("商务直播 孙珍妮", ["1", "2", "3", "4", "5"]) }
       ]
     };
 
-    const filmographyData = [
-      { title: "《见习爱神》", role: "饰 漫漫", intro: "青春题材角色，灵动感与轻松感并存。", link: "https://search.bilibili.com/all?keyword=%E8%A7%81%E4%B9%A0%E7%88%B1%E7%A5%9E%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-1/640/360" },
-      { title: "《天意》", role: "饰 天依", intro: "早期荧幕角色，成长线清晰。", link: "https://search.bilibili.com/all?keyword=%E5%A4%A9%E6%84%8F%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-2/640/360" },
-      { title: "《日不落酒店》", role: "饰 红", intro: "电影角色，风格辨识度高。", link: "https://search.bilibili.com/all?keyword=%E6%97%A5%E4%B8%8D%E8%90%BD%E9%85%92%E5%BA%97%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-3/640/360" },
-      { title: "《梦见狮子》", role: "饰 绫酒", intro: "角色气质突出，剧情线有记忆点。", link: "https://search.bilibili.com/all?keyword=%E6%A2%A6%E8%A7%81%E7%8B%AE%E5%AD%90%20%E7%BB%AB%E9%85%92", cover: "https://picsum.photos/seed/film-4/640/360" },
-      { title: "《替嫁小才女》", role: "饰 唐小山", intro: "轻喜线角色，节奏明快。", link: "https://search.bilibili.com/all?keyword=%E6%9B%BF%E5%AB%81%E5%B0%8F%E6%89%8D%E5%A5%B3%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-5/640/360" },
-      { title: "《亲爱的天狐大人》", role: "饰 苏浅浅", intro: "古偶甜感路线，角色成长完整。", link: "https://search.bilibili.com/all?keyword=%E4%BA%B2%E7%88%B1%E7%9A%84%E5%A4%A9%E7%8B%90%E5%A4%A7%E4%BA%BA%20%E8%8B%8F%E6%B5%85%E6%B5%85", cover: "https://picsum.photos/seed/film-6/640/360" },
-      { title: "《长月烬明》", role: "饰 翩然", intro: "高讨论度角色，出圈名场面密集。", link: "https://search.bilibili.com/all?keyword=%E9%95%BF%E6%9C%88%E7%83%AC%E6%98%8E%20%E7%BF%A9%E7%84%B6", cover: "https://picsum.photos/seed/film-7/640/360" },
-      { title: "《千朵桃花一世开》", role: "饰 暮悬铃/阿珠/神女", intro: "一人分饰三角，角色切换层次感强。", link: "https://search.bilibili.com/all?keyword=%E5%8D%83%E6%9C%B5%E6%A1%83%E8%8A%B1%E4%B8%80%E4%B8%96%E5%BC%80%20%E6%9A%AE%E6%82%AC%E9%93%83", cover: "https://picsum.photos/seed/film-8/640/360" },
-      { title: "《我在顶峰等你》", role: "饰 顾雪茭", intro: "新作品持续关注中。", link: "https://search.bilibili.com/all?keyword=%E6%88%91%E5%9C%A8%E9%A1%B6%E5%B3%B0%E7%AD%89%E4%BD%A0%20%E9%A1%BE%E9%9B%AA%E8%8C%AD", cover: "https://picsum.photos/seed/film-9/640/360" },
-      { title: "《十万狂花入梦来》", role: "饰 鸭毛", intro: "角色设定新鲜，期待正片上线。", link: "https://search.bilibili.com/all?keyword=%E5%8D%81%E4%B8%87%E7%8B%82%E8%8A%B1%E5%85%A5%E6%A2%A6%E6%9D%A5%20%E9%B8%AD%E6%AF%9B", cover: "https://picsum.photos/seed/film-10/640/360" },
-      { title: "《师兄太稳健》", role: "饰 云霄仙子", intro: "古装仙侠风角色，氛围感强。", link: "https://search.bilibili.com/all?keyword=%E5%B8%88%E5%85%84%E5%A4%AA%E7%A8%B3%E5%81%A5%20%E4%BA%91%E9%9C%84%E4%BB%99%E5%AD%90", cover: "https://picsum.photos/seed/film-11/640/360" },
-      { title: "《凤舞九天》", role: "饰 上官飞燕", intro: "古风角色向，动作与气场兼具。", link: "https://search.bilibili.com/all?keyword=%E5%87%A4%E8%88%9E%E4%B9%9D%E5%A4%A9%20%E4%B8%8A%E5%AE%98%E9%A3%9E%E7%87%95", cover: "https://picsum.photos/seed/film-12/640/360" }
-    ];
+    function clone(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
 
-    const guideImages = [
-      "https://picsum.photos/seed/guide-1/900/1200",
-      "https://picsum.photos/seed/guide-2/900/1200",
-      "https://picsum.photos/seed/guide-3/900/1200",
-      "https://picsum.photos/seed/guide-4/900/1200",
-      "https://picsum.photos/seed/guide-5/900/1200"
-    ];
-
-    function renderMediaCards(targetId, items) {
-      const mount = document.getElementById(targetId);
-      if (!mount) return;
-      if (!items || !items.length) {
-        mount.innerHTML = '<div class="empty-note">该分区暂无内容</div>';
-        return;
+    function loadLibrary() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return clone(DEFAULT_LIBRARY);
+        const parsed = JSON.parse(raw);
+        const finalData = clone(DEFAULT_LIBRARY);
+        PAGE_ORDER.forEach((page) => {
+          if (Array.isArray(parsed[page])) {
+            finalData[page] = parsed[page];
+          }
+        });
+        return finalData;
+      } catch (error) {
+        console.warn("loadLibrary failed", error);
+        return clone(DEFAULT_LIBRARY);
       }
-      mount.innerHTML = items.map((item) => `
+    }
+
+    function saveLibrary() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(library));
+    }
+
+    function normalizeUrl(url) {
+      if (!url) return FALLBACK_LINK;
+      if (/^https?:\/\//i.test(url)) return url;
+      return `https://${url}`;
+    }
+
+    function escapeHtml(text) {
+      return String(text || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function renderCard(item) {
+      const safeTitle = escapeHtml(item.title);
+      const safeSubtitle = escapeHtml(item.subtitle || "");
+      const safeDesc = escapeHtml(item.desc || "");
+      const cover = normalizeUrl(item.cover || defaultCover(item.title || "card"));
+      const links = Array.isArray(item.links) && item.links.length ? item.links : [{ label: "打开链接", url: FALLBACK_LINK }];
+      const firstLink = normalizeUrl(links[0].url);
+      const linksHtml = links.map((link) => {
+        const label = escapeHtml(link.label || "打开");
+        const url = escapeHtml(normalizeUrl(link.url || FALLBACK_LINK));
+        return `<a class="chip-link" href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
+      }).join("");
+      return `
         <article class="media-card">
-          <a class="media-thumb" href="${item.link}" target="_blank" rel="noopener noreferrer">
-            <img src="${item.cover}" alt="${item.title}" loading="lazy">
+          <a class="media-thumb" href="${escapeHtml(firstLink)}" target="_blank" rel="noopener noreferrer">
+            <img src="${escapeHtml(cover)}" alt="${safeTitle}" loading="lazy">
             <span class="play-icon">▶</span>
           </a>
           <div class="media-body">
-            <h3>${item.title}</h3>
-            <p class="meta-line">简介：${item.desc}</p>
-            <p class="episode-line">续集：${(item.episodes || []).join("，")}</p>
+            <h3>${safeTitle}</h3>
+            ${safeSubtitle ? `<div class="media-sub">${safeSubtitle}</div>` : ""}
+            <p class="meta-line">简介：${safeDesc || "暂无简介"}</p>
+            <div class="links-wrap">${linksHtml}</div>
           </div>
         </article>
-      `).join("");
+      `;
     }
 
-    function renderFilmCards() {
-      const mount = document.getElementById("grid-film");
+    function renderGroupedPage(targetId, pageKey) {
+      const mount = document.getElementById(targetId);
+      const items = library[pageKey] || [];
       if (!mount) return;
-      mount.innerHTML = filmographyData.map((item) => `
-        <article class="film-card">
-          <a href="${item.link}" target="_blank" rel="noopener noreferrer">
-            <img class="poster" src="${item.cover}" alt="${item.title}" loading="lazy">
-          </a>
-          <div class="body">
-            <h3>${item.title}</h3>
-            <div class="role">${item.role}</div>
-            <div class="intro">${item.intro}</div>
-          </div>
-        </article>
+      if (!items.length) {
+        mount.innerHTML = '<div class="empty-note">该分区暂无内容，可在后台新增。</div>';
+        return;
+      }
+      const groups = new Map();
+      items.forEach((item) => {
+        const section = item.section || "未分区";
+        if (!groups.has(section)) groups.set(section, []);
+        groups.get(section).push(item);
+      });
+      mount.innerHTML = Array.from(groups.entries()).map(([section, list]) => `
+        <section class="section-block">
+          <h3 class="sub-section-title">${escapeHtml(section)}</h3>
+          <div class="card-grid">${list.map(renderCard).join("")}</div>
+        </section>
       `).join("");
     }
 
+    function renderAllPages() {
+      renderGroupedPage("guideDynamic", "guide");
+      renderGroupedPage("roleDynamic", "role");
+      renderGroupedPage("showDynamic", "show");
+      renderGroupedPage("stageDynamic", "stage");
+      renderGroupedPage("interviewDynamic", "interview");
+      renderGroupedPage("liveDynamic", "live");
+      renderAdminList();
+      refreshSectionSelect();
+    }
+
+    const library = loadLibrary();
     const tabButtons = document.querySelectorAll(".tab-btn");
     const tabPages = document.querySelectorAll(".tab-page");
 
@@ -883,46 +1124,260 @@
       activatePage("guide");
     });
 
-    const guideImage = document.getElementById("guideImage");
-    const guideDots = document.getElementById("guideDots");
-    const prevGuide = document.getElementById("prevGuide");
-    const nextGuide = document.getElementById("nextGuide");
-    let guideIndex = 0;
+    const adminModal = document.getElementById("adminModal");
+    const openAdminBtn = document.getElementById("openAdminBtn");
+    const closeAdminBtn = document.getElementById("closeAdminBtn");
+    const adminTabs = document.getElementById("adminTabs");
+    const adminList = document.getElementById("adminList");
+    const adminForm = document.getElementById("adminForm");
+    const formEditingId = document.getElementById("formEditingId");
+    const formPage = document.getElementById("formPage");
+    const formSectionSelect = document.getElementById("formSectionSelect");
+    const formNewSection = document.getElementById("formNewSection");
+    const newSectionWrap = document.getElementById("newSectionWrap");
+    const formTitle = document.getElementById("formTitle");
+    const formSubtitle = document.getElementById("formSubtitle");
+    const formDesc = document.getElementById("formDesc");
+    const formCover = document.getElementById("formCover");
+    const formLinks = document.getElementById("formLinks");
+    const saveBtn = document.getElementById("saveBtn");
+    const resetBtn = document.getElementById("resetBtn");
 
-    function updateGuideImage() {
-      guideImage.src = guideImages[guideIndex];
-      guideDots.querySelectorAll(".dot").forEach((dot, idx) => {
-        dot.classList.toggle("active", idx === guideIndex);
+    let adminUnlocked = false;
+    let currentAdminPage = "guide";
+
+    function buildAdminTabs() {
+      adminTabs.innerHTML = PAGE_ORDER.map((page) => `
+        <button class="admin-tab ${page === currentAdminPage ? "active" : ""}" data-admin-page="${page}" type="button">${PAGE_LABELS[page]}</button>
+      `).join("");
+      adminTabs.querySelectorAll(".admin-tab").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          currentAdminPage = btn.dataset.adminPage;
+          buildAdminTabs();
+          formPage.value = currentAdminPage;
+          refreshSectionSelect();
+          renderAdminList();
+        });
       });
     }
 
-    guideImages.forEach((_, idx) => {
-      const dot = document.createElement("button");
-      dot.className = "dot";
-      dot.type = "button";
-      dot.addEventListener("click", () => {
-        guideIndex = idx;
-        updateGuideImage();
+    function getSections(page) {
+      const items = library[page] || [];
+      return Array.from(new Set(items.map((item) => item.section || "未分区")));
+    }
+
+    function refreshSectionSelect() {
+      const page = formPage.value || currentAdminPage;
+      const sections = getSections(page);
+      formSectionSelect.innerHTML = sections.map((section) => `
+        <option value="${escapeHtml(section)}">${escapeHtml(section)}</option>
+      `).join("") + '<option value="__new__">+ 新建区域</option>';
+      if (!sections.length) {
+        formSectionSelect.value = "__new__";
+        newSectionWrap.style.display = "grid";
+      } else if (formSectionSelect.value !== "__new__") {
+        newSectionWrap.style.display = "none";
+      }
+    }
+
+    function renderAdminList() {
+      const items = library[currentAdminPage] || [];
+      if (!items.length) {
+        adminList.innerHTML = "<div class='empty-note'>该页面暂无内容，使用下方表单新增。</div>";
+        return;
+      }
+      const groups = new Map();
+      items.forEach((item) => {
+        const section = item.section || "未分区";
+        if (!groups.has(section)) groups.set(section, []);
+        groups.get(section).push(item);
       });
-      guideDots.appendChild(dot);
+      adminList.innerHTML = Array.from(groups.entries()).map(([section, list]) => `
+        <section class="admin-section">
+          <h4>${escapeHtml(section)}</h4>
+          ${list.map((item) => `
+            <div class="admin-item">
+              <div class="title">${escapeHtml(item.title)}${item.subtitle ? ` · ${escapeHtml(item.subtitle)}` : ""}</div>
+              <div class="admin-actions">
+                <button type="button" data-action="edit" data-id="${item.id}">编辑</button>
+                <button type="button" data-action="delete" data-id="${item.id}">删除</button>
+              </div>
+            </div>
+          `).join("")}
+        </section>
+      `).join("");
+
+      adminList.querySelectorAll("button[data-action]").forEach((button) => {
+        const id = button.dataset.id;
+        const action = button.dataset.action;
+        if (action === "edit") {
+          button.addEventListener("click", () => startEdit(currentAdminPage, id));
+        } else if (action === "delete") {
+          button.addEventListener("click", () => removeItem(currentAdminPage, id));
+        }
+      });
+    }
+
+    function resetForm() {
+      formEditingId.value = "";
+      formPage.value = currentAdminPage;
+      refreshSectionSelect();
+      formTitle.value = "";
+      formSubtitle.value = "";
+      formDesc.value = "";
+      formCover.value = "";
+      formLinks.value = "";
+      saveBtn.textContent = "保存条目";
+      newSectionWrap.style.display = formSectionSelect.value === "__new__" ? "grid" : "none";
+    }
+
+    function startEdit(page, id) {
+      const item = (library[page] || []).find((entry) => entry.id === id);
+      if (!item) return;
+      formEditingId.value = id;
+      formPage.value = page;
+      refreshSectionSelect();
+      const hasSection = getSections(page).includes(item.section || "未分区");
+      if (hasSection) {
+        formSectionSelect.value = item.section || "未分区";
+        newSectionWrap.style.display = "none";
+      } else {
+        formSectionSelect.value = "__new__";
+        formNewSection.value = item.section || "";
+        newSectionWrap.style.display = "grid";
+      }
+      formTitle.value = item.title || "";
+      formSubtitle.value = item.subtitle || "";
+      formDesc.value = item.desc || "";
+      formCover.value = item.cover || "";
+      formLinks.value = (item.links || []).map((link) => `${link.label}|${link.url}`).join("\n");
+      saveBtn.textContent = "保存修改";
+      adminForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
+    function removeItem(page, id) {
+      const target = (library[page] || []).find((entry) => entry.id === id);
+      if (!target) return;
+      const ok = window.confirm(`确认删除：${target.title}？`);
+      if (!ok) return;
+      library[page] = (library[page] || []).filter((entry) => entry.id !== id);
+      saveLibrary();
+      renderAllPages();
+      if (formEditingId.value === id) resetForm();
+    }
+
+    function parseLinks(raw) {
+      const lines = String(raw || "")
+        .split("\n")
+        .map((line) => line.trim())
+        .filter(Boolean);
+      return lines.map((line) => {
+        if (line.includes("|")) {
+          const [label, ...rest] = line.split("|");
+          return {
+            label: (label || "打开").trim(),
+            url: normalizeUrl(rest.join("|").trim() || FALLBACK_LINK)
+          };
+        }
+        return { label: line, url: FALLBACK_LINK };
+      });
+    }
+
+    formPage.innerHTML = PAGE_ORDER.map((page) => `
+      <option value="${page}">${PAGE_LABELS[page]}</option>
+    `).join("");
+
+    buildAdminTabs();
+    resetForm();
+
+    formPage.addEventListener("change", () => {
+      currentAdminPage = formPage.value;
+      buildAdminTabs();
+      refreshSectionSelect();
+      renderAdminList();
     });
 
-    prevGuide.addEventListener("click", () => {
-      guideIndex = (guideIndex - 1 + guideImages.length) % guideImages.length;
-      updateGuideImage();
-    });
-    nextGuide.addEventListener("click", () => {
-      guideIndex = (guideIndex + 1) % guideImages.length;
-      updateGuideImage();
+    formSectionSelect.addEventListener("change", () => {
+      newSectionWrap.style.display = formSectionSelect.value === "__new__" ? "grid" : "none";
     });
 
-    renderMediaCards("grid-role", categoryData.role);
-    renderMediaCards("grid-stage", categoryData.stage);
-    renderMediaCards("grid-show", categoryData.show);
-    renderMediaCards("grid-interview", categoryData.interview);
-    renderMediaCards("grid-live", categoryData.live);
-    renderFilmCards();
-    updateGuideImage();
+    resetBtn.addEventListener("click", () => {
+      resetForm();
+    });
+
+    adminForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const page = formPage.value;
+      const section = formSectionSelect.value === "__new__"
+        ? (formNewSection.value || "").trim()
+        : formSectionSelect.value;
+      const title = (formTitle.value || "").trim();
+      const desc = (formDesc.value || "").trim();
+      const subtitle = (formSubtitle.value || "").trim();
+      const cover = (formCover.value || "").trim();
+      const links = parseLinks(formLinks.value);
+
+      if (!page || !section || !title || !desc || !links.length) {
+        window.alert("请完整填写：页面、区域、标题、简介、链接。");
+        return;
+      }
+
+      const editingId = formEditingId.value;
+      if (editingId) {
+        const items = library[page] || [];
+        const idx = items.findIndex((entry) => entry.id === editingId);
+        if (idx >= 0) {
+          items[idx] = { ...items[idx], section, title, subtitle, desc, cover, links };
+        } else {
+          items.push({ id: editingId, section, title, subtitle, desc, cover, links });
+        }
+        library[page] = items;
+      } else {
+        library[page] = library[page] || [];
+        library[page].push({
+          id: makeId(),
+          section,
+          title,
+          subtitle,
+          desc,
+          cover,
+          links
+        });
+      }
+      saveLibrary();
+      currentAdminPage = page;
+      buildAdminTabs();
+      renderAllPages();
+      resetForm();
+      window.alert("已保存。");
+    });
+
+    openAdminBtn.addEventListener("click", () => {
+      if (!adminUnlocked) {
+        const input = window.prompt("请输入后台密码");
+        if (input !== ADMIN_PASSWORD) {
+          window.alert("密码错误");
+          return;
+        }
+        adminUnlocked = true;
+      }
+      formPage.value = currentAdminPage;
+      refreshSectionSelect();
+      renderAdminList();
+      adminModal.classList.add("show");
+    });
+
+    closeAdminBtn.addEventListener("click", () => {
+      adminModal.classList.remove("show");
+    });
+
+    adminModal.addEventListener("click", (event) => {
+      if (event.target === adminModal) {
+        adminModal.classList.remove("show");
+      }
+    });
+
+    renderAllPages();
   </script>
 </body>
 </html>
