@@ -185,6 +185,26 @@
       margin-top: 28px;
     }
 
+    .channel-page {
+      display: none;
+    }
+
+    .channel-page.active {
+      display: block;
+      animation: pageFade 0.24s ease;
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     .channel-head {
       display: flex;
       justify-content: space-between;
@@ -540,10 +560,10 @@
         <input id="searchInput" type="text" placeholder="搜索视频标题/简介">
       </label>
       <nav class="nav">
-        <a href="#works" class="active">作品</a>
-        <a href="#stage">舞台</a>
-        <a href="#show">综艺</a>
-        <a href="#live">直播回放</a>
+        <a href="#" class="nav-tab active" data-tab="works">作品</a>
+        <a href="#" class="nav-tab" data-tab="stage">舞台</a>
+        <a href="#" class="nav-tab" data-tab="show">综艺</a>
+        <a href="#" class="nav-tab" data-tab="live">直播回放</a>
         <a href="#" id="adminEntry">管理</a>
         <a href="./daily-group.html">官群空降</a>
       </nav>
@@ -559,7 +579,7 @@
       </div>
     </section>
 
-    <section class="channel" id="works">
+    <section class="channel channel-page active" id="works">
       <div class="channel-head">
         <h2>作品</h2>
         <span class="label">Works</span>
@@ -567,7 +587,7 @@
       <div class="video-grid" data-channel="role"></div>
     </section>
 
-    <section class="channel" id="stage">
+    <section class="channel channel-page" id="stage">
       <div class="channel-head">
         <h2>舞台</h2>
         <span class="label">Stage</span>
@@ -575,7 +595,7 @@
       <div class="video-grid" data-channel="stage"></div>
     </section>
 
-    <section class="channel" id="show">
+    <section class="channel channel-page" id="show">
       <div class="channel-head">
         <h2>综艺</h2>
         <span class="label">Show</span>
@@ -583,7 +603,7 @@
       <div class="video-grid" data-channel="show"></div>
     </section>
 
-    <section class="channel" id="live">
+    <section class="channel channel-page" id="live">
       <div class="channel-head">
         <h2>直播回放</h2>
         <span class="label">Live</span>
@@ -1272,28 +1292,34 @@
       });
     }
 
-    const navLinks = document.querySelectorAll(".nav a[href^='#']");
-    const sections = document.querySelectorAll(".channel");
+    searchInput.addEventListener("input", renderAll);
+    const navTabs = document.querySelectorAll(".nav .nav-tab");
+    const pageSections = document.querySelectorAll(".channel-page");
+    let currentTab = "works";
 
-    function updateNavActive() {
-      let current = "works";
-      sections.forEach((section) => {
-        if (window.scrollY >= section.offsetTop - 130) current = section.id;
+    function switchTab(tabId) {
+      currentTab = tabId;
+      navTabs.forEach((tab) => {
+        tab.classList.toggle("active", tab.dataset.tab === tabId);
       });
-      navLinks.forEach((link) => {
-        link.classList.toggle("active", link.getAttribute("href") === "#" + current);
+      pageSections.forEach((section) => {
+        section.classList.toggle("active", section.id === tabId);
       });
     }
 
-    searchInput.addEventListener("input", renderAll);
-    window.addEventListener("scroll", updateNavActive);
+    navTabs.forEach((tab) => {
+      tab.addEventListener("click", (e) => {
+        e.preventDefault();
+        switchTab(tab.dataset.tab);
+      });
+    });
 
     loadCloudConfigToForm();
     applyHeroConfig();
     renderAll();
     bindCardEvents();
     bindAdminEvents();
-    updateNavActive();
+    switchTab(currentTab);
     refreshUploadedLibrary();
   </script>
 </body>
