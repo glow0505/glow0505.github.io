@@ -1,586 +1,928 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>珍藏丨孙珍妮安利站</title>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-}
-:root {
-  --bg-main: #0F0F17;
-  --bg-card: #12121B;
-  --gold: #FED71A;
-  --text-white: #FFFFFF;
-  --text-gray: #CCCCCC;
-  --border-gray: #444444;
-  --radius: 16px;
-}
-body {
-  background-color: var(--bg-main);
-  color: var(--text-white);
-  line-height: 1.6;
-  min-height: 100vh;
-  padding-bottom: 40px;
-}
-.wrapper {
-  max-width: 1000px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-.search-bar {
-  padding: 16px 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.search-input {
-  flex: 1;
-  height: 48px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-gray);
-  border-radius: var(--radius);
-  padding: 0 16px;
-  color: var(--text-white);
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.search-btn {
-  background: none;
-  border: none;
-  color: var(--text-white);
-  font-size: 20px;
-  cursor: pointer;
-}
-.nav-tabs {
-  display: flex;
-  gap: 8px;
-  padding: 0 0 16px;
-  overflow-x: auto;
-  scrollbar-width: none;
-  border-bottom: 1px solid var(--border-gray);
-  margin-bottom: 24px;
-}
-.nav-tabs::-webkit-scrollbar {
-  display: none;
-}
-.tab-item {
-  padding: 10px 20px;
-  border-radius: var(--radius);
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.3s ease;
-}
-.tab-item.active {
-  background-color: var(--bg-card);
-  color: var(--gold);
-  border: 1px solid var(--gold);
-}
-.tab-item:not(.active) {
-  color: var(--text-white);
-  background: none;
-  border: 1px solid transparent;
-}
-.hero-card {
-  padding: 40px 24px;
-  background-color: var(--bg-card);
-  border-radius: 24px;
-  text-align: center;
-  border: 1px solid var(--border-gray);
-  margin-bottom: 32px;
-}
-.hero-title {
-  font-size: 36px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  line-height: 1.2;
-}
-.hero-title span {
-  color: var(--gold);
-  margin: 0 8px;
-}
-.hero-desc {
-  font-size: 18px;
-  color: var(--text-gray);
-  margin-bottom: 32px;
-}
-.hero-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.hero-btn {
-  padding: 16px 24px;
-  border-radius: var(--radius);
-  font-size: 20px;
-  font-weight: 500;
-  text-decoration: none;
-  color: var(--text-white);
-  border: 1px solid var(--border-gray);
-  background-color: var(--bg-main);
-  transition: all 0.3s ease;
-  display: inline-block;
-  text-align: center;
-}
-.hero-btn.active {
-  background-color: var(--bg-card);
-  color: var(--gold);
-  border-color: var(--gold);
-}
-.hero-extra {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  max-width: 600px;
-  margin: 20px auto 0;
-}
-.hero-extra .btn {
-  padding: 16px 24px;
-  border-radius: var(--radius);
-  font-size: 20px;
-  font-weight: 500;
-  text-decoration: none;
-  color: var(--text-white);
-  border: 1px solid var(--border-gray);
-  background-color: var(--bg-main);
-  transition: all 0.3s ease;
-  display: inline-block;
-  text-align: center;
-}
-.container {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-.section {
-  display: none;
-  margin-bottom: 40px;
-}
-.section.active {
-  display: block;
-}
-.section-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: var(--gold);
-  margin-bottom: 20px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--gold);
-}
-.content-card {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-gray);
-  border-radius: var(--radius);
-  padding: 20px;
-  margin-bottom: 16px;
-}
-.content-card h3 {
-  font-size: 20px;
-  color: var(--gold);
-  margin-bottom: 12px;
-}
-.content-card p {
-  font-size: 16px;
-  color: var(--text-gray);
-  margin-bottom: 8px;
-  line-height: 1.7;
-}
-.small-btn {
-  display: inline-block;
-  padding: 6px 12px;
-  border: 1px solid var(--gold);
-  border-radius: 8px;
-  background-color: rgba(254, 215, 26, 0.1);
-  color: var(--gold);
-  text-decoration: none;
-  font-size: 14px;
-  margin-right: 8px;
-  margin-top: 8px;
-}
-.grid-2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 16px;
-}
-footer {
-  text-align: center;
-  padding: 32px 20px;
-  border-top: 1px solid var(--border-gray);
-  color: var(--text-gray);
-  font-size: 14px;
-  margin-top: 40px;
-}
-footer .gold-txt {
-  color: var(--gold);
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-@media (max-width: 768px) {
-  .hero-title {
-    font-size: 32px;
-  }
-  .hero-btn, .hero-extra .btn {
-    font-size: 18px;
-    padding: 14px 20px;
-  }
-  .grid-2 {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>珍珍日上TV</title>
+  <meta name="description" content="珍藏｜孙珍妮安利站，含入坑指南、角色、舞台、综艺、采访、直播回顾与影视作品整理。">
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-soft: #111111;
+      --panel: #151515;
+      --card: #1b1b1b;
+      --line: rgba(245, 202, 122, 0.28);
+      --text: #f7f7f7;
+      --muted: #c6c6c6;
+      --gold: #d8ad62;
+      --gold-soft: #f2d6a0;
+      --shadow: 0 18px 34px rgba(0, 0, 0, 0.42);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 86% 4%, rgba(216, 173, 98, 0.17), transparent 36%),
+        radial-gradient(circle at 8% 16%, rgba(216, 173, 98, 0.09), transparent 30%),
+        linear-gradient(180deg, #040404, #0a0a0a 44%, #060606);
+    }
+
+    .container {
+      width: min(1320px, 94vw);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      background: rgba(6, 6, 6, 0.9);
+    }
+
+    .topbar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 0;
+    }
+
+    .brand {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      white-space: nowrap;
+    }
+
+    .brand b {
+      color: var(--gold-soft);
+    }
+
+    .brand .sep {
+      margin: 0 4px;
+      color: #e4c58a;
+    }
+
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .tab-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .tab-btn {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      color: #efefef;
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.84rem;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      color: #211508;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+    }
+
+    main {
+      padding: 18px 0 42px;
+    }
+
+    .tab-page {
+      display: none;
+    }
+
+    .tab-page.active {
+      display: block;
+      animation: fadeSlide 0.26s ease;
+    }
+
+    @keyframes fadeSlide {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-banner {
+      width: 100%;
+      aspect-ratio: 16 / 5;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      display: block;
+      background: #121212;
+    }
+
+    .hero-copy {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(1.8rem, 4.4vw, 3rem);
+      letter-spacing: 1px;
+      color: #f7ecd8;
+      text-shadow: 0 6px 20px rgba(216, 173, 98, 0.2);
+      margin-bottom: 8px;
+    }
+
+    .hero-copy p {
+      color: #d4d4d4;
+      font-size: 0.96rem;
+      max-width: 860px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .guide-layout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(20, 20, 20, 0.9);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+
+    .panel h2 {
+      font-size: 1.08rem;
+      color: #f3ddba;
+      margin-bottom: 10px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-item {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 10px;
+    }
+
+    .info-item .k {
+      font-size: 0.76rem;
+      color: #e6c98f;
+      margin-bottom: 5px;
+    }
+
+    .info-item .v {
+      font-size: 0.84rem;
+      line-height: 1.5;
+      color: #efefef;
+    }
+
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #131313;
+      aspect-ratio: 4 / 5;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    .carousel-btn.prev { left: 10px; }
+    .carousel-btn.next { right: 10px; }
+
+    .dots {
+      position: absolute;
+      left: 50%;
+      bottom: 10px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.42);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--gold-soft);
+    }
+
+    .social-wrap {
+      margin-top: 16px;
+    }
+
+    .social-wrap h2 {
+      font-size: 1.08rem;
+      color: #f3ddba;
+      margin-bottom: 10px;
+    }
+
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .social-card {
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(216, 173, 98, 0.12), rgba(30, 30, 30, 0.95));
+      padding: 14px 10px;
+      min-height: 106px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s ease;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .social-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(242, 214, 160, 0.68);
+    }
+
+    .social-card .name {
+      font-size: 1rem;
+      color: #f8ebd2;
+      font-weight: 700;
+    }
+
+    .social-card .account {
+      font-size: 0.8rem;
+      color: #ececec;
+      line-height: 1.45;
+    }
+
+    .section-head {
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .section-head h2 {
+      font-size: 1.34rem;
+      color: #f7eddc;
+    }
+
+    .section-head .en {
+      font-size: 0.82rem;
+      color: #d6b778;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .media-card {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--card);
+      box-shadow: var(--shadow);
+      transition: 0.2s ease;
+    }
+
+    .media-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(216, 173, 98, 0.68);
+    }
+
+    .media-thumb {
+      display: block;
+      position: relative;
+      aspect-ratio: 16 / 9;
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      background: #121212;
+    }
+
+    .media-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .play-icon {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: rgba(0, 0, 0, 0.42);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 1rem;
+    }
+
+    .media-body {
+      padding: 10px;
+    }
+
+    .media-body h3 {
+      font-size: 0.94rem;
+      line-height: 1.45;
+      margin-bottom: 6px;
+      color: #f6ecd8;
+      min-height: 2.75em;
+    }
+
+    .meta-line {
+      font-size: 0.8rem;
+      color: #cfcfcf;
+      line-height: 1.55;
+      margin-bottom: 6px;
+    }
+
+    .episode-line {
+      font-size: 0.78rem;
+      color: #f0d6a3;
+      line-height: 1.5;
+    }
+
+    .film-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .film-card {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      background: var(--card);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .film-card .poster {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: #121212;
+    }
+
+    .film-card .body {
+      padding: 10px;
+    }
+
+    .film-card .body h3 {
+      font-size: 0.96rem;
+      color: #f7ecd8;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .film-card .role {
+      font-size: 0.82rem;
+      color: #f1d9aa;
+      margin-bottom: 5px;
+    }
+
+    .film-card .intro {
+      font-size: 0.8rem;
+      color: #c8c8c8;
+      line-height: 1.55;
+    }
+
+    .empty-note {
+      border: 1px dashed rgba(255, 255, 255, 0.24);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      color: #9d9d9d;
+      font-size: 0.9rem;
+      background: rgba(255, 255, 255, 0.02);
+      grid-column: 1 / -1;
+    }
+
+    footer {
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+      padding: 20px 0 30px;
+      color: #9b9b9b;
+      text-align: center;
+      font-size: 0.84rem;
+    }
+
+    @media (max-width: 1180px) {
+      .card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .film-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 920px) {
+      .topbar {
+        flex-wrap: wrap;
+      }
+      .tab-nav {
+        order: 3;
+        width: 100%;
+      }
+      .guide-layout {
+        grid-template-columns: 1fr;
+      }
+      .social-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .social-grid,
+      .card-grid,
+      .film-grid,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="wrapper">
-  <div class="search-bar">
-    <div class="search-input">
-      <span>🧋</span>
-      <span>向全世界安利孙珍妮</span>
+  <header>
+    <div class="container topbar">
+      <a class="brand" href="#" id="brandTop"><b>珍珍日上TV</b><span class="sep">｜</span>JENNYBOB</a>
+      <nav class="tab-nav" id="tabNav">
+        <button class="tab-btn active" data-page="guide">入坑指南</button>
+        <button class="tab-btn" data-page="role">角色安利</button>
+        <button class="tab-btn" data-page="stage">舞台安利</button>
+        <button class="tab-btn" data-page="show">综艺安利</button>
+        <button class="tab-btn" data-page="interview">采访安利</button>
+        <button class="tab-btn" data-page="live">直播回顾</button>
+        <button class="tab-btn" data-page="film">影视作品</button>
+      </nav>
     </div>
-    <button class="search-btn">搜索</button>
-    <button class="search-btn">🎬</button>
-    <button class="search-btn">✨</button>
-  </div>
-  <div class="nav-tabs">
-    <div class="tab-item active" data-target="#guide">入坑指南</div>
-    <div class="tab-item" data-target="#role">角色安利</div>
-    <div class="tab-item" data-target="#variety">综艺安利</div>
-    <div class="tab-item" data-target="#stage">舞台安利</div>
-    <div class="tab-item" data-target="#interview">采访安利</div>
-    <div class="tab-item" data-target="#live">直播回顾</div>
-  </div>
-  <div class="hero-card">
-    <h1 class="hero-title">珍藏<span>|</span>孙珍妮安利站</h1>
-    <p class="hero-desc">遇见珍妮，万事如意。这里整理了角色、综艺、舞台和入坑路线，欢迎一键收藏慢慢补。</p>
-    <div class="hero-buttons">
-      <a href="#guide" class="hero-btn active">入坑指南</a>
-      <a href="#role" class="hero-btn">角色安利</a>
-      <a href="#variety" class="hero-btn">综艺安利</a>
-      <a href="#stage" class="hero-btn">舞台安利</a>
-    </div>
-    <div class="hero-extra">
-      <a href="#interview" class="btn">采访安利</a>
-      <a href="#live" class="btn">直播回顾</a>
-    </div>
-  </div>
-</div>
-<div class="container wrapper">
-  <section id="guide" class="section active">
-    <h2 class="section-title">入坑指南</h2>
-    <div class="content-card">
-      <h3>基本介绍</h3>
-      <p>姓名：孙珍妮（Jenny Bob）</p>
-      <p>性别：女</p>
-      <p>生日：2000.05.05</p>
-      <p>出生地：中国上海</p>
-      <p>身高：165cm</p>
-      <p>MBTI：ESFP</p>
-      <p>学校：上海戏剧学院表演系（在读）</p>
-      <p>出道日期：2016年3月26日</p>
-      <p>粉丝名：藕粉</p>
-      <p>应援色：熙和金（色标：#FED71A）</p>
-    </div>
-    <div class="content-card">
-      <h3>实时更新</h3>
-      <p>📱 微博：日常动态、剧组营业、活动官宣、高清美图</p>
-      <a href="#" class="small-btn">微博主页</a>
-      <a href="#" class="small-btn">动态汇总</a>
-      <br><br>
-      <p>📕 小红书：生活碎片、妆容分享、剧组日常、自拍合集</p>
-      <a href="#" class="small-btn">小红书主页</a>
-      <a href="#" class="small-btn">笔记汇总</a>
-      <br><br>
-      <p>🎵 抖音：短视频营业、搞笑日常、角色宣传、幕后花絮</p>
-      <a href="#" class="small-btn">抖音主页</a>
-      <a href="#" class="small-btn">视频合集</a>
-      <br><br>
-      <p>📺 哔哩哔哩：vlog日常、幕后花絮、问题QA、好物分享</p>
-      <a href="#" class="small-btn">B站主页</a>
-      <a href="#" class="small-btn">视频合集</a>
-    </div>
-    <div class="content-card">
-      <h3>账号合集</h3>
-      <p>微博：@孙珍妮的微博</p>
-      <p>B站：@是孙珍妮</p>
-      <p>抖音：@是孙珍妮</p>
-      <p>小红书：@是孙珍妮</p>
-      <p>INS：_sunzhenni_</p>
-      <p>全民K歌：孙珍妮</p>
-    </div>
-    <div class="content-card">
-      <h3>影视作品</h3>
-      <p>《天意》饰 天依</p>
-      <p>《梦见狮子》饰 绫酒</p>
-      <p>《见习爱神》饰 漫漫</p>
-      <p>《日不落酒店》饰 红</p>
-      <p>《长月烬明》饰 翩然</p>
-      <p>《亲爱的天狐大人》饰 苏浅浅</p>
-      <p>《千朵桃花一世开》饰 暮悬铃/阿珠/神女</p>
-      <p>《我在顶峰等你》饰 顾雪茭</p>
-      <p>《替嫁小才女》饰 唐小山</p>
-      <p>《十万狂花入梦来》饰 鸭毛</p>
-      <p>《师兄太稳健》饰 云霄仙子</p>
-      <p>《凤舞九天》饰 上官飞燕</p>
-    </div>
-  </section>
+  </header>
 
-  <section id="role" class="section">
-    <h2 class="section-title">角色安利</h2>
-    <div class="grid-2">
-      <div class="content-card">
-        <h3>千朵桃花一世开 · 暮悬铃/阿珠/神女</h3>
-        <p>领衔主演 | 一人分饰三角 | 暗域圣女×灵动少女×清冷神女</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-        <a href="#" class="small-btn">原著小说</a>
+  <main class="container">
+    <section class="tab-page active" id="page-guide">
+      <img
+        class="hero-banner"
+        src="https://picsum.photos/seed/jenny-banner-main/1600/520"
+        alt="首页横幅"
+      >
+      <div class="hero-copy">
+        <h1>珍藏 ｜ 孙珍妮安利站</h1>
+        <p>遇见珍妮，万事如意。这里整理了角色、综艺、舞台和入坑路线，欢迎一键收藏慢慢补。</p>
       </div>
-      <div class="content-card">
-        <h3>长月烬明 · 翩然</h3>
-        <p>九尾狐妖 | 经典出圈 | 魅惑又痴情的意难平</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-        <a href="#" class="small-btn">原著小说</a>
-      </div>
-      <div class="content-card">
-        <h3>我在顶峰等你 · 顾雪茭</h3>
-        <p>励志大女主 | 重生追梦 | 清醒独立搞事业</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-        <a href="#" class="small-btn">原著小说</a>
-      </div>
-      <div class="content-card">
-        <h3>亲爱的天狐大人 · 苏浅浅</h3>
-        <p>灵动娇俏 | 狐系甜妹 | 古装轻喜剧可爱担当</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-      </div>
-      <div class="content-card">
-        <h3>十万狂花入梦来 · 鸭毛</h3>
-        <p>灵动讨喜 | 古装喜剧 | 鲜活可爱小角色</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-      </div>
-      <div class="content-card">
-        <h3>凤舞九天 · 上官飞燕</h3>
-        <p>江湖侠女 | 打戏利落 | 飒爽英气</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-        <a href="#" class="small-btn">原著小说</a>
-      </div>
-      <div class="content-card">
-        <h3>师兄太稳健 · 云霄仙子</h3>
-        <p>清冷仙气 | 三霄仙子 | 古风造型绝美</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-        <a href="#" class="small-btn">原著小说</a>
-      </div>
-      <div class="content-card">
-        <h3>其他角色合集</h3>
-        <p>天依、绫酒、漫漫、红、唐小山</p>
-        <a href="#" class="small-btn">正片</a>
-        <a href="#" class="small-btn">CUT</a>
-      </div>
-      <div class="content-card">
-        <h3>二创合集</h3>
-        <p>饭制剪辑 | 图文 | 同人 | 水仙剧 | 空瓶图</p>
-        <a href="#" class="small-btn">合集</a>
-        <a href="#" class="small-btn">水仙剧</a>
-        <a href="#" class="small-btn">空瓶图</a>
-      </div>
-    </div>
-  </section>
 
-  <section id="variety" class="section">
-    <h2 class="section-title">综艺安利</h2>
-    <div class="content-card"><h3>天天向上</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>星APP风云榜</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>这!就是世界波</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>晚安朋友圈</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>中华文明之美</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>花样妹妹</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>星星美人鱼2</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>塞纳河开学啦</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>创造营2020</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>创可少女屋</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>神奇的汉字</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>我是大美人</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>萌探探探案3</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>奔跑吧第7季</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>开工！喜剧之夜</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>你好，星期六</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-    <div class="content-card"><h3>盒子里的猫第二季</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
-  </section>
+      <div class="guide-layout">
+        <section class="panel">
+          <h2>基本介绍</h2>
+          <div class="info-grid">
+            <article class="info-item">
+              <div class="k">关键词</div>
+              <div class="v">演员 / 舞台表演 / 综艺反差感</div>
+            </article>
+            <article class="info-item">
+              <div class="k">入坑顺序</div>
+              <div class="v">舞台高光 → 综艺切片 → 角色正片</div>
+            </article>
+            <article class="info-item">
+              <div class="k">角色看点</div>
+              <div class="v">一人多面、情绪层次、人物完成度</div>
+            </article>
+            <article class="info-item">
+              <div class="k">舞台看点</div>
+              <div class="v">镜头表现、节奏控制、舞台稳定度</div>
+            </article>
+            <article class="info-item">
+              <div class="k">综艺看点</div>
+              <div class="v">轻松自然、梗密度高、互动感强</div>
+            </article>
+            <article class="info-item">
+              <div class="k">推荐方式</div>
+              <div class="v">先发一条高能混剪，再补长视频合集</div>
+            </article>
+          </div>
+        </section>
 
-  <section id="stage" class="section">
-    <h2 class="section-title">舞台安利</h2>
-    <div class="content-card">
-      <h3>偶像的黎明</h3>
-      <a href="#" class="small-btn">2016</a>
-      <a href="#" class="small-btn">全集</a>
-      <a href="#" class="small-btn">直拍</a>
-    </div>
-    <div class="content-card">
-      <h3>十八个闪耀瞬间</h3>
-      <a href="#" class="small-btn">2016</a>
-      <a href="#" class="small-btn">2017</a>
-      <a href="#" class="small-btn">全集</a>
-      <a href="#" class="small-btn">直拍</a>
-    </div>
-    <div class="content-card">
-      <h3>美丽世界</h3>
-      <a href="#" class="small-btn">2017</a>
-      <a href="#" class="small-btn">2018</a>
-      <a href="#" class="small-btn">全集</a>
-      <a href="#" class="small-btn">直拍</a>
-    </div>
-    <div class="content-card">
-      <h3>风尚大赏</h3>
-      <a href="#" class="small-btn">2016.11.05 走秀</a>
-      <a href="#" class="small-btn">2017.11.18 走秀</a>
-      <a href="#" class="small-btn">舞台</a>
-      <a href="#" class="small-btn">采访</a>
-    </div>
-    <div class="content-card">
-      <h3>橘色奇迹</h3>
-      <a href="#" class="small-btn">2019</a>
-      <a href="#" class="small-btn">全集</a>
-      <a href="#" class="small-btn">直拍</a>
-    </div>
-    <div class="content-card">
-      <h3>头号新闻</h3>
-      <a href="#" class="small-btn">2018</a>
-      <a href="#" class="small-btn">2019</a>
-      <a href="#" class="small-btn">2020</a>
-      <a href="#" class="small-btn">全集</a>
-      <a href="#" class="small-btn">直拍</a>
-    </div>
-    <div class="content-card">
-      <h3>终极任务</h3>
-      <a href="#" class="small-btn">2021</a>
-      <a href="#" class="small-btn">2022</a>
-      <a href="#" class="small-btn">全集</a>
-      <a href="#" class="small-btn">直拍</a>
-    </div>
-    <div class="content-card"><h3>特殊公演</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
-    <div class="content-card"><h3>联合公演</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
-    <div class="content-card"><h3>助演舞台</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
-    <div class="content-card">
-      <h3>MV 合集</h3>
-      <a href="#" class="small-btn">Color Girls</a>
-      <a href="#" class="small-btn">Colorful Days</a>
-      <a href="#" class="small-btn">HONOR</a>
-      <a href="#" class="small-btn">Twinkle Twinkle</a>
-      <a href="#" class="small-btn">都选C</a>
-      <a href="#" class="small-btn">梦想岛</a>
-      <a href="#" class="small-btn">绚丽时代</a>
-      <a href="#" class="small-btn">浪漫关系</a>
-      <a href="#" class="small-btn">少女终末战争</a>
-      <a href="#" class="small-btn">流动的希望</a>
-      <a href="#" class="small-btn">夏日柠檬船</a>
-      <a href="#" class="small-btn">未来的乐章</a>
-      <a href="#" class="small-btn">好运来</a>
-      <a href="#" class="small-btn">新年这一刻</a>
-      <a href="#" class="small-btn">生日快乐</a>
-      <a href="#" class="small-btn">森林法则</a>
-      <a href="#" class="small-btn">那年夏天的梦</a>
-      <a href="#" class="small-btn">未来会来</a>
-      <a href="#" class="small-btn">甜蜜盛典</a>
-      <a href="#" class="small-btn">虚构者</a>
-    </div>
-    <div class="content-card"><h3>VLOG</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">幕后花絮</a></div>
-    <div class="content-card"><h3>金曲大赏</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
-    <div class="content-card"><h3>创造炙热的青春</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
-    <div class="content-card"><h3>偶像年度人气总决选</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
-    <div class="content-card"><h3>生日冷餐会</h3><a href="#" class="small-btn">合集</a><a href="#" class="small-btn">直拍</a></div>
-  </section>
+        <section class="panel">
+          <h2>图集浏览</h2>
+          <div class="carousel">
+            <img id="guideImage" alt="孙珍妮图集">
+            <button class="carousel-btn prev" id="prevGuide" type="button">‹</button>
+            <button class="carousel-btn next" id="nextGuide" type="button">›</button>
+            <div class="dots" id="guideDots"></div>
+          </div>
+        </section>
+      </div>
 
-  <section id="interview" class="section">
-    <h2 class="section-title">采访安利</h2>
-    <div class="content-card">
-      <h3>剧集宣传采访</h3>
-      <p>作品主创专访、角色解读、幕后故事</p>
-      <a href="#" class="small-btn">完整合集</a>
-      <a href="#" class="small-btn">精彩片段</a>
-    </div>
-    <div class="content-card">
-      <h3>综艺专访</h3>
-      <p>综艺录制后台、节目宣传互动、现场快问快答</p>
-      <a href="#" class="small-btn">完整合集</a>
-      <a href="#" class="small-btn">精彩片段</a>
-    </div>
-    <div class="content-card">
-      <h3>CCTV相关采访</h3>
-      <p>央视节目录制、文艺活动专访、官方主题采访</p>
-      <a href="#" class="small-btn">完整合集</a>
-      <a href="#" class="small-btn">精彩片段</a>
-    </div>
-    <div class="content-card">
-      <h3>粉丝问答&互动采访</h3>
-      <p>快问快答、粉丝提问回应、趣味挑战</p>
-      <a href="#" class="small-btn">完整合集</a>
-      <a href="#" class="small-btn">精彩片段</a>
-    </div>
-  </section>
+      <section class="social-wrap">
+        <h2>实时更新</h2>
+        <div class="social-grid">
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://s.weibo.com/user?q=%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">微博</div>
+            <div class="account">账号：SNH48-孙珍妮</div>
+          </a>
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://www.xiaohongshu.com/search_result?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">小红书</div>
+            <div class="account">账号：孙珍妮相关更新</div>
+          </a>
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://www.douyin.com/search/%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">抖音</div>
+            <div class="account">账号：孙珍妮相关更新</div>
+          </a>
+          <a class="social-card" target="_blank" rel="noopener noreferrer" href="https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE">
+            <div class="name">哔哩哔哩</div>
+            <div class="account">账号：孙珍妮视频专区</div>
+          </a>
+        </div>
+      </section>
+    </section>
 
-  <section id="live" class="section">
-    <h2 class="section-title">直播回顾</h2>
-    <div class="content-card">
-      <h3>口袋直播</h3>
-      <p>口袋48专属直播、翻牌互动、深夜电台、日常唠嗑</p>
-      <a href="#" class="small-btn">回放</a>
-    </div>
-    <div class="content-card">
-      <h3>微博直播</h3>
-      <p>微博个人直播、生日直播、节日互动、日常分享</p>
-      <a href="#" class="small-btn">回放</a>
-    </div>
-    <div class="content-card">
-      <h3>剧宣直播</h3>
-      <p>《千朵桃花一世开》《长月烬明》剧集宣传直播</p>
-      <a href="#" class="small-btn">回放</a>
-    </div>
-    <div class="content-card">
-      <h3>商务直播</h3>
-      <p>品牌合作直播、产品推广、粉丝见面会直播</p>
-      <a href="#" class="small-btn">回放</a>
-    </div>
-  </section>
-</div>
+    <section class="tab-page" id="page-role">
+      <div class="section-head"><h2>角色安利</h2><span class="en">Roles</span></div>
+      <div class="card-grid" id="grid-role"></div>
+    </section>
 
-<footer class="wrapper">
-  <div class="gold-txt">珍藏丨孙珍妮安利站</div>
-  <p>遇见珍妮 万事如意·粉丝自制 非官方 仅供安利</p>
-</footer>
+    <section class="tab-page" id="page-stage">
+      <div class="section-head"><h2>舞台安利</h2><span class="en">Stage</span></div>
+      <div class="card-grid" id="grid-stage"></div>
+    </section>
 
-<script>
-const tabs = document.querySelectorAll('.tab-item');
-const btns = document.querySelectorAll('.hero-btn, .hero-extra .btn');
-const sections = document.querySelectorAll('.section');
-function showSection(id) {
-  sections.forEach(s => s.classList.remove('active'));
-  tabs.forEach(t => t.classList.remove('active'));
-  btns.forEach(b => b.classList.remove('active'));
-  document.querySelector(id).classList.add('active');
-  document.querySelector(`.tab-item[data-target="${id}"]`)?.classList.add('active');
-}
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => showSection(tab.dataset.target));
-});
-btns.forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    showSection(btn.getAttribute('href'));
-  });
-});
-</script>
+    <section class="tab-page" id="page-show">
+      <div class="section-head"><h2>综艺安利</h2><span class="en">Show</span></div>
+      <div class="card-grid" id="grid-show"></div>
+    </section>
+
+    <section class="tab-page" id="page-interview">
+      <div class="section-head"><h2>采访安利</h2><span class="en">Interview</span></div>
+      <div class="card-grid" id="grid-interview"></div>
+    </section>
+
+    <section class="tab-page" id="page-live">
+      <div class="section-head"><h2>直播回顾</h2><span class="en">Live Replay</span></div>
+      <div class="card-grid" id="grid-live"></div>
+    </section>
+
+    <section class="tab-page" id="page-film">
+      <div class="section-head"><h2>影视作品</h2><span class="en">Filmography</span></div>
+      <div class="film-grid" id="grid-film"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">珍珍日上TV ｜ JENNYBOB TV</div>
+  </footer>
+
+  <script>
+    const categoryData = {
+      role: [
+        {
+          title: "千朵桃花一世开 · 暮悬铃/阿珠/神女",
+          desc: "领衔主演 | 一人分饰三角 | 暗域圣女×灵动少女×清冷神女",
+          episodes: ["正片", "CUT", "原著小说"],
+          link: "https://search.bilibili.com/all?keyword=%E5%8D%83%E6%9C%B5%E6%A1%83%E8%8A%B1%E4%B8%80%E4%B8%96%E5%BC%80%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-1/640/360"
+        },
+        {
+          title: "长月烬明 · 翩然",
+          desc: "高人气角色线 | 明艳灵动 | 名场面密集",
+          episodes: ["角色合集", "CUT", "剧情向混剪"],
+          link: "https://search.bilibili.com/all?keyword=%E9%95%BF%E6%9C%88%E7%83%AC%E6%98%8E%20%E7%BF%A9%E7%84%B6%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-2/640/360"
+        },
+        {
+          title: "亲爱的天狐大人 · 苏浅浅",
+          desc: "古偶甜感角色 | 情绪过渡自然 | 角色成长线清晰",
+          episodes: ["正片", "CUT", "花絮"],
+          link: "https://search.bilibili.com/all?keyword=%E4%BA%B2%E7%88%B1%E7%9A%84%E5%A4%A9%E7%8B%90%E5%A4%A7%E4%BA%BA%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-3/640/360"
+        },
+        {
+          title: "我在顶峰等你 · 顾雪茭",
+          desc: "新作关注角色 | 话题持续升温 | 值得追更",
+          episodes: ["预告", "路透", "CUT"],
+          link: "https://search.bilibili.com/all?keyword=%E6%88%91%E5%9C%A8%E9%A1%B6%E5%B3%B0%E7%AD%89%E4%BD%A0%20%E5%AD%99%E7%8F%8D%E5%A6%AE",
+          cover: "https://picsum.photos/seed/role-4/640/360"
+        }
+      ],
+      stage: [
+        {
+          title: "高能舞台直拍合集",
+          desc: "节奏控制稳 | 镜头表现强 | 氛围感拉满",
+          episodes: ["直拍", "机位版", "练习室"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%88%9E%E5%8F%B0%20%E7%9B%B4%E6%8B%8D",
+          cover: "https://picsum.photos/seed/stage-1/640/360"
+        },
+        {
+          title: "合作舞台名场面",
+          desc: "合作适配度高 | 镜头调度流畅 | 记忆点强",
+          episodes: ["完整版", "高光CUT", "二创混剪"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E5%90%88%E4%BD%9C%E8%88%9E%E5%8F%B0",
+          cover: "https://picsum.photos/seed/stage-2/640/360"
+        },
+        {
+          title: "抒情舞台精选",
+          desc: "细腻表达 | 情绪层层递进 | 适合入坑补档",
+          episodes: ["正片", "现场版", "清唱片段"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%8A%92%E6%83%85%20%E8%88%9E%E5%8F%B0",
+          cover: "https://picsum.photos/seed/stage-3/640/360"
+        },
+        {
+          title: "年度舞台总览",
+          desc: "一条视频补完核心舞台，适合分享安利",
+          episodes: ["年度盘点", "高光片段", "推荐清单"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%88%9E%E5%8F%B0%E7%9B%98%E7%82%B9",
+          cover: "https://picsum.photos/seed/stage-4/640/360"
+        }
+      ],
+      show: [
+        {
+          title: "团综高能反应合集",
+          desc: "反应快、梗密度高、轻松下饭向",
+          episodes: ["正片", "CUT", "名场面"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%BB%BC%E8%89%BA",
+          cover: "https://picsum.photos/seed/show-1/640/360"
+        },
+        {
+          title: "游戏挑战名场面",
+          desc: "综艺节奏感好 | 镜头友好 | 入坑友好",
+          episodes: ["完整版", "高能CUT", "reaction"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%B8%B8%E6%88%8F%E6%8C%91%E6%88%98",
+          cover: "https://picsum.photos/seed/show-2/640/360"
+        },
+        {
+          title: "访谈综艺片段",
+          desc: "表达清晰自然 | 观点真诚 | 观感舒服",
+          episodes: ["访谈正片", "CUT", "金句合集"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%AE%BF%E8%B0%88",
+          cover: "https://picsum.photos/seed/show-3/640/360"
+        },
+        {
+          title: "综艺入坑速看",
+          desc: "一条视频快速了解综艺魅力点",
+          episodes: ["导览", "笑点合集", "剪辑版"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%BB%BC%E8%89%BA%20%E5%85%A5%E5%9D%91",
+          cover: "https://picsum.photos/seed/show-4/640/360"
+        }
+      ],
+      interview: [
+        {
+          title: "人物专访精选",
+          desc: "从角色理解到创作表达，信息量高",
+          episodes: ["完整版", "重点CUT", "文字摘录"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E4%B8%93%E8%AE%BF",
+          cover: "https://picsum.photos/seed/interview-1/640/360"
+        },
+        {
+          title: "活动采访回顾",
+          desc: "现场状态好，回答节奏松弛自然",
+          episodes: ["活动采访", "CUT", "快问快答"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E6%B4%BB%E5%8A%A8%20%E9%87%87%E8%AE%BF",
+          cover: "https://picsum.photos/seed/interview-2/640/360"
+        },
+        {
+          title: "幕后访谈合集",
+          desc: "聊表演、聊舞台、聊角色的成长线",
+          episodes: ["幕后", "CUT", "重点问答"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E5%B9%95%E5%90%8E%20%E8%AE%BF%E8%B0%88",
+          cover: "https://picsum.photos/seed/interview-3/640/360"
+        },
+        {
+          title: "采访高光合集",
+          desc: "适合新人快速认识她的表达风格",
+          episodes: ["高光", "CUT", "二创混剪"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E9%87%87%E8%AE%BF%20%E9%AB%98%E5%85%89",
+          cover: "https://picsum.photos/seed/interview-4/640/360"
+        }
+      ],
+      live: [
+        {
+          title: "直播回顾 · 日常场",
+          desc: "轻松聊天氛围好，适合睡前补档",
+          episodes: ["正片", "精华CUT", "文字时间轴"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E5%9B%9E%E9%A1%BE",
+          cover: "https://picsum.photos/seed/live-1/640/360"
+        },
+        {
+          title: "直播问答合辑",
+          desc: "幕后问题集中答复，信息密度高",
+          episodes: ["问答正片", "CUT", "要点汇总"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E9%97%AE%E7%AD%94",
+          cover: "https://picsum.photos/seed/live-2/640/360"
+        },
+        {
+          title: "直播名场面时间轴",
+          desc: "高能段落标记清晰，方便二刷",
+          episodes: ["时间轴", "高光CUT", "合集"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E7%9B%B4%E6%92%AD%20%E5%90%8D%E5%9C%BA%E9%9D%A2",
+          cover: "https://picsum.photos/seed/live-3/640/360"
+        },
+        {
+          title: "直播返场回放",
+          desc: "返场互动内容集中补档",
+          episodes: ["返场", "精华", "二创剪辑"],
+          link: "https://search.bilibili.com/all?keyword=%E5%AD%99%E7%8F%8D%E5%A6%AE%20%E8%BF%94%E5%9C%BA",
+          cover: "https://picsum.photos/seed/live-4/640/360"
+        }
+      ]
+    };
+
+    const filmographyData = [
+      { title: "《见习爱神》", role: "饰 漫漫", intro: "青春题材角色，灵动感与轻松感并存。", link: "https://search.bilibili.com/all?keyword=%E8%A7%81%E4%B9%A0%E7%88%B1%E7%A5%9E%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-1/640/360" },
+      { title: "《天意》", role: "饰 天依", intro: "早期荧幕角色，成长线清晰。", link: "https://search.bilibili.com/all?keyword=%E5%A4%A9%E6%84%8F%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-2/640/360" },
+      { title: "《日不落酒店》", role: "饰 红", intro: "电影角色，风格辨识度高。", link: "https://search.bilibili.com/all?keyword=%E6%97%A5%E4%B8%8D%E8%90%BD%E9%85%92%E5%BA%97%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-3/640/360" },
+      { title: "《梦见狮子》", role: "饰 绫酒", intro: "角色气质突出，剧情线有记忆点。", link: "https://search.bilibili.com/all?keyword=%E6%A2%A6%E8%A7%81%E7%8B%AE%E5%AD%90%20%E7%BB%AB%E9%85%92", cover: "https://picsum.photos/seed/film-4/640/360" },
+      { title: "《替嫁小才女》", role: "饰 唐小山", intro: "轻喜线角色，节奏明快。", link: "https://search.bilibili.com/all?keyword=%E6%9B%BF%E5%AB%81%E5%B0%8F%E6%89%8D%E5%A5%B3%20%E5%AD%99%E7%8F%8D%E5%A6%AE", cover: "https://picsum.photos/seed/film-5/640/360" },
+      { title: "《亲爱的天狐大人》", role: "饰 苏浅浅", intro: "古偶甜感路线，角色成长完整。", link: "https://search.bilibili.com/all?keyword=%E4%BA%B2%E7%88%B1%E7%9A%84%E5%A4%A9%E7%8B%90%E5%A4%A7%E4%BA%BA%20%E8%8B%8F%E6%B5%85%E6%B5%85", cover: "https://picsum.photos/seed/film-6/640/360" },
+      { title: "《长月烬明》", role: "饰 翩然", intro: "高讨论度角色，出圈名场面密集。", link: "https://search.bilibili.com/all?keyword=%E9%95%BF%E6%9C%88%E7%83%AC%E6%98%8E%20%E7%BF%A9%E7%84%B6", cover: "https://picsum.photos/seed/film-7/640/360" },
+      { title: "《千朵桃花一世开》", role: "饰 暮悬铃/阿珠/神女", intro: "一人分饰三角，角色切换层次感强。", link: "https://search.bilibili.com/all?keyword=%E5%8D%83%E6%9C%B5%E6%A1%83%E8%8A%B1%E4%B8%80%E4%B8%96%E5%BC%80%20%E6%9A%AE%E6%82%AC%E9%93%83", cover: "https://picsum.photos/seed/film-8/640/360" },
+      { title: "《我在顶峰等你》", role: "饰 顾雪茭", intro: "新作品持续关注中。", link: "https://search.bilibili.com/all?keyword=%E6%88%91%E5%9C%A8%E9%A1%B6%E5%B3%B0%E7%AD%89%E4%BD%A0%20%E9%A1%BE%E9%9B%AA%E8%8C%AD", cover: "https://picsum.photos/seed/film-9/640/360" },
+      { title: "《十万狂花入梦来》", role: "饰 鸭毛", intro: "角色设定新鲜，期待正片上线。", link: "https://search.bilibili.com/all?keyword=%E5%8D%81%E4%B8%87%E7%8B%82%E8%8A%B1%E5%85%A5%E6%A2%A6%E6%9D%A5%20%E9%B8%AD%E6%AF%9B", cover: "https://picsum.photos/seed/film-10/640/360" },
+      { title: "《师兄太稳健》", role: "饰 云霄仙子", intro: "古装仙侠风角色，氛围感强。", link: "https://search.bilibili.com/all?keyword=%E5%B8%88%E5%85%84%E5%A4%AA%E7%A8%B3%E5%81%A5%20%E4%BA%91%E9%9C%84%E4%BB%99%E5%AD%90", cover: "https://picsum.photos/seed/film-11/640/360" },
+      { title: "《凤舞九天》", role: "饰 上官飞燕", intro: "古风角色向，动作与气场兼具。", link: "https://search.bilibili.com/all?keyword=%E5%87%A4%E8%88%9E%E4%B9%9D%E5%A4%A9%20%E4%B8%8A%E5%AE%98%E9%A3%9E%E7%87%95", cover: "https://picsum.photos/seed/film-12/640/360" }
+    ];
+
+    const guideImages = [
+      "https://picsum.photos/seed/guide-1/900/1200",
+      "https://picsum.photos/seed/guide-2/900/1200",
+      "https://picsum.photos/seed/guide-3/900/1200",
+      "https://picsum.photos/seed/guide-4/900/1200",
+      "https://picsum.photos/seed/guide-5/900/1200"
+    ];
+
+    function renderMediaCards(targetId, items) {
+      const mount = document.getElementById(targetId);
+      if (!mount) return;
+      if (!items || !items.length) {
+        mount.innerHTML = '<div class="empty-note">该分区暂无内容</div>';
+        return;
+      }
+      mount.innerHTML = items.map((item) => `
+        <article class="media-card">
+          <a class="media-thumb" href="${item.link}" target="_blank" rel="noopener noreferrer">
+            <img src="${item.cover}" alt="${item.title}" loading="lazy">
+            <span class="play-icon">▶</span>
+          </a>
+          <div class="media-body">
+            <h3>${item.title}</h3>
+            <p class="meta-line">简介：${item.desc}</p>
+            <p class="episode-line">续集：${(item.episodes || []).join("，")}</p>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function renderFilmCards() {
+      const mount = document.getElementById("grid-film");
+      if (!mount) return;
+      mount.innerHTML = filmographyData.map((item) => `
+        <article class="film-card">
+          <a href="${item.link}" target="_blank" rel="noopener noreferrer">
+            <img class="poster" src="${item.cover}" alt="${item.title}" loading="lazy">
+          </a>
+          <div class="body">
+            <h3>${item.title}</h3>
+            <div class="role">${item.role}</div>
+            <div class="intro">${item.intro}</div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabPages = document.querySelectorAll(".tab-page");
+
+    function activatePage(pageKey) {
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.page === pageKey);
+      });
+      tabPages.forEach((page) => {
+        page.classList.toggle("active", page.id === `page-${pageKey}`);
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => activatePage(btn.dataset.page));
+    });
+
+    document.getElementById("brandTop").addEventListener("click", (event) => {
+      event.preventDefault();
+      activatePage("guide");
+    });
+
+    const guideImage = document.getElementById("guideImage");
+    const guideDots = document.getElementById("guideDots");
+    const prevGuide = document.getElementById("prevGuide");
+    const nextGuide = document.getElementById("nextGuide");
+    let guideIndex = 0;
+
+    function updateGuideImage() {
+      guideImage.src = guideImages[guideIndex];
+      guideDots.querySelectorAll(".dot").forEach((dot, idx) => {
+        dot.classList.toggle("active", idx === guideIndex);
+      });
+    }
+
+    guideImages.forEach((_, idx) => {
+      const dot = document.createElement("button");
+      dot.className = "dot";
+      dot.type = "button";
+      dot.addEventListener("click", () => {
+        guideIndex = idx;
+        updateGuideImage();
+      });
+      guideDots.appendChild(dot);
+    });
+
+    prevGuide.addEventListener("click", () => {
+      guideIndex = (guideIndex - 1 + guideImages.length) % guideImages.length;
+      updateGuideImage();
+    });
+    nextGuide.addEventListener("click", () => {
+      guideIndex = (guideIndex + 1) % guideImages.length;
+      updateGuideImage();
+    });
+
+    renderMediaCards("grid-role", categoryData.role);
+    renderMediaCards("grid-stage", categoryData.stage);
+    renderMediaCards("grid-show", categoryData.show);
+    renderMediaCards("grid-interview", categoryData.interview);
+    renderMediaCards("grid-live", categoryData.live);
+    renderFilmCards();
+    updateGuideImage();
+  </script>
 </body>
 </html>
