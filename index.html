@@ -1,1300 +1,586 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>珍珍日上TV</title>
-  <meta name="description" content="珍珍日上TV · 作品、舞台、综艺、直播回放分区视频站。">
-  <style>
-    :root {
-      --bg: #070707;
-      --bg-soft: #111111;
-      --panel: #121212;
-      --card: #191919;
-      --line: rgba(255, 215, 132, 0.22);
-      --text: #f5f5f5;
-      --muted: #b6b6b6;
-      --gold: #d8b269;
-      --gold-soft: #f0d49a;
-      --shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "PingFang SC", "Microsoft YaHei", "Segoe UI", sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 84% 0%, rgba(216, 178, 105, 0.18), transparent 34%),
-        radial-gradient(circle at 10% 10%, rgba(216, 178, 105, 0.1), transparent 30%),
-        linear-gradient(180deg, #050505, #0b0b0b 45%, #060606);
-      min-height: 100vh;
-    }
-
-    .container {
-      width: min(1320px, 94vw);
-      margin: 0 auto;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      border-bottom: 1px solid var(--line);
-      background: rgba(5, 5, 5, 0.92);
-      backdrop-filter: blur(8px);
-    }
-
-    .topbar {
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 0;
-    }
-
-    .brand {
-      white-space: nowrap;
-      font-size: 1.06rem;
-      letter-spacing: 0.6px;
-      font-weight: 700;
-      text-decoration: none;
-      color: var(--text);
-    }
-
-    .brand b {
-      color: var(--gold-soft);
-    }
-
-    .brand .sep {
-      color: #dbc292;
-      margin: 0 4px;
-    }
-
-    .search {
-      flex: 1;
-      max-width: 460px;
-      display: flex;
-      align-items: center;
-      height: 40px;
-      padding: 0 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .search input {
-      width: 100%;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: var(--text);
-      font-size: 0.92rem;
-    }
-
-    .search input::placeholder {
-      color: #8f8f8f;
-    }
-
-    .nav {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      scrollbar-width: none;
-      padding-bottom: 2px;
-    }
-
-    .nav::-webkit-scrollbar {
-      display: none;
-    }
-
-    .nav a {
-      text-decoration: none;
-      color: #ececec;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 999px;
-      padding: 7px 13px;
-      font-size: 0.84rem;
-      white-space: nowrap;
-      transition: 0.2s ease;
-    }
-
-    .nav a:hover,
-    .nav a.active {
-      color: #1a1408;
-      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
-      border-color: rgba(255, 255, 255, 0.25);
-    }
-
-    main {
-      padding-bottom: 40px;
-    }
-
-    .hero {
-      margin-top: 16px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      background:
-        linear-gradient(128deg, rgba(8, 8, 8, 0.93), rgba(18, 18, 18, 0.78)),
-        radial-gradient(circle at 76% 40%, rgba(216, 178, 105, 0.2), transparent 40%);
-      background-size: cover;
-      background-position: center;
-      min-height: 220px;
-      display: flex;
-      align-items: flex-end;
-    }
-
-    .hero-inner {
-      width: 100%;
-      padding: clamp(20px, 5vw, 44px);
-      background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.64));
-    }
-
-    .hero-tag {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: #ffe3b3;
-      margin-bottom: 4px;
-    }
-
-    .hero h1 {
-      font-size: clamp(1.6rem, 3.6vw, 2.8rem);
-      margin-bottom: 5px;
-    }
-
-    .hero p {
-      color: #d0d0d0;
-      font-size: 0.92rem;
-      max-width: 760px;
-    }
-
-    .channel {
-      margin-top: 28px;
-    }
-
-    .channel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 11px;
-    }
-
-    .channel-head h2 {
-      font-size: 1.3rem;
-      color: #f7f2e8;
-    }
-
-    .channel-head .label {
-      font-size: 0.82rem;
-      color: #cda96d;
-    }
-
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(6, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .video-card {
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      background: var(--card);
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-      min-width: 0;
-    }
-
-    .video-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(216, 178, 105, 0.65);
-    }
-
-    .thumb {
-      aspect-ratio: 16 / 9;
-      position: relative;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-      background:
-        linear-gradient(135deg, rgba(216, 178, 105, 0.2), rgba(255, 255, 255, 0.06)),
-        #151515;
-      background-size: cover;
-      background-position: center;
-      display: grid;
-      place-items: center;
-    }
-
-    .play {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.34);
-      background: rgba(0, 0, 0, 0.45);
-      display: grid;
-      place-items: center;
-      font-size: 0.84rem;
-    }
-
-    .duration {
-      position: absolute;
-      right: 7px;
-      bottom: 7px;
-      border-radius: 6px;
-      padding: 2px 6px;
-      font-size: 0.72rem;
-      background: rgba(0, 0, 0, 0.72);
-      color: #fff;
-    }
-
-    .info {
-      padding: 10px 10px 12px;
-    }
-
-    .title {
-      font-size: 0.9rem;
-      line-height: 1.35;
-      min-height: 2.45em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .desc {
-      margin-top: 5px;
-      font-size: 0.79rem;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .empty {
-      grid-column: 1 / -1;
-      border: 1px dashed rgba(255, 255, 255, 0.25);
-      border-radius: 10px;
-      padding: 16px;
-      text-align: center;
-      color: #9c9c9c;
-      background: rgba(255, 255, 255, 0.02);
-      font-size: 0.9rem;
-    }
-
-    .admin-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 90;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-    }
-
-    .admin-modal.show {
-      display: flex;
-    }
-
-    .admin-panel {
-      width: min(1080px, 95vw);
-      max-height: min(88vh, 860px);
-      overflow: auto;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      background: #101010;
-      box-shadow: var(--shadow);
-      padding: 14px;
-    }
-
-    .admin-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .admin-head h2 {
-      font-size: 1.08rem;
-      color: #f0d9a9;
-    }
-
-    .admin-close {
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      background: rgba(255, 255, 255, 0.06);
-      color: #fff;
-      border-radius: 8px;
-      padding: 7px 12px;
-      cursor: pointer;
-    }
-
-    .admin-alert {
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: rgba(255, 255, 255, 0.04);
-      border-radius: 10px;
-      padding: 9px 10px;
-      font-size: 0.84rem;
-      color: #e8eefb;
-      margin-bottom: 10px;
-    }
-
-    .admin-alert.error {
-      border-color: rgba(255, 95, 95, 0.6);
-      color: #ffcfcf;
-    }
-
-    .admin-alert.ok {
-      border-color: rgba(110, 225, 172, 0.6);
-      color: #d7ffe9;
-    }
-
-    .admin-grid {
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 10px;
-    }
-
-    .admin-form,
-    .admin-list-wrap {
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.03);
-      padding: 10px;
-    }
-
-    .admin-form h3,
-    .admin-list-wrap h3 {
-      font-size: 0.95rem;
-      margin-bottom: 8px;
-      color: #f4dfb4;
-    }
-
-    .field {
-      margin-bottom: 8px;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 4px;
-      font-size: 0.78rem;
-      color: #cecece;
-    }
-
-    .field input,
-    .field select,
-    .field textarea {
-      width: 100%;
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.28);
-      color: #fff;
-      padding: 8px 9px;
-      font-size: 0.84rem;
-      outline: none;
-    }
-
-    .field textarea {
-      min-height: 64px;
-      resize: vertical;
-    }
-
-    .split {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      margin-top: 6px;
-    }
-
-    .btn {
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      background: rgba(255, 255, 255, 0.05);
-      color: #fff;
-      padding: 7px 11px;
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-
-    .btn.primary {
-      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
-      color: #23160a;
-      border-color: rgba(255, 255, 255, 0.3);
-      font-weight: 700;
-    }
-
-    .btn.danger {
-      background: rgba(255, 104, 104, 0.12);
-      border-color: rgba(255, 124, 124, 0.46);
-      color: #ffc6c6;
-    }
-
-    .admin-list {
-      display: grid;
-      gap: 7px;
-      max-height: 56vh;
-      overflow: auto;
-      padding-right: 1px;
-    }
-
-    .admin-item {
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 9px;
-      padding: 7px;
-      background: rgba(0, 0, 0, 0.2);
-    }
-
-    .admin-item-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 0.8rem;
-    }
-
-    .admin-item-head b {
-      color: #f6e7c7;
-    }
-
-    .admin-item-meta {
-      margin-top: 4px;
-      font-size: 0.74rem;
-      color: #b2b2b2;
-    }
-
-    .admin-item-actions {
-      margin-top: 7px;
-      display: flex;
-      gap: 5px;
-    }
-
-    footer {
-      border-top: 1px solid var(--line);
-      text-align: center;
-      color: #9b9b9b;
-      font-size: 0.83rem;
-      padding: 20px 0 30px;
-      margin-top: 26px;
-    }
-
-    @media (max-width: 1180px) {
-      .video-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 980px) {
-      .admin-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .topbar {
-        flex-wrap: wrap;
-      }
-
-      .search {
-        order: 3;
-        width: 100%;
-        max-width: none;
-      }
-
-      .video-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 560px) {
-      .video-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .split {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>珍藏丨孙珍妮安利站</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+}
+:root {
+  --bg-main: #0F0F17;
+  --bg-card: #12121B;
+  --gold: #FED71A;
+  --text-white: #FFFFFF;
+  --text-gray: #CCCCCC;
+  --border-gray: #444444;
+  --radius: 16px;
+}
+body {
+  background-color: var(--bg-main);
+  color: var(--text-white);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+.wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.search-bar {
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.search-input {
+  flex: 1;
+  height: 48px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-gray);
+  border-radius: var(--radius);
+  padding: 0 16px;
+  color: var(--text-white);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.search-btn {
+  background: none;
+  border: none;
+  color: var(--text-white);
+  font-size: 20px;
+  cursor: pointer;
+}
+.nav-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 0 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border-gray);
+  margin-bottom: 24px;
+}
+.nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+.tab-item {
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+.tab-item.active {
+  background-color: var(--bg-card);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+.tab-item:not(.active) {
+  color: var(--text-white);
+  background: none;
+  border: 1px solid transparent;
+}
+.hero-card {
+  padding: 40px 24px;
+  background-color: var(--bg-card);
+  border-radius: 24px;
+  text-align: center;
+  border: 1px solid var(--border-gray);
+  margin-bottom: 32px;
+}
+.hero-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+.hero-title span {
+  color: var(--gold);
+  margin: 0 8px;
+}
+.hero-desc {
+  font-size: 18px;
+  color: var(--text-gray);
+  margin-bottom: 32px;
+}
+.hero-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.hero-btn {
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-white);
+  border: 1px solid var(--border-gray);
+  background-color: var(--bg-main);
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+.hero-btn.active {
+  background-color: var(--bg-card);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+.hero-extra {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 600px;
+  margin: 20px auto 0;
+}
+.hero-extra .btn {
+  padding: 16px 24px;
+  border-radius: var(--radius);
+  font-size: 20px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-white);
+  border: 1px solid var(--border-gray);
+  background-color: var(--bg-main);
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-align: center;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.section {
+  display: none;
+  margin-bottom: 40px;
+}
+.section.active {
+  display: block;
+}
+.section-title {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold);
+}
+.content-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-gray);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.content-card h3 {
+  font-size: 20px;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.content-card p {
+  font-size: 16px;
+  color: var(--text-gray);
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+.small-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  background-color: rgba(254, 215, 26, 0.1);
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 14px;
+  margin-right: 8px;
+  margin-top: 8px;
+}
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+}
+footer {
+  text-align: center;
+  padding: 32px 20px;
+  border-top: 1px solid var(--border-gray);
+  color: var(--text-gray);
+  font-size: 14px;
+  margin-top: 40px;
+}
+footer .gold-txt {
+  color: var(--gold);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 32px;
+  }
+  .hero-btn, .hero-extra .btn {
+    font-size: 18px;
+    padding: 14px 20px;
+  }
+  .grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
-<body id="top">
-  <header>
-    <div class="container topbar">
-      <a class="brand" href="#top"><b>珍珍日上TV</b><span class="sep">｜</span>JENNYBOB</a>
-      <label class="search">
-        <input id="searchInput" type="text" placeholder="搜索视频标题/简介">
-      </label>
-      <nav class="nav">
-        <a href="#works" class="active">作品</a>
-        <a href="#stage">舞台</a>
-        <a href="#show">综艺</a>
-        <a href="#live">直播回放</a>
-        <a href="#" id="adminEntry">管理</a>
-        <a href="./daily-group.html">官群空降</a>
-      </nav>
+<body>
+<div class="wrapper">
+  <div class="search-bar">
+    <div class="search-input">
+      <span>🧋</span>
+      <span>向全世界安利孙珍妮</span>
     </div>
-  </header>
-
-  <main class="container">
-    <section id="heroBanner" class="hero">
-      <div class="hero-inner">
-        <div class="hero-tag">JENNYBOB</div>
-        <h1>JENNYBOB TV</h1>
-        <p>遇见珍妮，万事如意。谢谢你走到这里，欢迎加入藕粉大家庭。</p>
-      </div>
-    </section>
-
-    <section class="channel" id="works">
-      <div class="channel-head">
-        <h2>作品</h2>
-        <span class="label">Works</span>
-      </div>
-      <div class="video-grid" data-channel="role"></div>
-    </section>
-
-    <section class="channel" id="stage">
-      <div class="channel-head">
-        <h2>舞台</h2>
-        <span class="label">Stage</span>
-      </div>
-      <div class="video-grid" data-channel="stage"></div>
-    </section>
-
-    <section class="channel" id="show">
-      <div class="channel-head">
-        <h2>综艺</h2>
-        <span class="label">Show</span>
-      </div>
-      <div class="video-grid" data-channel="show"></div>
-    </section>
-
-    <section class="channel" id="live">
-      <div class="channel-head">
-        <h2>直播回放</h2>
-        <span class="label">Live</span>
-      </div>
-      <div class="video-grid" data-channel="live"></div>
-    </section>
-  </main>
-
-  <div id="adminModal" class="admin-modal" aria-hidden="true">
-    <div class="admin-panel">
-      <div class="admin-head">
-        <h2>内容管理</h2>
-        <button id="adminClose" class="admin-close" type="button">关闭</button>
-      </div>
-      <div id="adminAlert" class="admin-alert">已进入管理模式。</div>
-
-      <div class="admin-alert">
-        <div class="split">
-          <div class="field">
-            <label for="heroImageUrl">首页横幅图 URL</label>
-            <input id="heroImageUrl" type="url" placeholder="https://...">
-          </div>
-          <div class="field" style="align-self:end;">
-            <button id="saveHeroBtn" class="btn primary" type="button">保存横幅图</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="admin-alert">
-        <div class="split">
-          <div class="field">
-            <label for="gtOwner">Gitee Owner</label>
-            <input id="gtOwner" type="text" placeholder="例如：yourname">
-          </div>
-          <div class="field">
-            <label for="gtRepo">Gitee Repo</label>
-            <input id="gtRepo" type="text" placeholder="例如：your-repo">
-          </div>
-          <div class="field">
-            <label for="gtBranch">分支</label>
-            <input id="gtBranch" type="text" placeholder="master">
-          </div>
-          <div class="field">
-            <label for="gtPath">云端数据路径</label>
-            <input id="gtPath" type="text" placeholder="data/zzrs-videos.json">
-          </div>
-        </div>
-        <div class="field">
-          <label for="gtToken">Gitee Token</label>
-          <input id="gtToken" type="password" placeholder="gitee_pat_xxx">
-        </div>
-        <div class="btn-row">
-          <button id="saveCloudConfigBtn" class="btn" type="button">保存云配置</button>
-          <button id="pullCloudBtn" class="btn" type="button">拉取云端</button>
-          <button id="pushCloudBtn" class="btn" type="button">上传云端</button>
-          <label style="margin-left:auto;font-size:.78rem;display:flex;align-items:center;gap:6px;color:#d8d8d8;">
-            <input id="autoSyncCloud" type="checkbox">
-            自动云同步
-          </label>
-        </div>
-      </div>
-
-      <div class="admin-grid">
-        <section class="admin-form">
-          <h3 id="formTitle">新增视频</h3>
-          <form id="adminForm">
-            <input type="hidden" id="editId">
-            <div class="field">
-              <label for="videoTitle">标题 *</label>
-              <input id="videoTitle" type="text" required>
-            </div>
-            <div class="field">
-              <label for="videoDesc">简介</label>
-              <textarea id="videoDesc"></textarea>
-            </div>
-            <div class="split">
-              <div class="field">
-                <label for="videoDuration">时长</label>
-                <input id="videoDuration" type="text" placeholder="例如：04:12">
-              </div>
-              <div class="field">
-                <label for="videoChannel">分区 *</label>
-                <select id="videoChannel" required>
-                  <option value="role">作品</option>
-                  <option value="stage">舞台</option>
-                  <option value="show">综艺</option>
-                  <option value="live">直播回放</option>
-                </select>
-              </div>
-            </div>
-            <div class="field">
-              <label for="videoSourceUrl">原链接（点击后新窗口打开）*</label>
-              <input id="videoSourceUrl" type="url" placeholder="https://...">
-            </div>
-            <div class="field">
-              <label for="coverUrl">封面图 URL（可选）</label>
-              <input id="coverUrl" type="url" placeholder="https://...">
-            </div>
-            <div class="btn-row">
-              <button class="btn primary" type="submit">保存</button>
-              <button class="btn" id="resetFormBtn" type="button">清空</button>
-            </div>
-          </form>
-        </section>
-
-        <section class="admin-list-wrap">
-          <h3>已添加内容</h3>
-          <div id="adminList" class="admin-list">
-            <div class="empty">暂无内容</div>
-          </div>
-        </section>
-      </div>
+    <button class="search-btn">搜索</button>
+    <button class="search-btn">🎬</button>
+    <button class="search-btn">✨</button>
+  </div>
+  <div class="nav-tabs">
+    <div class="tab-item active" data-target="#guide">入坑指南</div>
+    <div class="tab-item" data-target="#role">角色安利</div>
+    <div class="tab-item" data-target="#variety">综艺安利</div>
+    <div class="tab-item" data-target="#stage">舞台安利</div>
+    <div class="tab-item" data-target="#interview">采访安利</div>
+    <div class="tab-item" data-target="#live">直播回顾</div>
+  </div>
+  <div class="hero-card">
+    <h1 class="hero-title">珍藏<span>|</span>孙珍妮安利站</h1>
+    <p class="hero-desc">遇见珍妮，万事如意。这里整理了角色、综艺、舞台和入坑路线，欢迎一键收藏慢慢补。</p>
+    <div class="hero-buttons">
+      <a href="#guide" class="hero-btn active">入坑指南</a>
+      <a href="#role" class="hero-btn">角色安利</a>
+      <a href="#variety" class="hero-btn">综艺安利</a>
+      <a href="#stage" class="hero-btn">舞台安利</a>
+    </div>
+    <div class="hero-extra">
+      <a href="#interview" class="btn">采访安利</a>
+      <a href="#live" class="btn">直播回顾</a>
     </div>
   </div>
+</div>
+<div class="container wrapper">
+  <section id="guide" class="section active">
+    <h2 class="section-title">入坑指南</h2>
+    <div class="content-card">
+      <h3>基本介绍</h3>
+      <p>姓名：孙珍妮（Jenny Bob）</p>
+      <p>性别：女</p>
+      <p>生日：2000.05.05</p>
+      <p>出生地：中国上海</p>
+      <p>身高：165cm</p>
+      <p>MBTI：ESFP</p>
+      <p>学校：上海戏剧学院表演系（在读）</p>
+      <p>出道日期：2016年3月26日</p>
+      <p>粉丝名：藕粉</p>
+      <p>应援色：熙和金（色标：#FED71A）</p>
+    </div>
+    <div class="content-card">
+      <h3>实时更新</h3>
+      <p>📱 微博：日常动态、剧组营业、活动官宣、高清美图</p>
+      <a href="#" class="small-btn">微博主页</a>
+      <a href="#" class="small-btn">动态汇总</a>
+      <br><br>
+      <p>📕 小红书：生活碎片、妆容分享、剧组日常、自拍合集</p>
+      <a href="#" class="small-btn">小红书主页</a>
+      <a href="#" class="small-btn">笔记汇总</a>
+      <br><br>
+      <p>🎵 抖音：短视频营业、搞笑日常、角色宣传、幕后花絮</p>
+      <a href="#" class="small-btn">抖音主页</a>
+      <a href="#" class="small-btn">视频合集</a>
+      <br><br>
+      <p>📺 哔哩哔哩：vlog日常、幕后花絮、问题QA、好物分享</p>
+      <a href="#" class="small-btn">B站主页</a>
+      <a href="#" class="small-btn">视频合集</a>
+    </div>
+    <div class="content-card">
+      <h3>账号合集</h3>
+      <p>微博：@孙珍妮的微博</p>
+      <p>B站：@是孙珍妮</p>
+      <p>抖音：@是孙珍妮</p>
+      <p>小红书：@是孙珍妮</p>
+      <p>INS：_sunzhenni_</p>
+      <p>全民K歌：孙珍妮</p>
+    </div>
+    <div class="content-card">
+      <h3>影视作品</h3>
+      <p>《天意》饰 天依</p>
+      <p>《梦见狮子》饰 绫酒</p>
+      <p>《见习爱神》饰 漫漫</p>
+      <p>《日不落酒店》饰 红</p>
+      <p>《长月烬明》饰 翩然</p>
+      <p>《亲爱的天狐大人》饰 苏浅浅</p>
+      <p>《千朵桃花一世开》饰 暮悬铃/阿珠/神女</p>
+      <p>《我在顶峰等你》饰 顾雪茭</p>
+      <p>《替嫁小才女》饰 唐小山</p>
+      <p>《十万狂花入梦来》饰 鸭毛</p>
+      <p>《师兄太稳健》饰 云霄仙子</p>
+      <p>《凤舞九天》饰 上官飞燕</p>
+    </div>
+  </section>
 
-  <footer>
-    <div class="container">珍珍日上TV</div>
-  </footer>
+  <section id="role" class="section">
+    <h2 class="section-title">角色安利</h2>
+    <div class="grid-2">
+      <div class="content-card">
+        <h3>千朵桃花一世开 · 暮悬铃/阿珠/神女</h3>
+        <p>领衔主演 | 一人分饰三角 | 暗域圣女×灵动少女×清冷神女</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+        <a href="#" class="small-btn">原著小说</a>
+      </div>
+      <div class="content-card">
+        <h3>长月烬明 · 翩然</h3>
+        <p>九尾狐妖 | 经典出圈 | 魅惑又痴情的意难平</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+        <a href="#" class="small-btn">原著小说</a>
+      </div>
+      <div class="content-card">
+        <h3>我在顶峰等你 · 顾雪茭</h3>
+        <p>励志大女主 | 重生追梦 | 清醒独立搞事业</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+        <a href="#" class="small-btn">原著小说</a>
+      </div>
+      <div class="content-card">
+        <h3>亲爱的天狐大人 · 苏浅浅</h3>
+        <p>灵动娇俏 | 狐系甜妹 | 古装轻喜剧可爱担当</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+      </div>
+      <div class="content-card">
+        <h3>十万狂花入梦来 · 鸭毛</h3>
+        <p>灵动讨喜 | 古装喜剧 | 鲜活可爱小角色</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+      </div>
+      <div class="content-card">
+        <h3>凤舞九天 · 上官飞燕</h3>
+        <p>江湖侠女 | 打戏利落 | 飒爽英气</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+        <a href="#" class="small-btn">原著小说</a>
+      </div>
+      <div class="content-card">
+        <h3>师兄太稳健 · 云霄仙子</h3>
+        <p>清冷仙气 | 三霄仙子 | 古风造型绝美</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+        <a href="#" class="small-btn">原著小说</a>
+      </div>
+      <div class="content-card">
+        <h3>其他角色合集</h3>
+        <p>天依、绫酒、漫漫、红、唐小山</p>
+        <a href="#" class="small-btn">正片</a>
+        <a href="#" class="small-btn">CUT</a>
+      </div>
+      <div class="content-card">
+        <h3>二创合集</h3>
+        <p>饭制剪辑 | 图文 | 同人 | 水仙剧 | 空瓶图</p>
+        <a href="#" class="small-btn">合集</a>
+        <a href="#" class="small-btn">水仙剧</a>
+        <a href="#" class="small-btn">空瓶图</a>
+      </div>
+    </div>
+  </section>
 
-  <script>
-    const VIDEO_LIBRARY = {
-      stage: [],
-      show: [],
-      role: [],
-      live: []
-    };
+  <section id="variety" class="section">
+    <h2 class="section-title">综艺安利</h2>
+    <div class="content-card"><h3>天天向上</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>星APP风云榜</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>这!就是世界波</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>晚安朋友圈</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>中华文明之美</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>花样妹妹</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>星星美人鱼2</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>塞纳河开学啦</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>创造营2020</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>创可少女屋</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>神奇的汉字</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>我是大美人</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>萌探探探案3</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>奔跑吧第7季</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>开工！喜剧之夜</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>你好，星期六</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+    <div class="content-card"><h3>盒子里的猫第二季</h3><a href="#" class="small-btn">正片</a><a href="#" class="small-btn">CUT</a></div>
+  </section>
 
-    const channelLabels = {
-      stage: "舞台",
-      show: "综艺",
-      role: "作品",
-      live: "直播回放"
-    };
-    const channelOrder = ["stage", "show", "role", "live"];
+  <section id="stage" class="section">
+    <h2 class="section-title">舞台安利</h2>
+    <div class="content-card">
+      <h3>偶像的黎明</h3>
+      <a href="#" class="small-btn">2016</a>
+      <a href="#" class="small-btn">全集</a>
+      <a href="#" class="small-btn">直拍</a>
+    </div>
+    <div class="content-card">
+      <h3>十八个闪耀瞬间</h3>
+      <a href="#" class="small-btn">2016</a>
+      <a href="#" class="small-btn">2017</a>
+      <a href="#" class="small-btn">全集</a>
+      <a href="#" class="small-btn">直拍</a>
+    </div>
+    <div class="content-card">
+      <h3>美丽世界</h3>
+      <a href="#" class="small-btn">2017</a>
+      <a href="#" class="small-btn">2018</a>
+      <a href="#" class="small-btn">全集</a>
+      <a href="#" class="small-btn">直拍</a>
+    </div>
+    <div class="content-card">
+      <h3>风尚大赏</h3>
+      <a href="#" class="small-btn">2016.11.05 走秀</a>
+      <a href="#" class="small-btn">2017.11.18 走秀</a>
+      <a href="#" class="small-btn">舞台</a>
+      <a href="#" class="small-btn">采访</a>
+    </div>
+    <div class="content-card">
+      <h3>橘色奇迹</h3>
+      <a href="#" class="small-btn">2019</a>
+      <a href="#" class="small-btn">全集</a>
+      <a href="#" class="small-btn">直拍</a>
+    </div>
+    <div class="content-card">
+      <h3>头号新闻</h3>
+      <a href="#" class="small-btn">2018</a>
+      <a href="#" class="small-btn">2019</a>
+      <a href="#" class="small-btn">2020</a>
+      <a href="#" class="small-btn">全集</a>
+      <a href="#" class="small-btn">直拍</a>
+    </div>
+    <div class="content-card">
+      <h3>终极任务</h3>
+      <a href="#" class="small-btn">2021</a>
+      <a href="#" class="small-btn">2022</a>
+      <a href="#" class="small-btn">全集</a>
+      <a href="#" class="small-btn">直拍</a>
+    </div>
+    <div class="content-card"><h3>特殊公演</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
+    <div class="content-card"><h3>联合公演</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
+    <div class="content-card"><h3>助演舞台</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
+    <div class="content-card">
+      <h3>MV 合集</h3>
+      <a href="#" class="small-btn">Color Girls</a>
+      <a href="#" class="small-btn">Colorful Days</a>
+      <a href="#" class="small-btn">HONOR</a>
+      <a href="#" class="small-btn">Twinkle Twinkle</a>
+      <a href="#" class="small-btn">都选C</a>
+      <a href="#" class="small-btn">梦想岛</a>
+      <a href="#" class="small-btn">绚丽时代</a>
+      <a href="#" class="small-btn">浪漫关系</a>
+      <a href="#" class="small-btn">少女终末战争</a>
+      <a href="#" class="small-btn">流动的希望</a>
+      <a href="#" class="small-btn">夏日柠檬船</a>
+      <a href="#" class="small-btn">未来的乐章</a>
+      <a href="#" class="small-btn">好运来</a>
+      <a href="#" class="small-btn">新年这一刻</a>
+      <a href="#" class="small-btn">生日快乐</a>
+      <a href="#" class="small-btn">森林法则</a>
+      <a href="#" class="small-btn">那年夏天的梦</a>
+      <a href="#" class="small-btn">未来会来</a>
+      <a href="#" class="small-btn">甜蜜盛典</a>
+      <a href="#" class="small-btn">虚构者</a>
+    </div>
+    <div class="content-card"><h3>VLOG</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">幕后花絮</a></div>
+    <div class="content-card"><h3>金曲大赏</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
+    <div class="content-card"><h3>创造炙热的青春</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
+    <div class="content-card"><h3>偶像年度人气总决选</h3><a href="#" class="small-btn">全集</a><a href="#" class="small-btn">直拍</a></div>
+    <div class="content-card"><h3>生日冷餐会</h3><a href="#" class="small-btn">合集</a><a href="#" class="small-btn">直拍</a></div>
+  </section>
 
-    const ADMIN_PASSWORD_KEY = "zzrs-admin-password";
-    const DEFAULT_ADMIN_PASSWORD = "zzrs2026";
-    const CLOUD_CONFIG_KEY = "zzrs-cloud-config";
-    const CLOUD_TOKEN_KEY = "zzrs-cloud-token";
-    const HERO_CONFIG_KEY = "zzrs-hero-config";
+  <section id="interview" class="section">
+    <h2 class="section-title">采访安利</h2>
+    <div class="content-card">
+      <h3>剧集宣传采访</h3>
+      <p>作品主创专访、角色解读、幕后故事</p>
+      <a href="#" class="small-btn">完整合集</a>
+      <a href="#" class="small-btn">精彩片段</a>
+    </div>
+    <div class="content-card">
+      <h3>综艺专访</h3>
+      <p>综艺录制后台、节目宣传互动、现场快问快答</p>
+      <a href="#" class="small-btn">完整合集</a>
+      <a href="#" class="small-btn">精彩片段</a>
+    </div>
+    <div class="content-card">
+      <h3>CCTV相关采访</h3>
+      <p>央视节目录制、文艺活动专访、官方主题采访</p>
+      <a href="#" class="small-btn">完整合集</a>
+      <a href="#" class="small-btn">精彩片段</a>
+    </div>
+    <div class="content-card">
+      <h3>粉丝问答&互动采访</h3>
+      <p>快问快答、粉丝提问回应、趣味挑战</p>
+      <a href="#" class="small-btn">完整合集</a>
+      <a href="#" class="small-btn">精彩片段</a>
+    </div>
+  </section>
 
-    const DB_NAME = "zzrs-media-db";
-    const DB_VERSION = 1;
-    const STORE_NAME = "videos";
-    let dbPromise = null;
+  <section id="live" class="section">
+    <h2 class="section-title">直播回顾</h2>
+    <div class="content-card">
+      <h3>口袋直播</h3>
+      <p>口袋48专属直播、翻牌互动、深夜电台、日常唠嗑</p>
+      <a href="#" class="small-btn">回放</a>
+    </div>
+    <div class="content-card">
+      <h3>微博直播</h3>
+      <p>微博个人直播、生日直播、节日互动、日常分享</p>
+      <a href="#" class="small-btn">回放</a>
+    </div>
+    <div class="content-card">
+      <h3>剧宣直播</h3>
+      <p>《千朵桃花一世开》《长月烬明》剧集宣传直播</p>
+      <a href="#" class="small-btn">回放</a>
+    </div>
+    <div class="content-card">
+      <h3>商务直播</h3>
+      <p>品牌合作直播、产品推广、粉丝见面会直播</p>
+      <a href="#" class="small-btn">回放</a>
+    </div>
+  </section>
+</div>
 
-    let adminAuthed = false;
-    let uploadedRecords = [];
-    let uploadedByChannel = { stage: [], show: [], role: [], live: [] };
-    let renderedMap = { stage: [], show: [], role: [], live: [] };
+<footer class="wrapper">
+  <div class="gold-txt">珍藏丨孙珍妮安利站</div>
+  <p>遇见珍妮 万事如意·粉丝自制 非官方 仅供安利</p>
+</footer>
 
-    const searchInput = document.getElementById("searchInput");
-    const heroBanner = document.getElementById("heroBanner");
-
-    const adminModal = document.getElementById("adminModal");
-    const adminEntry = document.getElementById("adminEntry");
-    const adminClose = document.getElementById("adminClose");
-    const adminAlert = document.getElementById("adminAlert");
-    const adminForm = document.getElementById("adminForm");
-    const adminList = document.getElementById("adminList");
-    const formTitle = document.getElementById("formTitle");
-    const resetFormBtn = document.getElementById("resetFormBtn");
-
-    const editId = document.getElementById("editId");
-    const videoTitle = document.getElementById("videoTitle");
-    const videoDesc = document.getElementById("videoDesc");
-    const videoDuration = document.getElementById("videoDuration");
-    const videoChannel = document.getElementById("videoChannel");
-    const videoSourceUrl = document.getElementById("videoSourceUrl");
-    const coverUrl = document.getElementById("coverUrl");
-
-    const heroImageUrl = document.getElementById("heroImageUrl");
-    const saveHeroBtn = document.getElementById("saveHeroBtn");
-
-    const gtOwner = document.getElementById("gtOwner");
-    const gtRepo = document.getElementById("gtRepo");
-    const gtBranch = document.getElementById("gtBranch");
-    const gtPath = document.getElementById("gtPath");
-    const gtToken = document.getElementById("gtToken");
-    const autoSyncCloud = document.getElementById("autoSyncCloud");
-    const saveCloudConfigBtn = document.getElementById("saveCloudConfigBtn");
-    const pullCloudBtn = document.getElementById("pullCloudBtn");
-    const pushCloudBtn = document.getElementById("pushCloudBtn");
-
-    function safeText(v, fallback = "") {
-      return v && String(v).trim() ? String(v).trim() : fallback;
-    }
-
-    function escapeHTML(value) {
-      return String(value || "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
-    }
-
-    function showAlert(message, type) {
-      adminAlert.textContent = message;
-      adminAlert.classList.remove("error", "ok");
-      if (type === "error") adminAlert.classList.add("error");
-      if (type === "ok") adminAlert.classList.add("ok");
-    }
-
-    function normalizeRepoPath(path) {
-      return (path || "data/zzrs-videos.json").trim().replace(/^\/+/, "");
-    }
-
-    function encodeRepoPath(path) {
-      return normalizeRepoPath(path).split("/").map(encodeURIComponent).join("/");
-    }
-
-    function utf8ToBase64(input) {
-      return btoa(unescape(encodeURIComponent(input)));
-    }
-
-    function base64ToUtf8(input) {
-      return decodeURIComponent(escape(atob(input)));
-    }
-
-    function sanitizeCloudRecord(record) {
-      return {
-        id: safeText(record.id, "video_" + Date.now().toString(36)),
-        title: safeText(record.title, "未命名视频"),
-        desc: safeText(record.desc, ""),
-        duration: safeText(record.duration, ""),
-        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
-        url: safeText(record.url, "#"),
-        cover: safeText(record.cover, ""),
-        createdAt: Number(record.createdAt) || Date.now(),
-        updatedAt: Number(record.updatedAt) || Date.now()
-      };
-    }
-
-    function getHeroConfig() {
-      try {
-        const raw = localStorage.getItem(HERO_CONFIG_KEY);
-        return raw ? JSON.parse(raw) : {};
-      } catch {
-        return {};
-      }
-    }
-
-    function applyHeroConfig() {
-      const cfg = getHeroConfig();
-      const image = safeText(cfg.image, "");
-      if (image) {
-        heroBanner.style.backgroundImage =
-          `linear-gradient(128deg, rgba(8,8,8,0.65), rgba(18,18,18,0.55)), url('${image}')`;
-      } else {
-        heroBanner.style.backgroundImage =
-          "linear-gradient(128deg, rgba(8,8,8,0.93), rgba(18,18,18,0.78)), radial-gradient(circle at 76% 40%, rgba(216, 178, 105, 0.2), transparent 40%)";
-      }
-      heroImageUrl.value = image;
-    }
-
-    function saveHeroConfig() {
-      const image = heroImageUrl.value.trim();
-      localStorage.setItem(HERO_CONFIG_KEY, JSON.stringify({ image }));
-      applyHeroConfig();
-      showAlert("横幅图已保存。", "ok");
-    }
-
-    function loadCloudConfigToForm() {
-      let saved = {};
-      try {
-        const raw = localStorage.getItem(CLOUD_CONFIG_KEY);
-        saved = raw ? JSON.parse(raw) : {};
-      } catch {
-        saved = {};
-      }
-      gtOwner.value = safeText(saved.owner, "");
-      gtRepo.value = safeText(saved.repo, "");
-      gtBranch.value = safeText(saved.branch, "master");
-      gtPath.value = safeText(saved.path, "data/zzrs-videos.json");
-      autoSyncCloud.checked = Boolean(saved.autoSync);
-      gtToken.value = localStorage.getItem(CLOUD_TOKEN_KEY) || "";
-    }
-
-    function getCloudConfigFromForm() {
-      return {
-        owner: gtOwner.value.trim(),
-        repo: gtRepo.value.trim(),
-        branch: gtBranch.value.trim() || "master",
-        path: normalizeRepoPath(gtPath.value),
-        token: gtToken.value.trim(),
-        autoSync: autoSyncCloud.checked
-      };
-    }
-
-    function saveCloudConfigFromForm() {
-      const cfg = getCloudConfigFromForm();
-      localStorage.setItem(CLOUD_CONFIG_KEY, JSON.stringify({
-        owner: cfg.owner,
-        repo: cfg.repo,
-        branch: cfg.branch,
-        path: cfg.path,
-        autoSync: cfg.autoSync
-      }));
-      if (cfg.token) localStorage.setItem(CLOUD_TOKEN_KEY, cfg.token);
-      showAlert("云配置已保存。", "ok");
-    }
-
-    function buildGiteeContentEndpoint(config, includeRef) {
-      const query = new URLSearchParams();
-      query.set("access_token", config.token);
-      if (includeRef && config.branch) query.set("ref", config.branch);
-      return `https://gitee.com/api/v5/repos/${encodeURIComponent(config.owner)}/${encodeURIComponent(config.repo)}/contents/${encodeRepoPath(config.path)}?${query.toString()}`;
-    }
-
-    async function fetchCloudFileMeta(config) {
-      const endpoint = buildGiteeContentEndpoint(config, true);
-      const response = await fetch(endpoint, {
-        headers: {
-          "Accept": "application/json"
-        }
-      });
-      if (response.status === 404) return { exists: false, sha: "" };
-      if (!response.ok) throw new Error(`读取云端失败：HTTP ${response.status}`);
-      const data = await response.json();
-      return { exists: true, sha: data.sha || "", data };
-    }
-
-    async function pullFromCloud() {
-      const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
-      const meta = await fetchCloudFileMeta(cfg);
-      if (!meta.exists) throw new Error("云端文件不存在");
-      const contentBase64 = String(meta.data.content || "").replace(/\n/g, "");
-      const text = base64ToUtf8(contentBase64 || "");
-      const parsed = JSON.parse(text);
-      if (!Array.isArray(parsed)) throw new Error("云端数据格式错误");
-      const sanitized = parsed.map(sanitizeCloudRecord);
-      await dbReplaceAll(sanitized);
-      await refreshUploadedLibrary();
-      return sanitized.length;
-    }
-
-    async function pushToCloud() {
-      const cfg = getCloudConfigFromForm();
-      if (!cfg.owner || !cfg.repo || !cfg.token) throw new Error("请先填写 Gitee owner/repo/token");
-      const meta = await fetchCloudFileMeta(cfg);
-      const endpoint = `https://gitee.com/api/v5/repos/${encodeURIComponent(cfg.owner)}/${encodeURIComponent(cfg.repo)}/contents/${encodeRepoPath(cfg.path)}`;
-      const payload = new URLSearchParams();
-      payload.set("access_token", cfg.token);
-      payload.set("message", `update zzrs videos ${new Date().toISOString()}`);
-      payload.set("content", utf8ToBase64(JSON.stringify(uploadedRecords.map(sanitizeCloudRecord), null, 2)));
-      payload.set("branch", cfg.branch);
-      if (meta.exists && meta.sha) payload.set("sha", meta.sha);
-
-      const response = await fetch(endpoint, {
-        method: meta.exists ? "PUT" : "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-        },
-        body: payload.toString()
-      });
-      if (!response.ok) {
-        const txt = await response.text();
-        throw new Error(`上传云端失败：HTTP ${response.status} ${txt ? "- " + txt.slice(0, 120) : ""}`);
-      }
-      return true;
-    }
-
-    function openDB() {
-      if (!("indexedDB" in window)) return Promise.reject(new Error("当前浏览器不支持 IndexedDB"));
-      if (dbPromise) return dbPromise;
-      dbPromise = new Promise((resolve, reject) => {
-        const req = indexedDB.open(DB_NAME, DB_VERSION);
-        req.onerror = () => reject(req.error);
-        req.onupgradeneeded = () => {
-          const db = req.result;
-          if (!db.objectStoreNames.contains(STORE_NAME)) db.createObjectStore(STORE_NAME, { keyPath: "id" });
-        };
-        req.onsuccess = () => resolve(req.result);
-      });
-      return dbPromise;
-    }
-
-    async function dbGetAll() {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readonly");
-        const req = tx.objectStore(STORE_NAME).getAll();
-        req.onerror = () => reject(req.error);
-        req.onsuccess = () => resolve(req.result || []);
-      });
-    }
-
-    async function dbPut(record) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
-        const req = tx.objectStore(STORE_NAME).put(record);
-        req.onerror = () => reject(req.error);
-        req.onsuccess = () => resolve(record);
-      });
-    }
-
-    async function dbDelete(id) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
-        const req = tx.objectStore(STORE_NAME).delete(id);
-        req.onerror = () => reject(req.error);
-        req.onsuccess = () => resolve(true);
-      });
-    }
-
-    async function dbReplaceAll(records) {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(STORE_NAME, "readwrite");
-        const store = tx.objectStore(STORE_NAME);
-        const clearReq = store.clear();
-        clearReq.onerror = () => reject(clearReq.error);
-        clearReq.onsuccess = () => records.forEach((record) => store.put(record));
-        tx.oncomplete = () => resolve(true);
-        tx.onerror = () => reject(tx.error || new Error("写入失败"));
-      });
-    }
-
-    function buildCard(channel, item, index) {
-      const bg = item.cover && item.cover.trim()
-        ? ` style="background-image: linear-gradient(135deg, rgba(216,178,105,0.2), rgba(255,255,255,0.06)), url('${escapeHTML(item.cover)}');"`
-        : "";
-      return `
-        <article class="video-card" data-channel="${channel}" data-index="${index}">
-          <div class="thumb"${bg}>
-            <div class="play">▶</div>
-            <span class="duration">${escapeHTML(item.duration || "--:--")}</span>
-          </div>
-          <div class="info">
-            <div class="title">${escapeHTML(item.title || "未命名视频")}</div>
-            <div class="desc">${escapeHTML(item.desc || "暂无简介")}</div>
-          </div>
-        </article>
-      `;
-    }
-
-    function getChannelItems(channel) {
-      const uploaded = uploadedByChannel[channel] || [];
-      const defaults = VIDEO_LIBRARY[channel] || [];
-      return [...uploaded, ...defaults];
-    }
-
-    function renderAll() {
-      const keyword = (searchInput.value || "").trim().toLowerCase();
-      channelOrder.forEach((channel) => {
-        const mount = document.querySelector(`.video-grid[data-channel="${channel}"]`);
-        if (!mount) return;
-        const source = getChannelItems(channel);
-        const filtered = source.filter((item) => {
-          if (!keyword) return true;
-          return `${item.title || ""} ${item.desc || ""}`.toLowerCase().includes(keyword);
-        });
-        renderedMap[channel] = filtered;
-        if (!filtered.length) {
-          mount.innerHTML = '<div class="empty">该分区暂无内容</div>';
-          return;
-        }
-        mount.innerHTML = filtered.map((item, idx) => buildCard(channel, item, idx)).join("");
-      });
-    }
-
-    function makeUploadedItem(record) {
-      return {
-        id: record.id,
-        title: safeText(record.title, "未命名视频"),
-        desc: safeText(record.desc, ""),
-        duration: safeText(record.duration, ""),
-        channel: channelOrder.includes(record.channel) ? record.channel : "stage",
-        url: safeText(record.url, "#"),
-        cover: safeText(record.cover, ""),
-        createdAt: Number(record.createdAt) || Date.now(),
-        updatedAt: Number(record.updatedAt) || Date.now(),
-        fromAdmin: true
-      };
-    }
-
-    async function refreshUploadedLibrary() {
-      try {
-        const records = await dbGetAll();
-        uploadedRecords = records.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
-        uploadedByChannel = { stage: [], show: [], role: [], live: [] };
-        uploadedRecords.forEach((record) => {
-          const channel = channelOrder.includes(record.channel) ? record.channel : "stage";
-          uploadedByChannel[channel].push(makeUploadedItem(record));
-        });
-      } catch (error) {
-        showAlert("读取失败：" + error.message, "error");
-      }
-      renderAll();
-      renderAdminList();
-    }
-
-    function renderAdminList() {
-      if (!uploadedRecords.length) {
-        adminList.innerHTML = '<div class="empty">暂无内容</div>';
-        return;
-      }
-      adminList.innerHTML = uploadedRecords.map((record) => `
-        <article class="admin-item">
-          <div class="admin-item-head">
-            <b>${escapeHTML(record.title || "未命名视频")}</b>
-            <span>${escapeHTML(record.duration || "--:--")}</span>
-          </div>
-          <div class="admin-item-meta">
-            ${escapeHTML(channelLabels[record.channel] || "作品")}
-          </div>
-          <div class="admin-item-actions">
-            <button class="btn" type="button" data-action="edit" data-id="${escapeHTML(record.id)}">编辑</button>
-            <button class="btn danger" type="button" data-action="delete" data-id="${escapeHTML(record.id)}">删除</button>
-          </div>
-        </article>
-      `).join("");
-    }
-
-    function resetAdminForm() {
-      adminForm.reset();
-      editId.value = "";
-      formTitle.textContent = "新增视频";
-    }
-
-    function fillAdminForm(record) {
-      editId.value = record.id;
-      videoTitle.value = record.title || "";
-      videoDesc.value = record.desc || "";
-      videoDuration.value = record.duration || "";
-      videoChannel.value = channelOrder.includes(record.channel) ? record.channel : "stage";
-      videoSourceUrl.value = record.url && record.url !== "#" ? record.url : "";
-      coverUrl.value = record.cover || "";
-      formTitle.textContent = "编辑视频";
-      showAlert("编辑模式", "ok");
-    }
-
-    function getAdminPassword() {
-      return localStorage.getItem(ADMIN_PASSWORD_KEY) || DEFAULT_ADMIN_PASSWORD;
-    }
-
-    function openAdmin() {
-      if (!adminAuthed) {
-        const input = window.prompt("请输入管理后台密码");
-        if (input === null) return;
-        if (input !== getAdminPassword()) {
-          window.alert("密码错误");
-          return;
-        }
-        adminAuthed = true;
-      }
-      loadCloudConfigToForm();
-      applyHeroConfig();
-      adminModal.classList.add("show");
-      adminModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-      renderAdminList();
-      showAlert("管理模式", "ok");
-    }
-
-    function closeAdmin() {
-      adminModal.classList.remove("show");
-      adminModal.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-      resetAdminForm();
-    }
-
-    function bindCardEvents() {
-      document.addEventListener("click", (event) => {
-        const card = event.target.closest(".video-card");
-        if (!card) return;
-        const channel = card.dataset.channel;
-        const index = Number(card.dataset.index);
-        if (!channel || Number.isNaN(index)) return;
-        const item = (renderedMap[channel] || [])[index];
-        if (!item) return;
-        const link = safeText(item.url, "");
-        if (!link || link === "#") return;
-        window.open(link, "_blank", "noopener,noreferrer");
-      });
-    }
-
-    function bindAdminEvents() {
-      adminEntry.addEventListener("click", (e) => {
-        e.preventDefault();
-        openAdmin();
-      });
-      adminClose.addEventListener("click", closeAdmin);
-      adminModal.addEventListener("click", (e) => {
-        if (e.target === adminModal) closeAdmin();
-      });
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && adminModal.classList.contains("show")) closeAdmin();
-      });
-
-      saveHeroBtn.addEventListener("click", saveHeroConfig);
-
-      saveCloudConfigBtn.addEventListener("click", saveCloudConfigFromForm);
-      pullCloudBtn.addEventListener("click", async () => {
-        try {
-          const count = await pullFromCloud();
-          showAlert(`拉取成功：${count} 条`, "ok");
-        } catch (error) {
-          showAlert(error.message, "error");
-        }
-      });
-      pushCloudBtn.addEventListener("click", async () => {
-        try {
-          await pushToCloud();
-          showAlert("上传成功", "ok");
-        } catch (error) {
-          showAlert(error.message, "error");
-        }
-      });
-
-      resetFormBtn.addEventListener("click", () => {
-        resetAdminForm();
-        showAlert("已清空", "ok");
-      });
-
-      adminForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const id = editId.value || "video_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
-        const existing = uploadedRecords.find((record) => record.id === id);
-        const channel = videoChannel.value;
-        const title = videoTitle.value.trim();
-        const sourceUrl = videoSourceUrl.value.trim();
-        if (!title) {
-          showAlert("请填写标题", "error");
-          return;
-        }
-        if (!sourceUrl) {
-          showAlert("请填写原链接", "error");
-          return;
-        }
-        if (!channelOrder.includes(channel)) {
-          showAlert("请选择分区", "error");
-          return;
-        }
-
-        const record = {
-          id,
-          title,
-          desc: videoDesc.value.trim(),
-          duration: videoDuration.value.trim(),
-          channel,
-          url: sourceUrl,
-          cover: coverUrl.value.trim(),
-          createdAt: existing ? existing.createdAt : Date.now(),
-          updatedAt: Date.now()
-        };
-
-        try {
-          await dbPut(record);
-          await refreshUploadedLibrary();
-          if (autoSyncCloud.checked) await pushToCloud();
-          resetAdminForm();
-          showAlert("保存成功", "ok");
-        } catch (error) {
-          showAlert("保存失败：" + error.message, "error");
-        }
-      });
-
-      adminList.addEventListener("click", async (e) => {
-        const target = e.target.closest("button[data-action]");
-        if (!target) return;
-        const id = target.getAttribute("data-id");
-        const action = target.getAttribute("data-action");
-        const record = uploadedRecords.find((item) => item.id === id);
-        if (!record) return;
-        if (action === "edit") {
-          fillAdminForm(record);
-          return;
-        }
-        if (action === "delete") {
-          if (!window.confirm("确定删除？")) return;
-          try {
-            await dbDelete(id);
-            await refreshUploadedLibrary();
-            if (autoSyncCloud.checked) await pushToCloud();
-            showAlert("删除成功", "ok");
-          } catch (error) {
-            showAlert("删除失败：" + error.message, "error");
-          }
-        }
-      });
-    }
-
-    const navLinks = document.querySelectorAll(".nav a[href^='#']");
-    const sections = document.querySelectorAll(".channel");
-
-    function updateNavActive() {
-      let current = "works";
-      sections.forEach((section) => {
-        if (window.scrollY >= section.offsetTop - 130) current = section.id;
-      });
-      navLinks.forEach((link) => {
-        link.classList.toggle("active", link.getAttribute("href") === "#" + current);
-      });
-    }
-
-    searchInput.addEventListener("input", renderAll);
-    window.addEventListener("scroll", updateNavActive);
-
-    loadCloudConfigToForm();
-    applyHeroConfig();
-    renderAll();
-    bindCardEvents();
-    bindAdminEvents();
-    updateNavActive();
-    refreshUploadedLibrary();
-  </script>
+<script>
+const tabs = document.querySelectorAll('.tab-item');
+const btns = document.querySelectorAll('.hero-btn, .hero-extra .btn');
+const sections = document.querySelectorAll('.section');
+function showSection(id) {
+  sections.forEach(s => s.classList.remove('active'));
+  tabs.forEach(t => t.classList.remove('active'));
+  btns.forEach(b => b.classList.remove('active'));
+  document.querySelector(id).classList.add('active');
+  document.querySelector(`.tab-item[data-target="${id}"]`)?.classList.add('active');
+}
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => showSection(tab.dataset.target));
+});
+btns.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    showSection(btn.getAttribute('href'));
+  });
+});
+</script>
 </body>
 </html>
