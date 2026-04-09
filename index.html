@@ -357,6 +357,28 @@
       background: rgba(255, 255, 255, 0.04);
     }
 
+    .guide-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .guide-gallery-item {
+      display: block;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      overflow: hidden;
+      background: #121212;
+      box-shadow: var(--shadow);
+    }
+
+    .guide-gallery-item img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      display: block;
+    }
+
     .empty-note {
       border: 1px dashed rgba(255, 255, 255, 0.24);
       border-radius: 10px;
@@ -544,6 +566,91 @@
       line-height: 1.4;
     }
 
+    .admin-config {
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .admin-config h4 {
+      color: #f1d7a5;
+      font-size: 0.88rem;
+      margin-bottom: 2px;
+    }
+
+    .gallery-manage-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .gallery-admin-list {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 8px;
+      display: grid;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .gallery-admin-item {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 6px;
+      display: grid;
+      grid-template-columns: 52px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .gallery-admin-item img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #111;
+    }
+
+    .gallery-admin-item .url {
+      font-size: 0.74rem;
+      color: #d9d9d9;
+      word-break: break-all;
+      line-height: 1.35;
+    }
+
+    .gallery-admin-actions {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .gallery-admin-actions button,
+    .gallery-add-btn,
+    .save-settings-btn {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #f2f2f2;
+      font-size: 0.74rem;
+      padding: 5px 8px;
+      cursor: pointer;
+    }
+
+    .save-settings-btn {
+      color: #231507;
+      border-color: rgba(255, 255, 255, 0.25);
+      background: linear-gradient(120deg, var(--gold), var(--gold-soft));
+      justify-self: start;
+    }
+
     .form-actions {
       display: flex;
       gap: 8px;
@@ -587,14 +694,21 @@
       .card-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+      .guide-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       .intro-list,
-      .admin-form .row {
+      .admin-form .row,
+      .gallery-manage-row {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 560px) {
       .card-grid {
+        grid-template-columns: 1fr;
+      }
+      .guide-gallery {
         grid-template-columns: 1fr;
       }
     }
@@ -620,7 +734,7 @@
 
   <main class="container">
     <section class="tab-page active" id="page-guide">
-      <img class="hero-banner" src="https://picsum.photos/seed/jenny-banner-main/1600/520" alt="首页横幅">
+      <img class="hero-banner" id="heroBanner" src="https://picsum.photos/seed/jenny-banner-main/1600/520" alt="首页横幅">
       <div class="hero-copy">
         <h1>珍藏 ｜ 孙珍妮安利站</h1>
         <p>遇见珍妮，万事如意。谢谢你走到这里，欢迎加入藕粉大家庭。</p>
@@ -648,6 +762,11 @@
           <li>INS：_sunzhenni_</li>
           <li>全民K歌：孙珍妮</li>
         </ul>
+      </section>
+
+      <section class="panel">
+        <h2>入坑图集</h2>
+        <div class="guide-gallery" id="guideGallery"></div>
       </section>
 
       <div class="section-block" id="guideDynamic"></div>
@@ -692,6 +811,23 @@
 
       <div class="admin-tabs" id="adminTabs"></div>
       <div class="admin-list" id="adminList"></div>
+
+      <section class="admin-config">
+        <h4>页面配置（首页横幅 / 入坑图集）</h4>
+        <label>
+          首页横幅URL
+          <input id="heroBannerInput" type="url" placeholder="https://...">
+        </label>
+        <div class="gallery-manage-row">
+          <label>
+            新增图集图片URL
+            <input id="galleryUrlInput" type="url" placeholder="https://...">
+          </label>
+          <button class="gallery-add-btn" type="button" id="addGalleryBtn">添加图片</button>
+        </div>
+        <div class="gallery-admin-list" id="galleryAdminList"></div>
+        <button class="save-settings-btn" type="button" id="saveSettingsBtn">保存页面配置</button>
+      </section>
 
       <form class="admin-form" id="adminForm">
         <input type="hidden" id="formEditingId">
@@ -758,6 +894,7 @@
       live: "直播回放"
     };
     const STORAGE_KEY = "zzrs_tv_library_v3";
+    const SETTINGS_KEY = "zzrs_tv_page_settings_v1";
     const ADMIN_PASSWORD = "szn0214";
     const FALLBACK_LINK = "https://www.bilibili.com";
 
@@ -776,6 +913,16 @@
     function defaultCover(seed) {
       return `https://picsum.photos/seed/${encodeURIComponent(seed)}/640/360`;
     }
+
+    const DEFAULT_SETTINGS = {
+      heroBanner: "https://picsum.photos/seed/jenny-banner-main/1600/520",
+      guideGallery: [
+        defaultCover("guide-gallery-1"),
+        defaultCover("guide-gallery-2"),
+        defaultCover("guide-gallery-3"),
+        defaultCover("guide-gallery-4")
+      ]
+    };
 
     const DEFAULT_LIBRARY = {
       guide: [
@@ -1026,8 +1173,34 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(library));
     }
 
-    function normalizeUrl(url) {
-      if (!url) return FALLBACK_LINK;
+    function loadSettings() {
+      try {
+        const raw = localStorage.getItem(SETTINGS_KEY);
+        if (!raw) return clone(DEFAULT_SETTINGS);
+        const parsed = JSON.parse(raw);
+        const merged = clone(DEFAULT_SETTINGS);
+        if (typeof parsed.heroBanner === "string" && parsed.heroBanner.trim()) {
+          merged.heroBanner = parsed.heroBanner.trim();
+        }
+        if (Array.isArray(parsed.guideGallery)) {
+          const urls = parsed.guideGallery
+            .map((url) => String(url || "").trim())
+            .filter(Boolean);
+          if (urls.length) merged.guideGallery = urls;
+        }
+        return merged;
+      } catch (error) {
+        console.warn("loadSettings failed", error);
+        return clone(DEFAULT_SETTINGS);
+      }
+    }
+
+    function saveSettings() {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    }
+
+    function normalizeUrl(url, fallback = FALLBACK_LINK) {
+      if (!url) return fallback;
       if (/^https?:\/\//i.test(url)) return url;
       return `https://${url}`;
     }
@@ -1044,12 +1217,13 @@
       const safeTitle = escapeHtml(item.title);
       const safeSubtitle = escapeHtml(item.subtitle || "");
       const safeDesc = escapeHtml(item.desc || "");
-      const cover = normalizeUrl(item.cover || defaultCover(item.title || "card"));
+      const fallbackCover = defaultCover(item.title || "card");
+      const cover = normalizeUrl(item.cover || fallbackCover, fallbackCover);
       const links = Array.isArray(item.links) && item.links.length ? item.links : [{ label: "打开链接", url: FALLBACK_LINK }];
-      const firstLink = normalizeUrl(links[0].url);
+      const firstLink = normalizeUrl(links[0].url, FALLBACK_LINK);
       const linksHtml = links.map((link) => {
         const label = escapeHtml(link.label || "打开");
-        const url = escapeHtml(normalizeUrl(link.url || FALLBACK_LINK));
+        const url = escapeHtml(normalizeUrl(link.url || FALLBACK_LINK, FALLBACK_LINK));
         return `<a class="chip-link" href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`;
       }).join("");
       return `
@@ -1090,7 +1264,29 @@
       `).join("");
     }
 
+    function renderGuideSettings() {
+      const bannerEl = document.getElementById("heroBanner");
+      const galleryEl = document.getElementById("guideGallery");
+      if (bannerEl) {
+        bannerEl.src = normalizeUrl(settings.heroBanner, DEFAULT_SETTINGS.heroBanner);
+      }
+      if (galleryEl) {
+        const images = Array.isArray(settings.guideGallery) && settings.guideGallery.length
+          ? settings.guideGallery
+          : DEFAULT_SETTINGS.guideGallery;
+        galleryEl.innerHTML = images.map((url, idx) => {
+          const finalUrl = escapeHtml(normalizeUrl(url, defaultCover(`guide-gallery-${idx + 1}`)));
+          return `
+            <a class="guide-gallery-item" href="${finalUrl}" target="_blank" rel="noopener noreferrer">
+              <img src="${finalUrl}" alt="入坑图集 ${idx + 1}" loading="lazy">
+            </a>
+          `;
+        }).join("");
+      }
+    }
+
     function renderAllPages() {
+      renderGuideSettings();
       renderGroupedPage("guideDynamic", "guide");
       renderGroupedPage("roleDynamic", "role");
       renderGroupedPage("showDynamic", "show");
@@ -1102,6 +1298,7 @@
     }
 
     const library = loadLibrary();
+    const settings = loadSettings();
     const tabButtons = document.querySelectorAll(".tab-btn");
     const tabPages = document.querySelectorAll(".tab-page");
 
@@ -1142,9 +1339,15 @@
     const formLinks = document.getElementById("formLinks");
     const saveBtn = document.getElementById("saveBtn");
     const resetBtn = document.getElementById("resetBtn");
+    const heroBannerInput = document.getElementById("heroBannerInput");
+    const galleryUrlInput = document.getElementById("galleryUrlInput");
+    const addGalleryBtn = document.getElementById("addGalleryBtn");
+    const galleryAdminList = document.getElementById("galleryAdminList");
+    const saveSettingsBtn = document.getElementById("saveSettingsBtn");
 
     let adminUnlocked = false;
     let currentAdminPage = "guide";
+    let galleryDraft = [];
 
     function buildAdminTabs() {
       adminTabs.innerHTML = PAGE_ORDER.map((page) => `
@@ -1216,6 +1419,50 @@
           button.addEventListener("click", () => removeItem(currentAdminPage, id));
         }
       });
+    }
+
+    function renderGalleryAdminList() {
+      if (!galleryAdminList) return;
+      if (!galleryDraft.length) {
+        galleryAdminList.innerHTML = "<div class='empty-note'>图集暂无图片，请先添加。</div>";
+        return;
+      }
+      galleryAdminList.innerHTML = galleryDraft.map((url, index) => {
+        const safeUrl = escapeHtml(normalizeUrl(url, DEFAULT_SETTINGS.heroBanner));
+        return `
+          <div class="gallery-admin-item">
+            <img src="${safeUrl}" alt="图集图 ${index + 1}">
+            <div class="url">${safeUrl}</div>
+            <div class="gallery-admin-actions">
+              <button type="button" data-gallery-action="up" data-index="${index}">上移</button>
+              <button type="button" data-gallery-action="down" data-index="${index}">下移</button>
+              <button type="button" data-gallery-action="delete" data-index="${index}">删除</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      galleryAdminList.querySelectorAll("button[data-gallery-action]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const action = button.dataset.galleryAction;
+          const idx = Number(button.dataset.index);
+          if (!Number.isInteger(idx) || idx < 0 || idx >= galleryDraft.length) return;
+          if (action === "up" && idx > 0) {
+            [galleryDraft[idx - 1], galleryDraft[idx]] = [galleryDraft[idx], galleryDraft[idx - 1]];
+          } else if (action === "down" && idx < galleryDraft.length - 1) {
+            [galleryDraft[idx + 1], galleryDraft[idx]] = [galleryDraft[idx], galleryDraft[idx + 1]];
+          } else if (action === "delete") {
+            galleryDraft.splice(idx, 1);
+          }
+          renderGalleryAdminList();
+        });
+      });
+    }
+
+    function syncSettingsForm() {
+      heroBannerInput.value = settings.heroBanner || DEFAULT_SETTINGS.heroBanner;
+      galleryDraft = Array.isArray(settings.guideGallery) ? [...settings.guideGallery] : [...DEFAULT_SETTINGS.guideGallery];
+      renderGalleryAdminList();
     }
 
     function resetForm() {
@@ -1305,6 +1552,26 @@
       resetForm();
     });
 
+    addGalleryBtn.addEventListener("click", () => {
+      const raw = (galleryUrlInput.value || "").trim();
+      if (!raw) {
+        window.alert("请先输入图片URL。");
+        return;
+      }
+      galleryDraft.push(raw);
+      galleryUrlInput.value = "";
+      renderGalleryAdminList();
+    });
+
+    saveSettingsBtn.addEventListener("click", () => {
+      const banner = (heroBannerInput.value || "").trim();
+      settings.heroBanner = banner || DEFAULT_SETTINGS.heroBanner;
+      settings.guideGallery = galleryDraft.length ? [...galleryDraft] : [...DEFAULT_SETTINGS.guideGallery];
+      saveSettings();
+      renderGuideSettings();
+      window.alert("页面配置已保存。");
+    });
+
     adminForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const page = formPage.value;
@@ -1364,6 +1631,7 @@
       formPage.value = currentAdminPage;
       refreshSectionSelect();
       renderAdminList();
+      syncSettingsForm();
       adminModal.classList.add("show");
     });
 
